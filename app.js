@@ -627,7 +627,7 @@
     }
     function reply(text, o) {
       o = o || {};
-      var entry = logBot(text, o.more); if (hasOwn(o.k)) { entry.classList.add('own'); var tag = document.createElement('span'); tag.className = 'own-tag'; tag.textContent = 'my voice'; entry.insertBefore(tag, entry.firstChild); }
+      var entry = logBot(text, o.more); if (hasOwn(o.k)) { entry.classList.add('own'); var tag = document.createElement('span'); tag.className = 'own-tag'; var clone = String(voiceMap[o.k]).indexOf('.clone.') > -1; tag.textContent = clone ? 'AI clone of my voice' : 'my voice'; if (clone) tag.classList.add('clone'); entry.insertBefore(tag, entry.firstChild); }
       show('<em>' + esc(text.length > 150 ? text.slice(0, 147) + '...' : text) + '</em>', Math.min(3500 + text.length * 40, 14000));
       if (o.id) go(o.id); if (o.spin) setTimeout(function () { ring.spin(); }, 700);
       speak(text, undefined, o.k);
