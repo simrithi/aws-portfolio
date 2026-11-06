@@ -346,10 +346,22 @@
       }
       requestAnimationFrame(loop);
     }
+    function renderTech(card) {
+      var box = $('#r3Tech'), detail = $('#r3Detail'), ht = $('#r3HearTech'), raw = card.dataset.tech, d = null;
+      try { d = raw ? JSON.parse(raw) : null; } catch (e) {}
+      if (!d) { box.hidden = true; detail.classList.remove('has-tech'); if (ht) ht.hidden = true; $('#r3Kicker').textContent = 'The story'; return; }
+      var ul = $('#r3Bullets'); ul.textContent = '';
+      d.bul.forEach(function (t) { var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+      var st = $('#r3Stack'); st.textContent = '';
+      (d.stack || []).forEach(function (t) { var s = document.createElement('span'); s.textContent = t; st.appendChild(s); });
+      var lk = $('#r3Links'); lk.textContent = '';
+      (d.links || []).forEach(function (l) { var a = document.createElement('a'); a.href = l[1]; a.textContent = l[0]; a.rel = 'noopener'; a.target = '_blank'; lk.appendChild(a); });
+      box.hidden = false; detail.classList.add('has-tech'); if (ht) ht.hidden = false; $('#r3Kicker').textContent = 'The story';
+    }
     function select(i, silent) {
       cards.forEach(function (c, k) { c.classList.toggle('sel', k === i); });
       target = nearest(-i * step); auto = false;
-      $('#r3Title').textContent = cards[i].dataset.title; $('#r3Story').textContent = cards[i].dataset.story;
+      $('#r3Title').textContent = cards[i].dataset.title; $('#r3Story').textContent = cards[i].dataset.story; renderTech(cards[i]);
       if (hint) hint.classList.add('gone'); if (!silent) sfx.chime();
       var hb = $('#r3Hear'); if (hb) hb.hidden = false;
     }
@@ -388,6 +400,11 @@
       if (!('speechSynthesis' in window)) return;
       try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance($('#r3Title').textContent + '. ' + $('#r3Story').textContent); u.rate = 1.02; u.pitch = 1.08; speechSynthesis.speak(u); } catch (e) {}
     }); }
+    var ht = $('#r3HearTech'); if (ht) ht.addEventListener('click', function () {
+      if (!('speechSynthesis' in window)) return;
+      var txt = $('#r3Title').textContent + ', under the hood. ' + $$('#r3Bullets li').map(function (l) { return l.textContent; }).join(' ');
+      try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(txt); u.rate = 1.02; u.pitch = 1.06; speechSynthesis.speak(u); } catch (e) {}
+    });
     $$('.vid video').forEach(function (v) {
       v.addEventListener('play', function () { $$('.vid video').forEach(function (o) { if (o !== v) o.pause(); }); });
     });
@@ -401,56 +418,199 @@
     });
   })();
 
-  /* ================= Voice and typed commands ================= */
+  /* ================= Voice assistant: answers, tour, log, controls ================= */
   (function voice() {
     var dock = $('#voiceDock'), mic = $('#micBtn'), say = $('#say'), form = $('#cmdForm'), input = $('#cmdInput'), snd = $('#sndBtn'), bars = $$('#wave i'), heroMic = $('#heroMic');
-    var SR = window.SpeechRecognition || window.webkitSpeechRecognition, rec = null, listening = false, stream = null, aCtx = null, analyser = null, rafId = 0, sayT = 0;
-    function show(html, ms) {
-      say.hidden = false; say.innerHTML = html; clearTimeout(sayT); sayT = setTimeout(function () { say.hidden = true; }, ms || 4200);
-    }
-    function speak(text) {
-      if (!sfx.isOn() || !('speechSynthesis' in window)) return;
-      try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(text); u.rate = 1.02; u.pitch = 1.08; speechSynthesis.speak(u); } catch (e) {}
-    }
-    function go(id, line) {
-      var t = document.getElementById(id); if (!t) return;
-      t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-      if (line) { show('<em>' + line + '</em>'); speak(line); }
-      sfx.whoosh();
-    }
-    var intents = [
-      [/help|what can i say|commands/, function () { show('Try: about, moments, skills, projects, journey, contact, spin the ring, Varshik, or mute.', 7000); speak('Try about, moments, skills, projects, journey, contact, or spin the ring.'); }],
-      [/unmute|sound on|turn on sound/, function () { sfx.set(true); setSnd(); show('Sound on'); }],
-      [/mute|silence|quiet|sound off/, function () { show('Sound off'); sfx.set(false); setSnd(); }],
-      [/watch|video|clip|youtube|stream|session/, function () { go('watch', 'Here are some clips of me at work.'); }],
-      [/spin|ring|3d|three d|moment|photo|picture|gallery/, function () { go('moments'); setTimeout(function () { ring.spin(); }, 650); show('<em>Spinning my world for you.</em>'); speak('Spinning my world for you.'); }],
-      [/varshik|flood/, function () { go('varshik', 'Varshik, my flood risk map.'); }],
-      [/career ?lens|placement/, function () { go('careerlens', 'CareerLens, my serverless placement platform.'); }],
-      [/flash ?sale|inventory|oversell/, function () { go('flashsale', 'FlashSale, inventory that never oversells.'); }],
-      [/pipe|robot/, function () { go('pipesense', 'PipeSense, my pipe inspection robot.'); }],
-      [/ledger|payment/, function () { go('ledgerlite', 'LedgerLite, a distributed payment ledger.'); }],
-      [/surge|ride/, function () { go('surge', 'Surge, real time ride matching.'); }],
-      [/raft|key value/, function () { go('raftkv', 'RaftKV, a Raft key value store.'); }],
-      [/project|work|built|build/, function () { go('projects', 'Here is what I built.'); }],
-      [/skill|superpower|tech|stack|tool/, function () { go('skills', 'My tech superpowers.'); }],
-      [/journey|experience|timeline|career|intern|achievement/, function () { go('journey', 'Where I have worked, led and competed.'); }],
-      [/contact|email|hire|reach|message/, function () { go('contact', 'Say hello, I would love to hear from you.'); }],
-      [/about|who|yourself|introduc|hello|^hi$/, function () { go('about', 'I am Simrithi, a computer science student in Chennai. I build on AWS and lead a three hundred plus student cloud community.'); }],
-      [/github|code/, function () { window.open('https://github.com/simrithi', '_blank', 'noopener'); show('<em>Opening GitHub.</em>'); }],
-      [/linkedin/, function () { window.open('https://www.linkedin.com/in/simrithi-s/', '_blank', 'noopener'); show('<em>Opening LinkedIn.</em>'); }],
-      [/top|home|start|beginning/, function () { go('top'); show('<em>Back to the top.</em>'); }],
-      [/down|next|scroll/, function () { scrollBy({ top: innerHeight * 0.85, behavior: reduced ? 'auto' : 'smooth' }); sfx.whoosh(); }],
-      [/up|previous|back/, function () { scrollBy({ top: -innerHeight * 0.85, behavior: reduced ? 'auto' : 'smooth' }); sfx.whoosh(); }]
+    var guide = $('#vguide'), guideBtn = $('#guideBtn'), log = $('#vlog'), rateEl = $('#vRate'), voiceEl = $('#vVoice'), speakEl = $('#vSpeak'), keepEl = $('#vKeep'), tryEl = $('#vTry');
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var rec = null, listening = false, keepOn = false, speaking = false, stream = null, aCtx = null, analyser = null, rafId = 0, sayT = 0;
+    var tourId = 0, lastSpoken = '', voices = [], PKEY = 'simrithi-voice';
+    var prefs = { rate: 1, voice: '', speak: true };
+    try { prefs = Object.assign(prefs, JSON.parse(localStorage.getItem(PKEY)) || {}); } catch (e) {}
+    function savePrefs() { try { localStorage.setItem(PKEY, JSON.stringify(prefs)); } catch (e) {} }
+
+    /* ---------- what the assistant knows (all from my resumes) ---------- */
+    var DEMO = 'https://d24wvc44c3vaxz.cloudfront.net/';
+    var KB = [
+      { re: /why .*(flood|varshik)|inspiration|motivat|story behind|what inspired/, id: 'varshik', a: "I grew up in Tamil Nadu and saw what floods do to families. Varshik began with one question: what if we could see which roads will flood before it rains?", more: ["Tell me about Varshik", "Open the live demo"] },
+      { re: /varshik|flood|waterlog/, id: 'varshik', a: "Varshik is a street level flood risk map. Vision models on Amazon SageMaker score sixty metre road cells for waterlogging from dashcam frames, terrain and rainfall, and Amazon Bedrock writes plain language briefs. Its top risk cells matched Delhi's official flood hotspots, though the results are preliminary.", more: ["Why did you build it?", "Open the live demo", "Tell me about CareerLens"] },
+      { re: /career ?lens|placement/, id: 'careerlens', a: "CareerLens is a serverless placement platform I built solo on AWS. About thirty Lambda functions, API Gateway, DynamoDB, Cognito and EventBridge power a student portal and a company portal, and an LLM turns messy placement notices into structured drives.", more: ["Tell me about FlashSale", "What are your cloud skills?"] },
+      { re: /flash ?sale|oversell|inventory|redis|lua/, id: 'flashsale', a: "FlashSale is an inventory system that never oversells. One Redis Lua script makes check and decrement a single atomic step, a virtual waiting room admits buyers in batches, and RabbitMQ workers release unpaid stock. Zero oversells under Locust load tests.", more: ["Tell me about LedgerLite", "What are your backend skills?"] },
+      { re: /pipe ?sense|robot|pipe inspection|datathon/, id: 'pipesense', a: "PipeSense is a pipe inspection robot. Three sensors fuse into one position estimate, an ESP32 drives it and YOLO detects seven defect types offline. We won first place out of three hundred teams at the Datathon with the Robotics Club and IEEE, and the patent is in progress.", more: ["Tell me about the satellite", "Spin the ring"] },
+      { re: /ledger|payment|upi|saga|outbox/, id: 'ledgerlite', a: "LedgerLite is a UPI style distributed payment ledger in Java and Spring Boot. It uses idempotency keys, saga based transfers and the transactional outbox pattern, and survived random node kills with zero double debits.", more: ["Tell me about Surge", "Tell me about RaftKV"] },
+      { re: /surge|ride|uber|h3|hexagon/, id: 'surge', a: "Surge is a real time ride matching engine in Go. It indexes live driver locations into Uber H3 hexagons, matches riders by ETA over gRPC, and computes surge from Kafka streams, validated with a fleet simulator across Chennai.", more: ["Tell me about RaftKV"] },
+      { re: /raft|consensus|key ?value|distributed (store|database)/, id: 'raftkv', a: "RaftKV is a distributed key value store with the Raft consensus algorithm written from scratch: leader election, log replication, snapshots and linearizable reads, tested with Jepsen style partition and crash tests.", more: ["What are your backend skills?"] },
+      { re: /cansat|can-?sat|satellite|in-?space|defionix|ground station|flight software/, id: 'moments', spin: true, a: "For the IN-SPACe CANSAT competition our team Defionix built a can sized satellite with a Raspberry Pi, IMU, GPS and LoRa radio. I built the ground station and the flight software, and we were a Preliminary Design Review finalist among the top thirty five teams in India.", more: ["Tell me about PipeSense", "Tell me about the Ideathon"] },
+      { re: /ideathon|iit|delhi/, id: 'journey', a: "I led the pitch preparation and presentation for the team that placed in the top five out of three hundred teams at the IIT Delhi Ideathon 2026, and I also created the demo video.", more: ["How many hackathons?", "What have you won?"] },
+      { re: /hackathon|competition|won|win|award|prize|achievement|accomplish/, id: 'journey', a: "I have taken part in more than ten hackathons, including AWS Bharat Builds, the Amazon ML Challenge, NPCI and Citi DRUNIX and Paytm Build for India. I won first place in the PipeSense Datathon, was a CANSAT PDR finalist, and placed in the top five at the IIT Delhi Ideathon.", more: ["Tell me about PipeSense", "Tell me about the satellite"] },
+      { re: /patent|research|paper|publication|ergoguard|explainable|interpretab/, id: 'journey', a: "I am an inventor on a patent application for shipment clustering and route optimisation. My research covers explainable AI for cyber threat attribution, a drafted paper on ErgoGuard posture monitoring, and offline pipe defect detection.", more: ["What are your AI skills?"] },
+      { re: /aws|campus leader|student builder|builder center|community|300|cloud community/, id: 'moments', a: "I am an AWS Student Builder Campus Leader. I grew a three hundred plus student cloud community, ran sessions with live AWS demos and reached over two hundred students through pitches and tablings.", more: ["Spin the ring", "Show me the videos"] },
+      { re: /novac|intern|crm|shriram|real estate|construction|work experience|job/, id: 'journey', a: "At Novac Technology Solutions I shipped a production, fully responsive CRM: Figma designs, a React front end and a backend deployed on AWS. It manages more than twenty live construction projects, and I built modules end to end in a two person team, including CI CD and production support.", more: ["Tell me about open source", "What are your skills?"] },
+      { re: /open ?source|aossie|osc|osconnect|livestream|live stream/, id: 'watch', a: "I contribute to open source with AOSSIE, and I am Community Lead and a frontend developer for Open Source Connect Global 2026, where I coordinate international livestream events and built parts of the official conference website.", more: ["Show me the videos"] },
+      { re: /cgpa|gpa|education|college|university|srm|degree|school|igcse|topper|marks|percentage|study|studying/, id: 'about', a: "I study B.Tech Computer Science and Engineering at SRM Institute of Science and Technology, Ramapuram, with a CGPA of 9.10 out of 10. In school I was the Cambridge IGCSE school topper in Tamil Nadu with ninety three point five percent.", more: ["Tell me about your community", "What are your skills?"] },
+      { re: /certif|microsoft|sql server|coursera/, id: 'journey', a: "I am a Microsoft Certified SQL Server Professional, covering relational database design, advanced querying, security and BI integration.", more: ["What are your skills?"] },
+      { re: /ai skill|machine learning|\bml\b|langchain|langgraph|agent|\brag\b|\bllm\b|faiss|yolo|bedrock|gemini/, id: 'skills', a: "On the AI side I work with Amazon Bedrock and the Gemini API, build multi agent systems with LangChain and LangGraph, run retrieval augmented generation with FAISS, and train and deploy vision models like YOLO on SageMaker.", more: ["What are your cloud skills?"] },
+      { re: /cloud skill|aws service|lambda|dynamodb|serverless|sagemaker|amplify|cloudfront|s3/, id: 'skills', a: "My AWS toolbox is Lambda, API Gateway, DynamoDB, S3 and CloudFront, Amplify, SageMaker, Bedrock, Cognito, EventBridge and CloudWatch, plus Docker and GitHub Actions for delivery.", more: ["What are your backend skills?", "Tell me about CareerLens"] },
+      { re: /backend|back end|distributed|java|spring|golang|\bgo\b|kafka|grpc|microservice/, id: 'skills', a: "For backend and distributed systems I use Java and Spring Boot, Go with gRPC, Kafka, Redis, RabbitMQ, Nginx and PostgreSQL, and I test them with fault injection and load tests.", more: ["Tell me about LedgerLite", "Tell me about Surge"] },
+      { re: /language|programming|python|kotlin|c\+\+|javascript/, id: 'skills', a: "I write Java, Python, JavaScript, Go, Kotlin, C, C plus plus and SQL, and I build front ends with React and Angular and mobile apps with Flutter and Kotlin Multiplatform.", more: ["What are your backend skills?"] },
+      { re: /skill|superpower|tech stack|technolog|good at|expertise|strength/, id: 'skills', a: "My superpowers are cloud and distributed systems on AWS, full stack web with React and Node, AI and agentic systems, and explaining all of it clearly as a speaker and community leader.", more: ["What are your cloud skills?", "What are your AI skills?", "What are your backend skills?"] },
+      { re: /contact|email|reach|hire|hiring|available|availability|internship|opportunit|open to|recruit|work with/, id: 'contact', a: "I am open to internships in cloud and full stack engineering. The fastest way to reach me is email at simrithi dot work at gmail dot com, or message me on LinkedIn.", more: ["Open LinkedIn", "Open GitHub"] },
+      { re: /where|location|city|based|chennai|tamil nadu|india/, id: 'about', a: "I am based in Chennai, Tamil Nadu, and I grew up in Tamil Nadu.", more: ["Who are you?"] },
+      { re: /how (did you|was|is|were) .*(build|built|made|create)|this (site|website|portfolio|page)|tech behind|made with|under the hood/, id: 'top', a: "This site is plain HTML, CSS and JavaScript with no framework. The 3D ring is pure CSS 3D, the sounds are synthesized live with WebAudio, you are talking to the browser's speech recognition, and it is hosted on AWS Amplify.", more: ["Spin the ring", "Give me a tour"] },
+      { re: /fun fact|something (interesting|unique|cool)|surprise|different|unique|special|stand out/, id: 'moments', spin: true, a: "Fun fact: I built a satellite ground station, a pipe inspecting robot and a flood risk map, and I also teach other students how to do the same. Spin the ring to see the proof.", more: ["Tell me about the satellite", "Tell me about PipeSense"] },
+      { re: /who are you|introduce|yourself|about (you|simrithi)|who is simrithi|hello|^hi\b|^hey\b/, id: 'about', a: "I am Simrithi, a pre final year Computer Science student at SRM in Chennai. I build cloud and full stack systems on AWS, and I lead a three hundred plus student cloud community.", more: ["What are your skills?", "Show me your projects", "Give me a tour"] },
+      { re: /thank|thanks|awesome|great|nice|cool|wow/, a: "Anytime. Ask me anything else, or say give me a tour.", more: ["Give me a tour"] }
     ];
-    function run(text) {
-      var q = (text || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim(); if (!q) return;
-      for (var i = 0; i < intents.length; i++) if (intents[i][0].test(q)) { intents[i][1](q); return; }
-      show('I did not catch "' + q.replace(/</g, '') + '". Try projects, skills, journey, contact or spin the ring.', 5200);
+    var NAV = [
+      [/watch|video|clip|youtube|stream|session/, 'watch', "Here are some clips of me at work."],
+      [/moment|photo|picture|gallery|\bring\b|3d|three d/, 'moments', "Here is my world in 3D."],
+      [/project|work|built|build/, 'projects', "Here is what I built."],
+      [/skill|tool|superpower/, 'skills', "My tech superpowers."],
+      [/journey|experience|timeline|career/, 'journey', "Where I have worked, led and competed."],
+      [/contact|message/, 'contact', "Say hello. I would love to hear from you."],
+      [/about|top|home|start|beginning/, 'about', "Back to the beginning."]
+    ];
+    var TOUR = [
+      ['top', "Hi, I am Simrithi. Let me show you around."],
+      ['about', "I study computer science in Chennai and build cloud systems that have to be right under pressure."],
+      ['moments', "This is my world in 3D: my talks, my classrooms, my robot and a satellite."],
+      ['watch', "Here are short clips of me teaching, and the Open Source Connect Global stream."],
+      ['skills', "These are my tech superpowers. Tap any tool to see where I used it."],
+      ['varshik', "Varshik, a flood risk map that finds waterlogged roads before the rain."],
+      ['careerlens', "CareerLens, a serverless placement platform built solo on AWS."],
+      ['flashsale', "FlashSale, inventory that can never oversell."],
+      ['pipesense', "PipeSense, the pipe inspection robot that won first of three hundred teams."],
+      ['journey', "My journey: an AWS campus leader, an intern who shipped a production CRM, and an open source contributor."],
+      ['contact', "That is the tour. I am open to internships in cloud and full stack. Say hello!"]
+    ];
+
+    /* ---------- speech out ---------- */
+    function loadVoices() {
+      if (!('speechSynthesis' in window)) return;
+      voices = speechSynthesis.getVoices().filter(function (v) { return /^en/i.test(v.lang); });
+      voiceEl.textContent = '';
+      voices.forEach(function (v) { var o = document.createElement('option'); o.value = v.name; o.textContent = v.name.replace(/Microsoft |Google /, '') + ' (' + v.lang + ')'; voiceEl.appendChild(o); });
+      var pick = voices.filter(function (v) { return v.name === prefs.voice; })[0] || voices.filter(function (v) { return /en-IN/i.test(v.lang); })[0] || voices.filter(function (v) { return /female|zira|aria|jenny|samantha|google uk english female/i.test(v.name); })[0] || voices[0];
+      if (pick) { voiceEl.value = pick.name; prefs.voice = pick.name; }
     }
+    if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+    function speak(text, done) {
+      lastSpoken = text;
+      if (!prefs.speak || !sfx.isOn() || !('speechSynthesis' in window)) { if (done) setTimeout(done, Math.min(2600 + text.length * 22, 9000)); return; }
+      try {
+        speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(text); u.rate = prefs.rate; u.pitch = 1.06;
+        var v = voices.filter(function (x) { return x.name === prefs.voice; })[0]; if (v) u.voice = v;
+        speaking = true; if (listening && rec) { try { rec.stop(); } catch (e) {} }
+        var fin = function () { speaking = false; if (done) done(); if (keepOn && !listening) setTimeout(startListening, 250); };
+        u.onend = fin; u.onerror = fin;
+        speechSynthesis.speak(u);
+      } catch (e) { if (done) done(); }
+    }
+    function hush() { tourId++; speaking = false; try { speechSynthesis.cancel(); } catch (e) {} }
+
+    /* ---------- UI helpers ---------- */
+    function show(html, ms) { say.hidden = false; say.innerHTML = html; clearTimeout(sayT); sayT = setTimeout(function () { say.hidden = true; }, ms || 4200); }
+    function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+    function go(id) {
+      var t = document.getElementById(id); if (!t) return;
+      t.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); sfx.whoosh();
+    }
+    function logUser(text) {
+      var li = document.createElement('li'); li.className = 'u'; li.textContent = text; log.appendChild(li); log.scrollTop = log.scrollHeight;
+    }
+    function logBot(text, more) {
+      var li = document.createElement('li'); li.className = 'b'; var p = document.createElement('p'); p.textContent = text; li.appendChild(p);
+      if (more && more.length) {
+        var row = document.createElement('div'); row.className = 'chips2';
+        more.forEach(function (m) { var b = document.createElement('button'); b.type = 'button'; b.textContent = m; b.addEventListener('click', function () { handle(m, true); }); row.appendChild(b); });
+        li.appendChild(row);
+      }
+      log.appendChild(li); log.scrollTop = log.scrollHeight;
+      while (log.children.length > 24) log.removeChild(log.firstChild);
+    }
+    function reply(text, o) {
+      o = o || {};
+      logBot(text, o.more); show('<em>' + esc(text.length > 150 ? text.slice(0, 147) + '...' : text) + '</em>', Math.min(3500 + text.length * 40, 14000));
+      if (o.id) go(o.id); if (o.spin) setTimeout(function () { ring.spin(); }, 700);
+      speak(text);
+    }
+
+    /* ---------- tour ---------- */
+    function startTour() {
+      hush(); var my = ++tourId; logBot('Starting the guided tour. Say stop or press Escape to end it.');
+      (function step(i) {
+        if (my !== tourId) return;
+        if (i >= TOUR.length) { show('<em>Tour complete.</em>', 3000); sfx.chime(); return; }
+        var s = TOUR[i]; go(s.id || s[0]); show('<em>' + esc(s[1]) + '</em>', 8000);
+        if (s[0] === 'moments') setTimeout(function () { if (my === tourId) ring.spin(); }, 900);
+        setTimeout(function () { if (my === tourId) speak(s[1], function () { setTimeout(function () { step(i + 1); }, 500); }); }, 1100);
+      })(0);
+    }
+
+    /* ---------- command handling ---------- */
+    function handle(text, fromChip) {
+      var raw = (text || '').trim(); if (!raw) return;
+      var q = raw.toLowerCase().replace(/[^a-z0-9+ ]/g, ' ').replace(/\s+/g, ' ').trim();
+      logUser(raw); if (!fromChip) sfx.chime();
+      var m;
+      if (/^(stop|cancel|enough|pause|shut up|be quiet|end tour|stop talking)\b/.test(q)) { hush(); reply('Okay, stopping.'); if (window.speechSynthesis) speechSynthesis.cancel(); return; }
+      if (/\b(repeat|say that again|again|what did you say|come again)\b/.test(q) && lastSpoken) { logBot(lastSpoken); speak(lastSpoken); return; }
+      if (/\b(faster|speed up|quicker)\b/.test(q)) { prefs.rate = Math.min(1.4, +(prefs.rate + 0.15).toFixed(2)); rateEl.value = prefs.rate; savePrefs(); reply('Speaking faster.'); return; }
+      if (/\b(slower|slow down)\b/.test(q)) { prefs.rate = Math.max(0.8, +(prefs.rate - 0.15).toFixed(2)); rateEl.value = prefs.rate; savePrefs(); reply('Speaking slower.'); return; }
+      if (/(change|switch|another|different|next) (the )?voice/.test(q)) {
+        if (voices.length) { var i = (voices.map(function (v) { return v.name; }).indexOf(prefs.voice) + 1) % voices.length; prefs.voice = voices[i].name; voiceEl.value = prefs.voice; savePrefs(); }
+        reply('This is my new voice. How do I sound?'); return;
+      }
+      if (/(keep|always) listening|conversation mode|hands free/.test(q)) { setKeep(true); reply('I will keep listening. Say stop listening to end this.'); return; }
+      if (/(stop|end|turn off|no more) (keep )?listening|stop the mic/.test(q)) { setKeep(false); reply('I stopped listening.'); return; }
+      if (/\b(tour|walk me through|guide me|show me around|take me around|overview)\b/.test(q)) { startTour(); return; }
+      if (/\b(help|what can (i|you)|commands|options|what should i)\b/.test(q)) { openGuide(true); reply('Here is what you can ask me. Tap any suggestion, or just speak.', { more: ['Who are you?', 'What are your skills?', 'Give me a tour'] }); return; }
+      if (/clear (the )?(log|chat|history)/.test(q)) { log.textContent = ''; show('Cleared'); return; }
+      if (/\b(unmute|sound on|turn on sound)\b/.test(q)) { sfx.set(true); setSnd(); reply('Sound is on.'); return; }
+      if (/\b(mute|sound off|silence)\b/.test(q)) { reply('Sound off.'); sfx.set(false); setSnd(); return; }
+      if (/\b(spin|rotate)\b/.test(q)) { go('moments'); setTimeout(function () { ring.spin(); }, 650); reply('Spinning my world for you.'); return; }
+      if (/live demo|open varshik|try varshik|launch varshik/.test(q)) { window.open(DEMO, '_blank', 'noopener'); reply('Opening the Varshik live demo in a new tab.'); return; }
+      if (/\bgithub\b/.test(q) && /open|show|take|go/.test(q)) { window.open('https://github.com/simrithi', '_blank', 'noopener'); reply('Opening my GitHub.'); return; }
+      if (/\blinkedin\b/.test(q)) { window.open('https://www.linkedin.com/in/simrithi-s/', '_blank', 'noopener'); reply('Opening my LinkedIn.'); return; }
+      if (/\b(scroll down|go down|next section|down)\b/.test(q)) { scrollBy({ top: innerHeight * 0.85, behavior: reduced ? 'auto' : 'smooth' }); sfx.whoosh(); logBot('Scrolling down.'); return; }
+      if (/\b(scroll up|go up|previous|up)\b/.test(q)) { scrollBy({ top: -innerHeight * 0.85, behavior: reduced ? 'auto' : 'smooth' }); sfx.whoosh(); logBot('Scrolling up.'); return; }
+      for (var k = 0; k < KB.length; k++) if (KB[k].re.test(q)) { reply(KB[k].a, { id: KB[k].id, spin: KB[k].spin, more: KB[k].more }); return; }
+      for (var n = 0; n < NAV.length; n++) if (NAV[n][0].test(q)) { reply(NAV[n][2], { id: NAV[n][1] }); return; }
+      reply('I am not sure about "' + raw.slice(0, 60) + '". Try asking about my projects, skills, CGPA, the satellite, or say give me a tour.', { more: ['Who are you?', 'What are your skills?', 'Give me a tour'] });
+    }
+
+    /* ---------- guide panel ---------- */
+    var TRY = {
+      'About me': ['Who are you?', 'What is your CGPA?', 'Tell me about your community', 'Where are you from?'],
+      'Projects': ['Tell me about Varshik', 'Tell me about CareerLens', 'What is PipeSense?', 'Tell me about the satellite', 'Tell me about LedgerLite', 'Tell me about RaftKV'],
+      'Skills': ['What are your skills?', 'What are your AI skills?', 'What are your cloud skills?', 'What are your backend skills?'],
+      'Hire me': ['Are you open to internships?', 'How can I contact you?', 'What have you won?'],
+      'Controls': ['Give me a tour', 'Spin the ring', 'Repeat', 'Slower', 'Faster', 'Change voice', 'Keep listening', 'Mute']
+    };
+    Object.keys(TRY).forEach(function (cat) {
+      var g = document.createElement('div'); g.className = 'try-group'; var h = document.createElement('h3'); h.textContent = cat; g.appendChild(h);
+      var r = document.createElement('div'); r.className = 'chips2';
+      TRY[cat].forEach(function (t) { var b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.addEventListener('click', function () { handle(t, true); }); r.appendChild(b); });
+      g.appendChild(r); tryEl.appendChild(g);
+    });
+    function openGuide(on) {
+      guide.hidden = !on; guideBtn.setAttribute('aria-expanded', on ? 'true' : 'false'); guideBtn.classList.toggle('on', on);
+    }
+    guideBtn.addEventListener('click', function () { openGuide(guide.hidden); });
+    $('#vguideClose').addEventListener('click', function () { openGuide(false); });
+    rateEl.value = prefs.rate; speakEl.checked = prefs.speak;
+    rateEl.addEventListener('input', function () { prefs.rate = parseFloat(rateEl.value); savePrefs(); });
+    voiceEl.addEventListener('change', function () { prefs.voice = voiceEl.value; savePrefs(); speak('Hi, this is how I sound.'); });
+    speakEl.addEventListener('change', function () { prefs.speak = speakEl.checked; savePrefs(); if (!prefs.speak) { try { speechSynthesis.cancel(); } catch (e) {} } });
+    function setKeep(v) { keepOn = v; keepEl.checked = v; if (v && !listening) startListening(); if (!v && listening && rec) { try { rec.stop(); } catch (e) {} } }
+    keepEl.addEventListener('change', function () { setKeep(keepEl.checked); });
     function setSnd() { var on = sfx.isOn(); snd.setAttribute('aria-pressed', on ? 'true' : 'false'); snd.setAttribute('aria-label', on ? 'Sound on. Click to mute.' : 'Sound off. Click to turn on.'); }
     snd.addEventListener('click', function () { sfx.set(!sfx.isOn()); setSnd(); }); setSnd();
-    form.addEventListener('submit', function (e) { e.preventDefault(); var v = input.value; input.value = ''; show('You typed: <em>' + v.replace(/</g, '') + '</em>', 1400); setTimeout(function () { run(v); }, 250); });
+    form.addEventListener('submit', function (e) { e.preventDefault(); var v = input.value; input.value = ''; handle(v); });
+    logBot('Hi, I am the voice of this portfolio. Tap the mic and ask me anything, hold the V key to talk, or pick a suggestion.', ['Who are you?', 'Give me a tour', 'What are your skills?']);
 
+    /* ---------- mic meter + recognition ---------- */
     function meter() {
       if (!analyser) return;
       var data = new Uint8Array(analyser.frequencyBinCount); analyser.getByteFrequencyData(data);
@@ -475,27 +635,43 @@
       listening = v; mic.setAttribute('aria-pressed', v ? 'true' : 'false'); dock.classList.toggle('live', v);
       if (v) startMeter(); else stopMeter();
     }
-    function toggle() {
-      if (!SR) { show('Voice commands need Chrome or Edge. You can type a command in the box instead.', 6000); input.focus(); return; }
-      if (listening) { try { rec.stop(); } catch (e) {} return; }
+    function startListening() {
+      if (!SR) { show('Voice commands need Chrome or Edge. You can type a command in the box instead.', 6000); input.focus(); openGuide(true); return; }
+      if (listening) return;
+      hush();
       rec = new SR(); rec.lang = navigator.language || 'en-US'; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
-      rec.onstart = function () { setListening(true); sfx.listen(); show('Listening… try <em>"projects"</em>, <em>"skills"</em> or <em>"spin the ring"</em>', 6000); try { speechSynthesis.cancel(); } catch (e) {} };
+      rec.onstart = function () { setListening(true); sfx.listen(); show('Listening… ask about my <em>projects</em>, <em>skills</em>, <em>CGPA</em> or say <em>give me a tour</em>', 6000); };
       rec.onresult = function (e) {
         var txt = '', fin = false;
         for (var i = e.resultIndex; i < e.results.length; i++) { txt += e.results[i][0].transcript; if (e.results[i].isFinal) fin = true; }
-        show('<em>' + txt.replace(/</g, '') + '</em>', fin ? 1600 : 6000);
-        if (fin) setTimeout(function () { run(txt); }, 350);
+        show('<em>' + esc(txt) + '</em>', fin ? 1600 : 6000);
+        if (fin) setTimeout(function () { handle(txt); }, 300);
       };
       rec.onerror = function (e) {
         setListening(false);
-        if (e.error === 'not-allowed' || e.error === 'service-not-allowed') show('Microphone is blocked. Allow it in your browser, or type a command instead.', 6000);
-        else if (e.error === 'no-speech') show('I did not hear anything. Tap the mic and try again.', 4000);
+        if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { keepOn = false; keepEl.checked = false; show('Microphone is blocked. Allow it in your browser, or type a command instead.', 6000); }
+        else if (e.error === 'no-speech' && !keepOn) show('I did not hear anything. Tap the mic and try again.', 4000);
       };
-      rec.onend = function () { setListening(false); };
+      rec.onend = function () { setListening(false); if (keepOn && !speaking && !tourIdActive()) setTimeout(startListening, 350); };
       try { rec.start(); } catch (e) { setListening(false); }
+    }
+    function tourIdActive() { return false; }
+    function toggle() {
+      if (!listening) { startListening(); return; }
+      keepOn = false; keepEl.checked = false; try { rec.stop(); } catch (e) {}
     }
     mic.addEventListener('click', toggle);
     if (heroMic) heroMic.addEventListener('click', toggle);
     if (!SR) mic.title = 'Voice needs Chrome or Edge. Type a command instead.';
+
+    /* ---------- keyboard: hold V to talk, ? for the guide, Esc to hush ---------- */
+    var vHeld = false;
+    addEventListener('keydown', function (e) {
+      var tag = (e.target && e.target.tagName) || ''; if (/INPUT|TEXTAREA|SELECT/.test(tag) || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === 'v' || e.key === 'V') { if (!vHeld && !listening) { vHeld = true; startListening(); } }
+      else if (e.key === '?') { openGuide(guide.hidden); }
+      else if (e.key === 'Escape') { hush(); if (!guide.hidden) openGuide(false); }
+    });
+    addEventListener('keyup', function (e) { if ((e.key === 'v' || e.key === 'V') && vHeld) { vHeld = false; if (listening && rec && !keepOn) { try { rec.stop(); } catch (er) {} } } });
   })();
 })();
