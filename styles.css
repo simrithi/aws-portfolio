@@ -848,3 +848,11 @@ html.gl .hero-copy { text-shadow: 0 0 22px #ffffeb, 0 0 8px #ffffeb; }
 .hero .ring { width: 230px; height: 230px; left: 14px; top: 22%; }
 .hero .ring text { font-size: 15px; }
 @media (max-width: 1320px) { .hero .ring { display: none; } }
+/* circle visible on laptops: sits bottom right, clear of the centred text */
+.hero .ring { left: auto; right: max(14px, 2.5vw); top: auto; bottom: 16%; width: 210px; height: 210px; display: block; }
+@media (max-width: 1100px) { .hero .ring { display: none; } }
+.hero .ring { left: 8px; right: auto; bottom: auto; top: 30%; width: 190px; height: 190px; }
+@media (max-width: 1240px) { .hero .ring { display: none; } }
+.hero .ring text { fill: #034f46; font-weight: 700; font-size: 15px; opacity: 1; }
+.hero .ring { opacity: 1; color: #034f46; }
+.hero .ring circle { stroke: #034f46; stroke-opacity: .55; stroke-width: 1.5; }
