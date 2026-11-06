@@ -236,7 +236,7 @@
   addEventListener('resize', resize); addEventListener('load', measure); setInterval(measure, 2500); resize();
 
   /* ---------- pointer: parallax, hover, click, drag ---------- */
-  var ray = new T.Raycaster(), mouse = new T.Vector2(), hovered = null, down = null;
+  var ray = new T.Raycaster(), mouse = new T.Vector2(), hovered = null, down = null, downCard = null;
   function interactive(t) { return t && t.closest && t.closest('a, button, input, select, label, video, iframe, [role="button"], .vguide, .voice-dock, .r3open, .spot-panel, .tile, .vid, .post, .sys, .portrait, .toolbox, .j-wrap, .wins, .stats, .about-top, .nav, .banner'); }
   function inGalleryZone(t) { var m = $('#moments'); return m && m.contains(t) && !interactive(t); }
   function setMouse(e) { mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = -(e.clientY / innerHeight) * 2 + 1; }
@@ -247,10 +247,12 @@
   addEventListener('pointerdown', function (e) {
     if (!inGalleryZone(e.target)) return;
     down = { x: e.clientX }; ringMoved = 0; var hint = $('#r3Hint'); if (hint) hint.classList.add('gone');
+    setMouse(e); ray.setFromCamera(mouse, camera); var dh = ray.intersectObjects(cardMeshes)[0]; downCard = dh ? dh.object : hovered;
   });
   function release(e) {
     if (!down) return; down = null;
-    if (ringMoved < 6 && hovered && window.__openCard) { window.__openCard(hovered.userData.el); }
+    var pick = downCard || hovered; downCard = null;
+    if (ringMoved < 6 && pick && window.__openCard) { window.__openCard(pick.userData.el); }
   }
   addEventListener('pointerup', release); addEventListener('pointercancel', function () { down = null; });
   addEventListener('click', function (e) {
