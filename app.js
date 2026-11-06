@@ -115,7 +115,7 @@
   /* ================= Contact form -> Lambda -> SNS -> my inbox ================= */
   (function contactForm() {
     var f = $('#cform'); if (!f) return;
-    var ENDPOINT = ''; /* set to the Lambda Function URL after deployment */
+    var ENDPOINT = 'https://t2aptddrdqh2i3oar242wswqbe0jyqjq.lambda-url.us-east-1.on.aws/'; /* set to the Lambda Function URL after deployment */
     if (!ENDPOINT) return;
     f.hidden = false;
     var st = $('#cState'), btn = $('#cSend');
