@@ -2,18 +2,18 @@
 
 Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting. Fonts (Geist) and icons (Phosphor) are self-hosted.
 
-## Creative feature: the rising flood
+## Creative feature: Superpower cards
 
-Tap the pulsing raindrop in the corner. Rain falls and the water climbs the page.
-- A draggable gauge on the right edge lets you set the water level (arrow keys work too).
-- Every project and journey card below the waterline flips to **High risk**, the same logic as Varshik, my flood-risk map.
-- A story card explains why I build flood tools. Esc or "Let it drain" resets everything.
-- The water layers ignore pointer events, so navigation is never blocked. Honours `prefers-reduced-motion`.
+A foil pack sits in the hero (and a floating "Open a pack" button follows you down the page).
+- Tear it open to get 3 holographic trading cards built from my real achievements. Click to flip, move the pointer to tilt and shine them.
+- Collect all 8 to unlock a hidden Legendary card with the story behind why I build.
+- Progress is saved in your browser. Esc closes the deck, "Start over" resets it.
+- It is a closeable overlay, so it never blocks navigation. Honours `prefers-reduced-motion`.
 
 ## Other interactions
 - Terrain-line hero that lifts toward the pointer
-- Words in the About statement light up as you read down
+- About statement that lights up word by word as you scroll
 - Skills toolbox: pick a tool to see which projects used it
-- Spotlight project cards, magnetic buttons, light and dark themes
+- Varshik diagram switcher, spotlight project cards, magnetic buttons, light and dark themes
 
-Run locally: open `index.html`, or `python -m http.server`.
+Run locally: `python -m http.server`, then open http://localhost:8000 (icons need a server, not file://).

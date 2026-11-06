@@ -168,143 +168,176 @@
     });
   })();
 
-  /* ---------- Creative feature: the rising flood ---------- */
-  (function flood() {
-    var MAX = 60, STORY_AT = 24, RISE_TARGET = 36, RISE_MS = 6500, RAIN_MS = 9000;
-    var drop = $('#drop'), dropLabel = $('#dropLabel'), hint = $('#dropHint');
-    var water = $('#water'), marker = $('#marker'), gauge = $('#gauge');
-    var track = $('#gaugeTrack'), handle = $('#gaugeHandle'), read = $('#gaugeRead');
-    var cv = $('#rain'), ctx = cv.getContext('2d');
-    var risky = $$('[data-risk]');
-    var level = 0, flooded = false, raf = 0, rainUntil = 0, drops = [], rings = [], looping = false;
-
-    setTimeout(function () { hint.classList.add('gone'); }, 12000);
-
-    function setLevel(v) {
-      level = Math.max(0, Math.min(MAX, v));
-      root.style.setProperty('--level', level.toFixed(2));
-      root.style.setProperty('--handle', (100 - level / MAX * 100).toFixed(2) + '%');
-      var m = (level / MAX * 3).toFixed(1);
-      read.textContent = m + ' m';
-      handle.setAttribute('aria-valuenow', Math.round(level / MAX * 100));
-      handle.setAttribute('aria-valuetext', m + ' metres');
-      if (flooded && level >= STORY_AT && marker.hidden && !storyClosed) marker.hidden = false;
-      updateRisk();
-    }
-    var storyClosed = false;
-
-    function updateRisk() {
-      var top = innerHeight * (1 - level / 100);
-      risky.forEach(function (el) {
-        var r = el.getBoundingClientRect();
-        var wet = flooded && level > 2 && (r.top + r.height / 2) > top && r.bottom > 0 && r.top < innerHeight;
-        if (el.classList.contains('wet') !== wet) {
-          el.classList.toggle('wet', wet);
-          var chip = el.querySelector('.risk-chip');
-          if (chip) chip.textContent = wet ? chip.dataset.wet : chip.dataset.dry;
-        }
+  /* ---------- Varshik diagram tabs ---------- */
+  (function vtabs() {
+    var img = $('#vimg');
+    if (!img) return;
+    $$('.vtabs button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        $$('.vtabs button').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+        b.setAttribute('aria-selected', 'true');
+        img.src = b.dataset.img; img.width = b.dataset.w; img.height = b.dataset.h; img.alt = b.dataset.alt;
       });
-    }
-
-    function animateTo(target, ms, done) {
-      cancelAnimationFrame(raf);
-      var from = level, start = performance.now();
-      if (reduced) { setLevel(target); if (done) done(); return; }
-      (function step(now) {
-        var k = Math.min((now - start) / ms, 1);
-        var e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-        setLevel(from + (target - from) * e);
-        if (k < 1) raf = requestAnimationFrame(step); else if (done) done();
-      })(start);
-    }
-
-    function resize() {
-      var d = devicePixelRatio || 1;
-      cv.width = innerWidth * d; cv.height = innerHeight * d;
-      ctx.setTransform(d, 0, 0, d, 0, 0);
-    }
-    addEventListener('resize', resize); resize();
-
-    function rainFrame(now) {
-      ctx.clearRect(0, 0, innerWidth, innerHeight);
-      var waterTop = innerHeight * (1 - level / 100);
-      if (now < rainUntil && drops.length < 170) {
-        for (var i = 0; i < 4; i++) drops.push({ x: Math.random() * innerWidth, y: -20, v: 14 + Math.random() * 10, l: 10 + Math.random() * 14 });
-      }
-      ctx.strokeStyle = 'rgba(' + cssColor('--water-a', '63,182,214') + ',.85)';
-      ctx.lineWidth = 1.4; ctx.beginPath();
-      drops = drops.filter(function (d) {
-        ctx.moveTo(d.x, d.y); ctx.lineTo(d.x - 2, d.y + d.l);
-        d.y += d.v;
-        if (level > 1 && d.y >= waterTop && rings.length < 40) { rings.push({ x: d.x, y: waterTop + 6, r: 2, a: .7 }); return false; }
-        return d.y < innerHeight;
-      });
-      ctx.stroke();
-      rings = rings.filter(function (g) {
-        g.r += 0.9; g.a -= 0.025;
-        ctx.strokeStyle = 'rgba(' + cssColor('--water-a', '63,182,214') + ',' + Math.max(g.a, 0) + ')';
-        ctx.beginPath(); ctx.ellipse(g.x, g.y, g.r * 2, g.r * 0.5, 0, 0, 6.283); ctx.stroke();
-        return g.a > 0;
-      });
-      if (drops.length || rings.length || now < rainUntil) requestAnimationFrame(rainFrame); else looping = false;
-    }
-    function startRain() {
-      if (reduced) return;
-      rainUntil = performance.now() + RAIN_MS;
-      if (!looping) { looping = true; requestAnimationFrame(rainFrame); }
-    }
-
-    function start() {
-      flooded = true; storyClosed = false;
-      document.body.classList.add('flooded');
-      drop.setAttribute('aria-pressed', 'true');
-      drop.setAttribute('aria-label', 'Let the water drain');
-      drop.classList.add('used'); dropLabel.textContent = 'Let it drain';
-      hint.classList.add('gone');
-      water.classList.add('on'); gauge.hidden = false;
-      startRain();
-      animateTo(RISE_TARGET, RISE_MS);
-    }
-    function stop() {
-      flooded = false;
-      drop.setAttribute('aria-pressed', 'false');
-      drop.setAttribute('aria-label', 'Make it rain. Floods the page and reveals why I build what I build.');
-      dropLabel.textContent = 'Make it rain';
-      marker.hidden = true;
-      animateTo(0, reduced ? 1 : 3000, function () {
-        water.classList.remove('on'); gauge.hidden = true;
-        document.body.classList.remove('flooded');
-        updateRisk();
-      });
-    }
-    drop.addEventListener('click', function () { flooded ? stop() : start(); });
-    $('#drain').addEventListener('click', stop);
-    addEventListener('keydown', function (e) { if (e.key === 'Escape' && flooded) stop(); });
-
-    // Water level follows the page as it scrolls, so labels stay honest.
-    var ticking = false;
-    function onFrameScroll() { if (!flooded || ticking) return; ticking = true; requestAnimationFrame(function () { ticking = false; updateRisk(); }); }
-    document.addEventListener('scroll', onFrameScroll, { passive: true });
-
-    // Draggable gauge: the visitor controls the water.
-    function fromPointer(e) {
-      var r = track.getBoundingClientRect();
-      var k = 1 - (e.clientY - r.top) / r.height;
-      cancelAnimationFrame(raf);
-      setLevel(k * MAX);
-    }
-    var dragging = false;
-    track.addEventListener('pointerdown', function (e) { dragging = true; track.setPointerCapture(e.pointerId); fromPointer(e); });
-    track.addEventListener('pointermove', function (e) { if (dragging) fromPointer(e); });
-    track.addEventListener('pointerup', function () { dragging = false; });
-    track.addEventListener('pointercancel', function () { dragging = false; });
-    handle.addEventListener('keydown', function (e) {
-      var d = { ArrowUp: 2, ArrowRight: 2, ArrowDown: -2, ArrowLeft: -2, PageUp: 10, PageDown: -10 }[e.key];
-      if (e.key === 'Home') { setLevel(0); e.preventDefault(); }
-      else if (e.key === 'End') { setLevel(MAX); e.preventDefault(); }
-      else if (d) { cancelAnimationFrame(raf); setLevel(level + d); e.preventDefault(); }
     });
-    marker.addEventListener('keydown', function (e) { if (e.key === 'Escape') { marker.hidden = true; storyClosed = true; } });
-    setLevel(0);
+  })();
+
+  /* ---------- Creative feature: the superpower card pack ---------- */
+  (function cards() {
+    var KEY = 'simrithi-cards-v1';
+    var CARDS = [
+      { id: 'cloud', name: 'Cloud Builder', rarity: 'Rare', icon: 'cloud', text: 'Varshik, CareerLens and the Novac CRM all run on AWS. Lambda, DynamoDB, SageMaker, Bedrock, CloudFront.' },
+      { id: 'seer', name: 'Flood Seer', rarity: 'Epic', icon: 'drop-fill', text: 'Varshik scores 60 m road cells for waterlogging risk. Top-risk cells matched Delhi\'s official hotspots.' },
+      { id: 'community', name: 'Community Builder', rarity: 'Epic', icon: 'users-three', text: 'Grew a 300+ student cloud community. Recognised by AWS as a top Student Builder Campus Leader.' },
+      { id: 'guardian', name: 'Last Unit Guardian', rarity: 'Rare', icon: 'lock-key', text: 'FlashSale uses atomic Redis Lua so two buyers never claim the last item. Zero oversells under load.' },
+      { id: 'hacker', name: 'Hackathon Regular', rarity: 'Rare', icon: 'rocket-launch', text: '10+ hackathons, including AWS Bharat Builds and Amazon ML Challenge. Top 5 of 300 at IIT Delhi Ideathon.' },
+      { id: 'pipe', name: 'Pipe Whisperer', rarity: 'Epic', icon: 'wrench', text: 'PipeSense won 1st of 300 teams at the Datathon. Three sensors, 7 defect types, patent in progress.' },
+      { id: 'shipper', name: 'Shipper', rarity: 'Common', icon: 'trophy', text: 'Took a CRM from Figma to production on AWS. 20+ live construction projects now run on it.' },
+      { id: 'voice', name: 'Stage Voice', rarity: 'Common', icon: 'microphone-stage', text: 'Runs workshops with live AWS demos, pitched to 200+ students and leads Open Source Connect Global 2026.' }
+    ];
+    var LEGEND = { id: 'origin', name: 'Why I Build', rarity: 'Legendary', icon: 'star-fill', text: 'I grew up in Tamil Nadu and saw what floods do to families. I lost friends to them. Varshik began with one question: what if we could see which roads will flood before it rains?' };
+
+    var deck = $('#deck'), stage = $('#stage'), list = $('#collection');
+    var btnOpen = $('#openPack'), btnReset = $('#resetDeck'), sub = $('#deckSub');
+    var owned = load();
+    var opener = null, pending = 0;
+
+    function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(owned)); } catch (e) {} }
+    function have(id) { return owned.indexOf(id) > -1; }
+    function count() { return CARDS.filter(function (c) { return have(c.id); }).length; }
+    function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+
+    function cardEl(c, o) {
+      o = o || {};
+      var el = document.createElement('div');
+      el.setAttribute('role', 'button'); el.tabIndex = o.locked ? -1 : 0;
+      el.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target === el) { e.preventDefault(); el.click(); } });
+      el.className = 'card' + (o.small ? ' sm' : '') + (o.up ? ' up' : '') + (o.locked ? ' locked' : '');
+      el.dataset.rarity = c ? c.rarity : 'Common';
+      el.setAttribute('aria-label', o.locked ? 'Locked card' : (c ? c.name + ', ' + c.rarity + '. ' + c.text : 'Face-down card. Click to reveal.'));
+      var more = c && c.id === 'origin' ? '<a class="more" href="https://d24wvc44c3vaxz.cloudfront.net/" rel="noopener">Open Varshik</a>' : '';
+      el.innerHTML =
+        '<span class="tilt"><span class="flip">' +
+        '<span class="face back"></span>' +
+        '<span class="face front">' + (c ? (
+          '<span class="top"><span>' + c.rarity + '</span><span>Superpower</span></span>' +
+          '<span class="art"><i style="--i:url(assets/icons/' + c.icon + '.svg)"></i></span>' +
+          '<h4>' + c.name + '</h4><p>' + c.text + '</p>' + more) : '') +
+        '<span class="foil"></span></span></span></span>';
+      if (o.badge) { var b = document.createElement('span'); b.className = 'new' + (o.badge === 'Duplicate' ? ' dup' : ''); b.textContent = o.badge; el.appendChild(b); }
+      if (!reduced) tilt(el);
+      return el;
+    }
+
+    function tilt(el) {
+      var t = el.querySelector('.tilt');
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        el.style.setProperty('--ry', ((x - .5) * 22).toFixed(1) + 'deg');
+        el.style.setProperty('--rx', ((.5 - y) * 22).toFixed(1) + 'deg');
+        el.style.setProperty('--px', (x * 100).toFixed(0) + '%');
+        el.style.setProperty('--py', (y * 100).toFixed(0) + '%');
+      });
+      el.addEventListener('pointerleave', function () { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+    }
+
+    function renderCollection() {
+      list.textContent = '';
+      CARDS.concat([LEGEND]).forEach(function (c) {
+        var li = document.createElement('li');
+        var got = c.id === 'origin' ? have('origin') : have(c.id);
+        var el = got ? cardEl(c, { small: true, up: true }) : cardEl(null, { small: true, locked: true });
+        if (got && c.id === 'origin') el.classList.add('glow');
+        li.appendChild(el); list.appendChild(li);
+      });
+      var n = count();
+      $('#collCount').textContent = n + '/8';
+      $('#packCount').textContent = n + '/8';
+      if (n === 8 && have('origin')) sub.textContent = 'Complete. You found everything, including the secret card.';
+      else if (n === 8) sub.textContent = 'All 8 collected. Open one more pack, something is glowing.';
+      else sub.textContent = 'Tear open a pack. Collect all 8 to unlock a secret.';
+      btnOpen.hidden = n === 8 && have('origin');
+    }
+
+    function showPack() {
+      stage.textContent = ''; pending = 0;
+      var p = document.createElement('button');
+      p.type = 'button'; p.className = 'foil-pack';
+      p.innerHTML = '<span><strong>Superpower<br>pack</strong><small>Click to tear open</small></span>';
+      p.addEventListener('click', tear);
+      stage.appendChild(p); p.focus();
+    }
+
+    function draw() {
+      var unseen = shuffle(CARDS.filter(function (c) { return !have(c.id); }));
+      var picks = unseen.slice(0, 3);
+      var rest = shuffle(CARDS.filter(function (c) { return picks.indexOf(c) < 0; }));
+      while (picks.length < 3) picks.push(rest.shift());
+      if (count() === 8 && !have('origin')) picks = [shuffle(CARDS)[0], shuffle(CARDS)[1], LEGEND];
+      return picks;
+    }
+
+    function tear() {
+      var p = $('.foil-pack', stage);
+      if (!p || p.classList.contains('tear')) return;
+      p.classList.add('tear');
+      var picks = draw();
+      setTimeout(function () {
+        stage.textContent = ''; pending = picks.length;
+        picks.forEach(function (c, i) {
+          var isNew = !have(c.id);
+          var el = cardEl(c, { badge: isNew ? 'New' : 'Duplicate' });
+          el.querySelector('.new').hidden = true;
+          if (c.id === 'origin') el.classList.add('glow');
+          el.style.opacity = '0'; el.style.transform = 'translateY(30px)';
+          stage.appendChild(el);
+          setTimeout(function () { el.style.transition = 'opacity .5s, transform .6s var(--ease)'; el.style.opacity = '1'; el.style.transform = 'none'; }, 80 + i * 140);
+          el.addEventListener('click', function (e) {
+            if (e.target.closest('a')) return;
+            if (el.classList.contains('up')) return;
+            el.classList.add('up');
+            var nb = el.querySelector('.new'); if (nb) nb.hidden = false;
+            if (isNew && owned.indexOf(c.id) < 0) { owned.push(c.id); save(); }
+            pending--;
+            if (c.id === 'origin') burst();
+            if (pending === 0) { renderCollection(); btnOpen.textContent = count() === 8 && !have('origin') ? 'Open the glowing pack' : 'Tear open another pack'; }
+          });
+        });
+        sub.textContent = 'Click each card to flip it. Move your pointer over it to tilt.';
+      }, reduced ? 0 : 650);
+    }
+
+    function burst() {
+      if (reduced) return;
+      var cv = document.createElement('canvas');
+      cv.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;z-index:95;pointer-events:none';
+      cv.width = innerWidth; cv.height = innerHeight; deck.appendChild(cv);
+      var x = cv.getContext('2d'), ps = [], cols = ['#ffd479', '#3fd6c9', '#e58bff', '#7aa2ff', '#fff'];
+      for (var i = 0; i < 160; i++) ps.push({ x: innerWidth / 2, y: innerHeight / 2, vx: (Math.random() - .5) * 18, vy: Math.random() * -16 - 4, s: 4 + Math.random() * 6, c: cols[i % 5], r: Math.random() * 6 });
+      var f = 0;
+      (function step() {
+        x.clearRect(0, 0, cv.width, cv.height);
+        ps.forEach(function (p) { p.x += p.vx; p.y += p.vy; p.vy += .45; p.r += .2; x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c; x.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * .6); x.restore(); });
+        if (++f < 110) requestAnimationFrame(step); else cv.remove();
+      })();
+    }
+
+    function openDeck() {
+      opener = document.activeElement;
+      deck.hidden = false; document.body.style.overflow = 'hidden';
+      renderCollection(); showPack(); btnOpen.textContent = 'Tear open a pack';
+    }
+    function closeDeck() {
+      deck.hidden = true; document.body.style.overflow = '';
+      if (opener && opener.focus) opener.focus();
+    }
+    $('#packBtn').addEventListener('click', openDeck);
+    $('#heroPack').addEventListener('click', openDeck);
+    $('#deckClose').addEventListener('click', closeDeck);
+    deck.addEventListener('click', function (e) { if (e.target === deck) closeDeck(); });
+    addEventListener('keydown', function (e) { if (e.key === 'Escape' && !deck.hidden) closeDeck(); });
+    btnOpen.addEventListener('click', showPack);
+    btnReset.addEventListener('click', function () { owned = []; save(); renderCollection(); showPack(); btnOpen.textContent = 'Tear open a pack'; });
+    renderCollection();
   })();
 })();
