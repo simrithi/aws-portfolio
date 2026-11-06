@@ -45,6 +45,8 @@
     };
   })();
 
+  window.__sfx = sfx;
+
   /* ================= Water ripples on every click ================= */
   function waterRipple(x, y) {
     if (reduced) return;
@@ -455,7 +457,8 @@
     new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }, { threshold: 0.05 }).observe(wrap);
     addEventListener('resize', function () { layout(); apply(); });
     layout(); apply(); requestAnimationFrame(loop);
-    return { spin: function () { auto = true; target = null; vel = 22; if (hint) hint.classList.add('gone'); sfx.whoosh(); } };
+    window.__openCard = function (card) { var idx = cards.indexOf(card); if (idx > -1) { select(idx); openBook(card); } };
+    return { spin: function () { if (window.__worldSpin) { window.__worldSpin(); return; } auto = true; target = null; vel = 22; if (hint) hint.classList.add('gone'); sfx.whoosh(); } };
   })();
 
 
