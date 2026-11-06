@@ -248,7 +248,7 @@
   /* ================= Skills toolbox ================= */
   (function toolbox() {
     var out = $('#usedIn');
-    var names = { varshik: 'Varshik', careerlens: 'CareerLens', flashsale: 'FlashSale', pipesense: 'PipeSense', ledgerlite: 'LedgerLite', surge: 'Surge', raftkv: 'RaftKV' };
+    var names = { varshik: 'Varshik', careerlens: 'CareerLens', flashsale: 'FlashSale', pipesense: 'PipeSense', novac: 'my Novac internship', ledgerlite: 'LedgerLite', surge: 'Surge', raftkv: 'RaftKV' };
     var buttons = $$('.toolbox button');
     function clear() { $$('.hl').forEach(function (n) { n.classList.remove('hl'); }); }
     buttons.forEach(function (b) {
@@ -394,6 +394,14 @@
   })();
 
 
+  /* ================= About portrait swap ================= */
+  (function portraitSwap() {
+    var p = $('#portrait'); if (!p) return;
+    function flip() { p.classList.add('seen'); p.classList.toggle('alt'); }
+    p.addEventListener('click', flip);
+    p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+  })();
+
   /* ================= Hear the story, video and YouTube facade ================= */
   (function media() {
     var hb = $('#r3Hear'); if (hb) { hb.hidden = true; hb.addEventListener('click', function () {
@@ -446,7 +454,8 @@
       { re: /hackathon|competition|won|win|award|prize|achievement|accomplish/, id: 'journey', a: "I have taken part in more than ten hackathons, including AWS Bharat Builds, the Amazon ML Challenge, NPCI and Citi DRUNIX and Paytm Build for India. I won first place in the PipeSense Datathon, was a CANSAT PDR finalist, and placed in the top five at the IIT Delhi Ideathon.", more: ["Tell me about PipeSense", "Tell me about the satellite"] },
       { re: /patent|research|paper|publication|ergoguard|explainable|interpretab/, id: 'journey', a: "I am an inventor on a patent application for shipment clustering and route optimisation. My research covers explainable AI for cyber threat attribution, a drafted paper on ErgoGuard posture monitoring, and offline pipe defect detection.", more: ["What are your AI skills?"] },
       { re: /aws|campus leader|student builder|builder center|community|300|cloud community/, id: 'moments', a: "I am an AWS Student Builder Campus Leader. I grew a three hundred plus student cloud community, ran sessions with live AWS demos and reached over two hundred students through pitches and tablings.", more: ["Spin the ring", "Show me the videos"] },
-      { re: /intern|experience|work experience|job|fresher|role/, id: "journey", a: "I am looking for cloud and backend internships. So far I have built and tested distributed systems and AWS projects, led a three hundred plus student community, contributed to open source, and taken a satellite design all the way to the launch round.", more: ["What are your backend skills?", "Tell me about the satellite", "How can I contact you?"] },
+      { re: /novac|shriram|construction/, id: "journey", a: "At Novac Technology Solutions, part of the Shriram Group, I was a software engineering intern on the backend and cloud side of a production platform that manages more than twenty live construction projects. In a two person team I worked on REST API design, MongoDB data modelling, CI CD pipelines, deployment on AWS and production support.", more: ["What are your backend skills?", "What are your cloud skills?"] },
+      { re: /intern|experience|work experience|job|fresher|role/, id: "journey", a: "I am looking for cloud and backend internships. So far I have interned at Novac Technology Solutions on the backend and cloud side, built and tested distributed systems and AWS projects, led a three hundred plus student community, contributed to open source, and taken a satellite design all the way to the launch round.", more: ["What are your backend skills?", "Tell me about the satellite", "How can I contact you?"] },
       { re: /open ?source|aossie|osc|osconnect|livestream|live stream/, id: 'watch', a: "I contribute to open source with AOSSIE, and I am Community Lead and a frontend developer for Open Source Connect Global 2026, where I coordinate international livestream events and built parts of the official conference website.", more: ["Show me the videos"] },
       { re: /cgpa|gpa|education|college|university|srm|degree|school|igcse|topper|marks|percentage|study|studying/, id: 'about', a: "I study B.Tech Computer Science and Engineering at SRM Institute of Science and Technology, Ramapuram, with a CGPA of 9.10 out of 10. In school I was the Cambridge IGCSE school topper in Tamil Nadu with ninety three point five percent.", more: ["Tell me about your community", "What are your skills?"] },
       { re: /certif|microsoft|sql server|coursera/, id: 'journey', a: "I am a Microsoft Certified SQL Server Professional, covering relational database design, advanced querying, security and BI integration.", more: ["What are your skills?"] },
@@ -481,7 +490,7 @@
       ['careerlens', "CareerLens, a serverless placement platform built solo on AWS."],
       ['flashsale', "FlashSale, inventory that can never oversell."],
       ['pipesense', "PipeSense, the pipe inspection robot that won first of three hundred teams."],
-      ['journey', "My journey: an AWS campus leader, a CanSat team that reached the launch round, and an open source contributor."],
+      ['journey', "My journey: an AWS campus leader, a CanSat team that reached the launch round, a backend and cloud intern at Novac, and an open source contributor."],
       ['contact', "That is the tour. I am open to internships in cloud and full stack. Say hello!"]
     ];
 

@@ -701,3 +701,20 @@ kbd { font: 600 .8rem var(--mono); background: #fff; border: 1.5px solid #1a1a1a
 @media (max-width: 900px) { .r3-detail.has-tech { grid-template-columns: 1fr; text-align: center; } .r3-detail.has-tech .r3-btns { justify-content: center; } }
 
 .tx-cansat { --g1: #3b4a8f; --g2: #0c1230; }
+
+/* portrait swap */
+.portrait { cursor: pointer; }
+.portrait img { transition: opacity .6s var(--ease), transform .8s var(--ease); }
+.portrait .p-b { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); }
+.portrait.alt .p-b { opacity: 1; transform: none; }
+.portrait.alt .p-a { opacity: 0; }
+.portrait figcaption { display: grid; }
+.portrait .cap-a, .portrait .cap-b { grid-area: 1 / 1; transition: opacity .4s; }
+.portrait .cap-b { opacity: 0; }
+.portrait.alt .cap-a { opacity: 0; }
+.portrait.alt .cap-b { opacity: 1; }
+.p-hint { position: absolute; top: 14px; right: 14px; padding: 5px 12px; border-radius: 999px; background: #f0d7ff; color: #1a1a1a; font: 600 .78rem var(--sans); transition: opacity .4s; }
+.portrait.alt .p-hint, .portrait.seen .p-hint { opacity: 0; }
+.portrait .p-b { z-index: 1; }
+.portrait figcaption { z-index: 2; }
+.p-hint { z-index: 3; }

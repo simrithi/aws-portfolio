@@ -55,9 +55,11 @@
         <p class="statement" id="statement">I like systems that have to be right under pressure. A stock counter that can never oversell. A payment ledger that never double-debits. A map that must not cry wolf. I build them, then I teach other students how to build them too.</p>
         <p class="origin">I grew up in Tamil Nadu and topped the state in the Cambridge IGCSE (93.5%). Today I study Computer Science at SRM in Chennai, build on AWS, and run the campus cloud community I started as an AWS Student Builder Campus Leader.</p>
       </div>
-      <figure class="portrait" data-liquid-solo>
-        <img src="assets/photos/simrithi.jpg" width="413" height="531" alt="Portrait of Simrithi S" loading="eager">
-        <figcaption>Simrithi S, Chennai</figcaption>
+      <figure class="portrait" data-liquid-solo id="portrait" tabindex="0" role="button" aria-label="Portrait of Simrithi. Press to see another photo.">
+        <img class="p-a" src="assets/photos/simrithi.jpg" width="413" height="531" alt="Portrait of Simrithi S" loading="eager">
+        <img class="p-b" src="assets/photos/simrithi-outdoors.jpg" width="895" height="1161" alt="Simrithi in a pink dress leaning on a large old tree in a park" loading="lazy">
+        <figcaption><span class="cap-a">Simrithi S, Chennai</span><span class="cap-b">Away from the screen</span></figcaption>
+        <span class="p-hint">Tap for another</span>
       </figure>
     </div>
     <dl class="stats">
@@ -75,6 +77,9 @@
       <div class="r3-stage"><div class="r3-ring" id="r3Ring">
         <figure class="r3-card" data-i="0" data-title="Hi, I&#x27;m Simrithi" data-story="I am a Computer Science student in Chennai. I build on AWS, lead a 300+ student cloud community, and like making complicated things feel simple. Everything on this page is real: the photos, the projects and the numbers." tabindex="0" role="button" aria-label="Hi, I&#x27;m Simrithi. Press Enter to read the story.">
           <div class="r3-face"><img src="assets/photos/simrithi.jpg" alt="Portrait of Simrithi" loading="lazy" draggable="false"><figcaption>Hi, I&#x27;m Simrithi</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-title="Away from the screen" data-story="Not every moment is a slide deck or a terminal. This is me away from the screen, which is where I reset before the next build." tabindex="0" role="button" aria-label="Away from the screen. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/simrithi-outdoors.jpg" alt="Simrithi in a pink dress leaning on a large old tree in a park" loading="lazy" draggable="false"><figcaption>Away from the screen</figcaption></div>
         </figure>
         <figure class="r3-card" data-i="1" data-title="Varshik" data-story="I grew up in Tamil Nadu and saw what floods do to families. Varshik began with one question: what if we could see which roads will flood before it rains? I rode roads with a phone, turned tilt and distance into a road-height profile, and taught three vision models to read dashcam frames. When the top-risk cells lined up with Delhi&#x27;s official flood hotspots, I knew the idea held water." data-tech='{&quot;bul&quot;: [&quot;Dashcam frames go to one Amazon SageMaker endpoint running SegFormer-B2 (road regions), Depth Anything V2 (relative depth) and YOLOv8m-seg (potholes).&quot;, &quot;Phone tilt plus distance becomes a road-height profile that finds underpasses and sags a 30 m satellite model cannot see.&quot;, &quot;Copernicus GLO-30 and FABDEM terrain from the AWS Open Data registry, pysheds flow routing and a water-balance model estimate standing water per 60 m segment for 2, 5 and 10 year storms.&quot;, &quot;Step Functions and Lambda orchestrate the run, S3 and CloudFront serve results, Bedrock writes the officer briefs, EventBridge checks rainfall and SNS sends alerts. All in AWS CDK.&quot;, &quot;Validation: AUC 0.69 for underpass detection on 45 km of Bengaluru ORR against 0.47 for satellite elevation, and Delhi hotspot AUC 0.66. Results are preliminary.&quot;], &quot;stack&quot;: [&quot;SageMaker&quot;, &quot;Bedrock&quot;, &quot;Step Functions&quot;, &quot;Lambda&quot;, &quot;S3 + CloudFront&quot;, &quot;CDK&quot;, &quot;YOLOv8&quot;, &quot;React 19&quot;, &quot;MapLibre&quot;], &quot;links&quot;: [[&quot;Live demo&quot;, &quot;https://d24wvc44c3vaxz.cloudfront.net/&quot;], [&quot;GitHub&quot;, &quot;https://github.com/simrithi/floodlens&quot;], [&quot;Blog post&quot;, &quot;https://builder.aws.com/content/3KYn3Kwff6ZOhYY2RbAhKFBszHr/varshik&quot;]]}' tabindex="0" role="button" aria-label="Varshik, a project. Press Enter to read the story and technical details.">
           <div class="r3-face txt tx-varshik"><span class="tx-k">Project 01</span><strong>Varshik</strong><span class="tx-t">Flood risk before the rain</span><span class="tx-m">60 m road cells</span></div>
@@ -184,9 +189,9 @@
           <li><button type="button" data-in="flashsale ledgerlite surge">Redis</button></li>
           <li><button type="button" data-in="flashsale">RabbitMQ</button></li>
           <li><button type="button" data-in="flashsale">Nginx</button></li>
-          <li><button type="button" data-in="flashsale">Node.js</button></li>
-          <li><button type="button" data-in="">Express</button></li>
-          <li><button type="button" data-in="careerlens">REST APIs</button></li>
+          <li><button type="button" data-in="flashsale novac">Node.js</button></li>
+          <li><button type="button" data-in="novac">Express</button></li>
+          <li><button type="button" data-in="careerlens novac">REST APIs</button></li>
         </ul>
       </div>
       <div class="tool-group">
@@ -216,7 +221,7 @@
         <h3>Languages</h3>
         <ul>
           <li><button type="button" data-in="varshik">Python</button></li>
-          <li><button type="button" data-in="careerlens flashsale">JavaScript</button></li>
+          <li><button type="button" data-in="careerlens flashsale novac">JavaScript</button></li>
           <li><button type="button" data-in="" data-note="Part of my coursework and hackathon work.">C and C++</button></li>
           <li><button type="button" data-in="" data-note="Part of my coursework and hackathon work.">Kotlin</button></li>
           <li><button type="button" data-in="" data-note="Microsoft Certified: SQL Server Professional.">SQL</button></li>
@@ -228,7 +233,7 @@
           <li><button type="button" data-in="flashsale ledgerlite">PostgreSQL</button></li>
           <li><button type="button" data-in="" data-note="Part of my coursework and projects.">MySQL</button></li>
           <li><button type="button" data-in="" data-note="Microsoft Certified: SQL Server Professional.">SQL Server</button></li>
-          <li><button type="button" data-in="">MongoDB</button></li>
+          <li><button type="button" data-in="novac">MongoDB</button></li>
           <li><button type="button" data-in="" data-note="Used in full-stack web projects.">Firebase</button></li>
           <li><button type="button" data-in="flashsale">Redis streams and caches</button></li>
         </ul>
@@ -237,9 +242,9 @@
         <h3>Tools and delivery</h3>
         <ul>
           <li><button type="button" data-in="flashsale ledgerlite raftkv">Docker</button></li>
-          <li><button type="button" data-in="">GitHub Actions</button></li>
-          <li><button type="button" data-in="">CI/CD</button></li>
-          <li><button type="button" data-in="">Git and GitHub</button></li>
+          <li><button type="button" data-in="novac">GitHub Actions</button></li>
+          <li><button type="button" data-in="novac">CI/CD</button></li>
+          <li><button type="button" data-in="novac">Git and GitHub</button></li>
           <li><button type="button" data-in="" data-note="Part of my day-to-day tooling.">Linux</button></li>
           <li><button type="button" data-in="" data-note="Part of my day-to-day tooling.">IntelliJ and VS Code</button></li>
         </ul>
@@ -367,6 +372,11 @@
           <p class="when">Open source</p>
           <h3>Open Source Contributor, AOSSIE</h3>
           <p>Resolved assigned GitHub issues and shipped enhancements to production open-source repositories through structured, Git-based review workflows.</p>
+        </li>
+        <li id="novac" data-short="Cloud and backend intern at Novac">
+          <p class="when">Nov 2025 - Jan 2026</p>
+          <h3>Software Engineering Intern, Novac Technology Solutions (Shriram Group)</h3>
+          <p>Worked on the backend and cloud side of a production platform that manages 20+ live construction projects, in a two-person team. REST API design, MongoDB data modelling, CI/CD pipelines, deployment on AWS and production support, all through Git code reviews.</p>
         </li>
         <li data-short="Frontend contributor, Twin Cities Tamil Association">
           <p class="when">Remote</p>
