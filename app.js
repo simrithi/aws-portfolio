@@ -768,6 +768,7 @@
       var tag = (e.target && e.target.tagName) || ''; if (/INPUT|TEXTAREA|SELECT/.test(tag) || e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === 'v' || e.key === 'V') { if (!vHeld && !listening) { vHeld = true; startListening(); } }
       else if (e.key === '?') { openGuide(guide.hidden); }
+      else if (e.key === '/') { e.preventDefault(); input.focus(); show('Type or dictate your question, then press Enter.', 3000); }
       else if (e.key === 'Escape') { hush(); if (!guide.hidden) openGuide(false); }
     });
     addEventListener('keyup', function (e) { if ((e.key === 'v' || e.key === 'V') && vHeld) { vHeld = false; if (listening && rec && !keepOn) { try { rec.stop(); } catch (er) {} } } });

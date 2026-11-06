@@ -99,6 +99,12 @@
         <figure class="r3-card" data-i="6" data-title="PipeSense, the pipe robot" data-story="PipeSense inspects pipes nobody wants to crawl through. We won 1st of 300 teams at the Datathon with the Robotics Club and IEEE, and the patent is in progress. This is the design from our pitch deck." data-tech='{&quot;bul&quot;: [&quot;An ESP32 DevKit is the central controller, driven from a joystick app, with a TB6612FNG motor driver and encoders on both motors.&quot;, &quot;An IMU and VL53L0X time-of-flight sensors are fused into one position estimate for localising defects.&quot;, &quot;An ESP32-CAM (OV2640) with an LED ring lights and records the pipe, logging to SD card and Wi-Fi.&quot;, &quot;YOLO runs offline to detect 7 defect types, then a cause and remedy lookup produces an inspection report.&quot;], &quot;stack&quot;: [&quot;ESP32&quot;, &quot;ESP32-CAM&quot;, &quot;YOLO&quot;, &quot;ToF&quot;, &quot;IMU&quot;, &quot;TB6612FNG&quot;], &quot;links&quot;: []}' tabindex="0" role="button" aria-label="PipeSense, the pipe robot. Press Enter to read the story.">
           <div class="r3-face"><img src="assets/photos/pipesense-robot.jpg" alt="Labelled design of the PipeSense pipe-inspection robot" loading="lazy" draggable="false"><figcaption>PipeSense, the pipe robot</figcaption></div>
         </figure>
+        <figure class="r3-card" data-title="The real PipeSense robot" data-story="This is the real PipeSense robot: an early prototype on a clear acrylic chassis with two geared motors, a caster wheel and the wiring still showing. It crawls, it takes commands from a phone over Bluetooth, and every sensor we later fused into one position estimate started on a bench like this one." data-tech='{&quot;bul&quot;: [&quot;Prototype chassis: two geared motors with yellow wheels and a front caster wheel, with the controller and wiring mounted on top.&quot;, &quot;Driven from a phone: the terminal in the demo video shows it connecting over Bluetooth before it drives.&quot;, &quot;The final design adds an ESP32 controller, ToF and IMU sensors and an ESP32-CAM with an LED ring, with YOLO detecting 7 defect types offline.&quot;, &quot;Result: 1st of 300 teams at the Datathon, and the patent is in progress.&quot;], &quot;stack&quot;: [&quot;ESP32&quot;, &quot;Bluetooth&quot;, &quot;Motor driver&quot;, &quot;YOLO&quot;, &quot;Prototype&quot;], &quot;links&quot;: []}' tabindex="0" role="button" aria-label="The real PipeSense robot. Press Enter to read the story and details.">
+          <div class="r3-face"><img src="assets/photos/pipesense-prototype.jpg" alt="Close-up of the PipeSense prototype robot with yellow wheels and visible wiring" loading="lazy" draggable="false"><figcaption>The real PipeSense robot</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-title="First place, Datathon'26" data-story="We won first place at Datathon&#x27;26 at SRM with PipeSense, out of 300 teams. This is me outside with the winner&#x27;s cheque." tabindex="0" role="button" aria-label="First place, Datathon 26. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/datathon-winner.jpg" alt="Simrithi holding the Datathon 26 first place winner cheque outside the SRM building" loading="lazy" draggable="false"><figcaption>First place, Datathon'26</figcaption></div>
+        </figure>
         <figure class="r3-card" data-i="7" data-title="On the mic" data-story="Public speaking is half of being an AWS Student Builder Campus Leader. I practise explaining the cloud the way I wish someone had explained it to me: plainly and with a live demo." tabindex="0" role="button" aria-label="On the mic. Press Enter to read the story.">
           <div class="r3-face"><img src="assets/photos/aws-talk-3.jpg" alt="Simrithi speaking on stage with a microphone" loading="lazy" draggable="false"><figcaption>On the mic</figcaption></div>
         </figure>
@@ -147,8 +153,9 @@
 
   <section id="watch" class="block watch" aria-labelledby="watchTitle">
     <h2 id="watchTitle">Watch me work</h2>
-    <p class="section-sub">Short clips from my sessions, and the Open Source Connect Global community stream.</p>
+    <p class="section-sub">My PipeSense robot driving, short clips from my sessions, and the Open Source Connect Global community stream.</p>
     <div class="vgrid">
+      <figure class="vid"><video controls preload="none" playsinline poster="assets/video/pipesense-robot.jpg" src="assets/video/pipesense-robot.mp4"></video><figcaption>The PipeSense prototype driving, controlled from a phone</figcaption></figure>
       <figure class="vid"><video controls preload="none" playsinline poster="assets/video/talk-classroom.jpg" src="assets/video/talk-classroom.mp4"></video><figcaption>Pitching AWS Builder Center to a classroom</figcaption></figure>
       <figure class="vid"><video controls preload="none" playsinline poster="assets/video/talk-lab-1.jpg" src="assets/video/talk-lab-1.mp4"></video><figcaption>Leading a hands-on session in a computer lab</figcaption></figure>
       <figure class="vid"><video controls preload="none" playsinline poster="assets/video/talk-lab-2.jpg" src="assets/video/talk-lab-2.mp4"></video><figcaption>Walking students through the AWS console</figcaption></figure>
@@ -336,7 +343,7 @@
           <p class="stack">ESP32, ESP32-CAM, YOLO</p>
         </div>
         <div class="sp-visual" data-liquid>
-          <figure class="robot"><img src="assets/photos/pipesense-robot.jpg" width="647" height="396" loading="lazy" alt="Labelled design of the PipeSense robot: ESP32 controller, motor driver, ToF sensors, camera and LED ring"><figcaption>The robot design from our pitch deck</figcaption></figure>
+          <figure class="robot"><img src="assets/photos/pipesense-prototype.jpg" width="1200" height="900" loading="lazy" alt="Close-up of the PipeSense prototype robot with yellow wheels and visible wiring"><figcaption>The prototype robot</figcaption></figure>
           <ul class="bigstats"><li><strong data-count="1" data-suffix="st">1st</strong><span>of 300 teams at the Datathon</span></li><li><strong data-count="7">7</strong><span>defect types detected</span></li><li><strong data-count="3">3</strong><span>sensors fused</span></li></ul>
         </div>
       </article>
@@ -436,12 +443,12 @@
 <div class="voice-dock" id="voiceDock" role="group" aria-label="Voice and sound controls">
   <button id="micBtn" class="mic" type="button" aria-pressed="false" aria-label="Talk to my portfolio. Say projects, skills, journey, contact or spin the ring."><i class="ico ico-mic" aria-hidden="true"></i></button>
   <div class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <form id="cmdForm" class="cmd" autocomplete="off"><input id="cmdInput" type="text" placeholder="Ask me anything: skills, CGPA, Varshik" aria-label="Voice or typed command"></form>
+  <form id="cmdForm" class="cmd" autocomplete="off"><input id="cmdInput" type="text" placeholder="Ask me anything (type or dictate)" aria-label="Voice or typed command"></form>
   <button id="guideBtn" class="guide-btn" type="button" aria-expanded="false" aria-controls="vguide">Guide</button>
   <button id="sndBtn" class="snd" type="button" aria-pressed="true" aria-label="Sound on. Click to mute."><i class="ico ico-speaker" aria-hidden="true"></i></button>
 </div>
 <aside id="vguide" class="vguide" aria-label="Voice guide" hidden>
-  <header class="vg-head"><div><h2>Talk to me</h2><p>Tap the mic, hold the <kbd>V</kbd> key, or type. I answer out loud and take you there. Press <kbd>?</kbd> for this panel.</p></div><button class="x2" id="vguideClose" type="button" aria-label="Close the voice guide"><i class="ico ico-x" aria-hidden="true"></i></button></header>
+  <header class="vg-head"><div><h2>Talk to me</h2><p>Tap the mic, hold the <kbd>V</kbd> key, or type. I answer out loud and take you there. Press <kbd>?</kbd> for this panel, and <kbd>/</kbd> to jump to the question box. Use Wispr Flow or another dictation app? Press <kbd>/</kbd>, then dictate your question.</p></div><button class="x2" id="vguideClose" type="button" aria-label="Close the voice guide"><i class="ico ico-x" aria-hidden="true"></i></button></header>
   <div class="vg-set">
     <label>Speed <input type="range" id="vRate" min="0.8" max="1.4" step="0.05" value="1" aria-label="Speaking speed"></label>
     <label>Voice <select id="vVoice" aria-label="Voice"></select></label>
