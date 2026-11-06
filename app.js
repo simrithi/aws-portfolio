@@ -387,6 +387,7 @@
     function techBlock(d) {
       var wrap = mk('div', 'o-tech');
       wrap.appendChild(mk('p', 'o-kicker', 'Under the hood'));
+      if (d.img) { var im = mk('img', 'o-arch'); im.src = d.img; im.alt = d.imgAlt || ''; im.loading = 'lazy'; wrap.appendChild(im); }
       var ul = mk('ul'); d.bul.forEach(function (t) { ul.appendChild(mk('li', null, t)); }); wrap.appendChild(ul);
       var st = mk('div', 'o-chips'); (d.stack || []).forEach(function (t) { st.appendChild(mk('span', null, t)); }); wrap.appendChild(st);
       if (d.links && d.links.length) { var lk = mk('p', 'o-links'); d.links.forEach(function (l) { var a = mk('a', null, l[0]); a.href = l[1]; a.target = '_blank'; a.rel = 'noopener'; lk.appendChild(a); }); wrap.appendChild(lk); }

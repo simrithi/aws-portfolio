@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-labelledby="t d">
+<title id="t">Varshik system architecture</title>
+<desc id="d">Five tiers: evidence from dashcam frames and Copernicus terrain, a Python geospatial pipeline, SageMaker inference, delivery through S3, CloudFront and a React map, then Bedrock, EventBridge with Lambda, SNS and DynamoDB reacting to events.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1a1a1a"/></marker></defs>
+<rect width="1200" height="900" fill="#ffffeb"/>
+<text x="40" y="52" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="40" fill="#1a1a1a">How <tspan font-style="italic" fill="#034f46">Varshik</tspan> works</text>
+<text x="40" y="80" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16" fill="#6b6b5c">From street level evidence to flood risk scores, delivered on AWS</text>
+<rect x="20" y="100" width="1160" height="120" rx="22" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="46" y="154" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" fill="#034f46">1</text>
+<text x="46" y="182" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">Evidence</text>
+<rect x="200" y="121" width="210" height="78" rx="16" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="305.0" y="155" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#1a1a1a">Dashcam frames</text>
+<text x="305.0" y="177" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b6b5c">Phone and sensor data</text>
+<rect x="450" y="121" width="210" height="78" rx="16" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="555.0" y="155" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#1a1a1a">Copernicus GLO-30</text>
+<text x="555.0" y="177" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b6b5c">Terrain and drainage maps</text>
+<path d="M413 160.0 H446" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="20" y="250" width="1160" height="120" rx="22" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="46" y="304" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" fill="#034f46">2</text>
+<text x="46" y="332" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">Prepare</text>
+<rect x="200" y="271" width="210" height="78" rx="16" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="305.0" y="305" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#1a1a1a">Python 3.12</text>
+<text x="305.0" y="327" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b6b5c">Geospatial pipeline</text>
+<rect x="450" y="271" width="210" height="78" rx="16" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="555.0" y="305" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#1a1a1a">JSON and GeoJSON</text>
+<text x="555.0" y="327" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b6b5c">Frames, overlays, depth</text>
+<rect x="700" y="271" width="210" height="78" rx="16" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="805.0" y="305" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#1a1a1a">Feature preparation</text>
+<text x="805.0" y="327" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b6b5c">Terrain and geo inputs</text>
+<path d="M413 310.0 H446" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M663 310.0 H696" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="20" y="400" width="1160" height="120" rx="22" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="46" y="454" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" fill="#034f46">3</text>
+<text x="46" y="482" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">Predict</text>
+<rect x="200" y="421" width="210" height="78" rx="16" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="305.0" y="455" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#ffffeb">Amazon SageMaker</text>
+<text x="305.0" y="477" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#cfe9e3">Real-time inference endpoint</text>
+<rect x="450" y="421" width="210" height="78" rx="16" fill="#f0d7ff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="555.0" y="455" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#1a1a1a">Validated predictions</text>
+<text x="555.0" y="477" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#4a3a63">Model-derived estimates</text>
+<path d="M413 460.0 H446" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="20" y="550" width="1160" height="120" rx="22" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="46" y="604" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" fill="#034f46">4</text>
+<text x="46" y="632" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">Deliver</text>
+<rect x="200" y="571" width="210" height="78" rx="16" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="305.0" y="605" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#ffffeb">Amazon S3</text>
+<text x="305.0" y="627" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#cfe9e3">Private artefact storage</text>
+<rect x="450" y="571" width="210" height="78" rx="16" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="555.0" y="605" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#ffffeb">CloudFront + OAC</text>
+<text x="555.0" y="627" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#cfe9e3">HTTPS delivery</text>
+<rect x="700" y="571" width="210" height="78" rx="16" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="805.0" y="605" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#1a1a1a">React + TypeScript</text>
+<text x="805.0" y="627" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b6b5c">MapLibre map UI</text>
+<path d="M413 610.0 H446" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M663 610.0 H696" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="20" y="700" width="1160" height="120" rx="22" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="46" y="754" font-family="'EB Garamond', Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" fill="#034f46">5</text>
+<text x="46" y="782" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">React to events</text>
+<rect x="200" y="721" width="210" height="78" rx="16" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="305.0" y="755" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#ffffeb">Amazon Bedrock</text>
+<text x="305.0" y="777" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#cfe9e3">Vision and officer briefs</text>
+<rect x="450" y="721" width="210" height="78" rx="16" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="555.0" y="755" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#ffffeb">EventBridge + Lambda</text>
+<text x="555.0" y="777" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#cfe9e3">Scheduled rainfall analysis</text>
+<rect x="700" y="721" width="210" height="78" rx="16" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="805.0" y="755" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#ffffeb">Amazon SNS</text>
+<text x="805.0" y="777" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#cfe9e3">Daily notifications</text>
+<rect x="950" y="721" width="210" height="78" rx="16" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="1055.0" y="755" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="16.5" font-weight="700" fill="#ffffeb">Amazon DynamoDB</text>
+<text x="1055.0" y="777" text-anchor="middle" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#cfe9e3">Actions and observations</text>
+<path d="M555.0 201 V235.0 H305.0 V267" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linejoin="round" marker-end="url(#ar)"/>
+<path d="M805.0 351 V385.0 H305.0 V417" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linejoin="round" marker-end="url(#ar)"/>
+<path d="M555.0 501 V535.0 H305.0 V567" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linejoin="round" marker-end="url(#ar)"/>
+<path d="M805.0 651 V685.0" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+<path d="M305.0 685.0 H1055.0" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+<path d="M305.0 685.0 V717" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M555.0 685.0 V717" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M805.0 685.0 V717" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<path d="M1055.0 685.0 V717" stroke="#1a1a1a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<rect x="46" y="844" width="22" height="16" rx="5" fill="#034f46" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="78" y="857" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" fill="#1a1a1a">AWS service</text>
+<rect x="236" y="844" width="22" height="16" rx="5" fill="#f0d7ff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="268" y="857" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" fill="#1a1a1a">Output</text>
+<rect x="426" y="844" width="22" height="16" rx="5" fill="#fffff6" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="458" y="857" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="14" fill="#1a1a1a">Data and code</text>
+<text x="1160" y="857" text-anchor="end" font-family="Figtree, 'Segoe UI', Arial, sans-serif" font-size="13" fill="#6b6b5c">Predictions and AI readings are decision support signals, not verified field measurements.</text>
+</svg>
