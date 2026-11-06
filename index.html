@@ -15,12 +15,14 @@
 </head>
 <body>
 <a class="skip" href="#about">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 <div class="banner">Portfolio entry for the AWS Student Builder Challenge</div>
 
 <header class="nav">
   <a class="brand" href="#top" aria-label="Simrithi S, back to top">Simrithi S</a>
   <nav aria-label="Primary">
     <a href="#about">About</a>
+    <a href="#moments">Moments</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
     <a href="#journey">Journey</a>
@@ -31,7 +33,6 @@
 <main id="top">
   <section class="hero" aria-label="Introduction">
     <canvas id="ridges" aria-hidden="true"></canvas>
-    <i class="sp s1" aria-hidden="true"></i><i class="sp s2" aria-hidden="true"></i><i class="sp s3" aria-hidden="true"></i><i class="sp s4" aria-hidden="true"></i>
     <svg class="ring" viewBox="0 0 340 340" aria-hidden="true"><defs><path id="ringPath" d="M170 170 m-135 0 a135 135 0 1 1 270 0 a135 135 0 1 1 -270 0"/></defs><text><textPath href="#ringPath">AWS Student Builder Campus Leader. 1st of 300 teams. Top 5 at IIT Delhi. 20+ live projects on one CRM. Varshik maps flood risk. </textPath></text></svg>
     <div class="hero-copy">
       <h1>I build cloud systems<br>that <em>hold up.</em></h1>
@@ -41,23 +42,71 @@
         <a class="btn mag" href="https://github.com/simrithi" rel="noopener">GitHub</a>
       </div>
     </div>
-    <button class="hero-pack" id="heroPack" type="button" aria-label="Open a loot chest. Open the loot chest, collect all 8 superpower cards and unlock a secret.">
-      <span class="hp-chest" aria-hidden="true" data-chest></span>
-      <span class="hp-label">Open the chest</span>
-      <span class="hp-sub">Loot 8 superpower cards</span>
-    </button>
+    <div class="hero-hint">
+      <button class="hint-mic" id="heroMic" type="button"><i class="ico ico-mic" aria-hidden="true"></i><span>Talk to my portfolio</span></button>
+      <a class="hint-link" href="#moments">or spin my world in 3D</a>
+    </div>
   </section>
 
   <section id="about" class="block about" aria-labelledby="aboutTitle">
     <h2 id="aboutTitle" class="sr">About me</h2>
-    <p class="statement" id="statement">I like systems that have to be right under pressure. A stock counter that can never oversell. A map that must not cry wolf. A CRM that real teams open every morning. I build them, then I teach other students how to build them too.</p>
-    <p class="origin">I grew up in Tamil Nadu and topped the state in the Cambridge IGCSE (93.5%). Today I study Computer Science at SRM in Chennai, build on AWS, and run the campus cloud community I started as an AWS Student Builder Campus Leader.</p>
+    <div class="about-top">
+      <div>
+        <p class="statement" id="statement">I like systems that have to be right under pressure. A stock counter that can never oversell. A map that must not cry wolf. A CRM that real teams open every morning. I build them, then I teach other students how to build them too.</p>
+        <p class="origin">I grew up in Tamil Nadu and topped the state in the Cambridge IGCSE (93.5%). Today I study Computer Science at SRM in Chennai, build on AWS, and run the campus cloud community I started as an AWS Student Builder Campus Leader.</p>
+      </div>
+      <figure class="portrait" data-liquid-solo>
+        <img src="assets/photos/simrithi.jpg" width="413" height="531" alt="Portrait of Simrithi S" loading="eager">
+        <figcaption>Simrithi S, Chennai</figcaption>
+      </figure>
+    </div>
     <dl class="stats">
-      <div><dt>CGPA</dt><dd>9.07</dd><dd class="sub">B.Tech CSE, SRM Ramapuram</dd></div>
-      <div><dt>Community</dt><dd>300+</dd><dd class="sub">students in the AWS group I grew</dd></div>
-      <div><dt>Live projects</dt><dd>20+</dd><dd class="sub">run on the CRM I shipped</dd></div>
-      <div><dt>Datathon</dt><dd>1st</dd><dd class="sub">of 300 teams, PipeSense</dd></div>
+      <div><dt>CGPA</dt><dd data-count="9.07" data-dec="2">9.07</dd><dd class="sub">B.Tech CSE, SRM Ramapuram</dd></div>
+      <div><dt>Community</dt><dd data-count="300" data-suffix="+">300+</dd><dd class="sub">students in the AWS group I grew</dd></div>
+      <div><dt>Live projects</dt><dd data-count="20" data-suffix="+">20+</dd><dd class="sub">run on the CRM I shipped</dd></div>
+      <div><dt>Datathon</dt><dd data-count="1" data-suffix="st">1st</dd><dd class="sub">of 300 teams, PipeSense</dd></div>
     </dl>
+  </section>
+
+  <section id="moments" class="block moments" aria-labelledby="momentsTitle">
+    <h2 id="momentsTitle">My world, in 3D</h2>
+    <p class="section-sub">Drag the ring to spin it. Hover to pull a moment closer, press to push it back, click to hear the story. Or just say "spin the ring".</p>
+    <div class="ring3d" id="ring3d" aria-label="3D ring of photos from my events and projects">
+      <div class="r3-stage"><div class="r3-ring" id="r3Ring">
+        <figure class="r3-card" data-i="0" data-title="Hi, I'm Simrithi" data-story="Student builder, community leader and the person writing these captions. I build on AWS and love explaining it to people who have never opened a console." tabindex="0" role="button" aria-label="Hi, I'm Simrithi. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/simrithi.jpg" alt="Portrait of Simrithi" loading="lazy" draggable="false"><figcaption>Hi, I'm Simrithi</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="1" data-title="The AWS Builder Center talk" data-story="Introducing students to AWS Builder Center: Explore, Learn, Build, Grow." tabindex="0" role="button" aria-label="The AWS Builder Center talk. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/aws-talk-1.jpg" alt="Simrithi presenting an AWS Builder Center slide on stage" loading="lazy" draggable="false"><figcaption>The AWS Builder Center talk</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="2" data-title="Why should students explore it?" data-story="Curiosity, Explore, Learn, Build, Grow. The roadmap I use when I pitch the cloud to students." tabindex="0" role="button" aria-label="Why should students explore it?. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/aws-talk-2.jpg" alt="Simrithi presenting the slide Why Should Students Explore It" loading="lazy" draggable="false"><figcaption>Why should students explore it?</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="3" data-title="On the mic" data-story="Public speaking is half of what an AWS Student Builder Campus Leader does." tabindex="0" role="button" aria-label="On the mic. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/aws-talk-3.jpg" alt="Simrithi speaking on stage with a microphone" loading="lazy" draggable="false"><figcaption>On the mic</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="4" data-title="A full hall" data-story="Cloud sessions with live AWS demos for the 300+ student community I grew." tabindex="0" role="button" aria-label="A full hall. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/aws-talk-4.jpg" alt="Simrithi speaking to a full hall of students" loading="lazy" draggable="false"><figcaption>A full hall</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="5" data-title="Pitching to a packed classroom" data-story="Going classroom to classroom to bring AWS Builder Center to students." tabindex="0" role="button" aria-label="Pitching to a packed classroom. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/class-1.jpg" alt="Simrithi talking to a classroom of students" loading="lazy" draggable="false"><figcaption>Pitching to a packed classroom</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="6" data-title="Explaining the cloud, no jargon" data-story="I reached 200+ students through pitches and tablings by keeping the cloud simple." tabindex="0" role="button" aria-label="Explaining the cloud, no jargon. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/class-2.jpg" alt="Simrithi at the whiteboard in a classroom" loading="lazy" draggable="false"><figcaption>Explaining the cloud, no jargon</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="7" data-title="Handouts in hand" data-story="Printed QR codes, a whiteboard and a lot of questions from curious students." tabindex="0" role="button" aria-label="Handouts in hand. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/class-3.jpg" alt="Simrithi holding handouts in front of a whiteboard" loading="lazy" draggable="false"><figcaption>Handouts in hand</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="8" data-title="Up close with students" data-story="The best part of the job: the questions that come after the pitch." tabindex="0" role="button" aria-label="Up close with students. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/class-4.jpg" alt="Simrithi in a classroom with students" loading="lazy" draggable="false"><figcaption>Up close with students</figcaption></div>
+        </figure>
+        <figure class="r3-card" data-i="9" data-title="PipeSense, the pipe robot" data-story="ESP32 controller, ToF and IMU sensors, a camera ring and YOLO on top. Won 1st of 300 teams at the Datathon. Design from our pitch deck." tabindex="0" role="button" aria-label="PipeSense, the pipe robot. Press Enter to read the story.">
+          <div class="r3-face"><img src="assets/photos/pipesense-robot.jpg" alt="Labelled design of the PipeSense pipe-inspection robot" loading="lazy" draggable="false"><figcaption>PipeSense, the pipe robot</figcaption></div>
+        </figure>
+      </div></div>
+      <p class="r3-hint" id="r3Hint"><i class="ico ico-lr" aria-hidden="true"></i><span>Drag to spin</span></p>
+    </div>
+    <div class="r3-detail" id="r3Detail" aria-live="polite"><h3 id="r3Title">Hi, I'm Simrithi</h3><p id="r3Story">Pick any card to read its story.</p></div>
   </section>
 
   <section id="skills" class="block skills" aria-labelledby="skillsTitle">
@@ -74,40 +123,88 @@
           <li><button type="button" data-in="careerlens">Amplify</button></li>
           <li><button type="button" data-in="varshik">SageMaker</button></li>
           <li><button type="button" data-in="varshik">Bedrock</button></li>
+          <li><button type="button" data-in="careerlens">Cognito</button></li>
+          <li><button type="button" data-in="careerlens">EventBridge</button></li>
           <li><button type="button" data-in="careerlens">CloudWatch</button></li>
         </ul>
       </div>
       <div class="tool-group">
-        <h3>Full-stack</h3>
+        <h3>Backend and distributed systems</h3>
         <ul>
-          <li><button type="button" data-in="varshik careerlens novac">React</button></li>
-          <li><button type="button" data-in="flashsale novac">Node.js</button></li>
-          <li><button type="button" data-in="novac">Express</button></li>
-          <li><button type="button" data-in="flashsale">Redis</button></li>
+          <li><button type="button" data-in="ledgerlite">Java</button></li>
+          <li><button type="button" data-in="ledgerlite">Spring Boot</button></li>
+          <li><button type="button" data-in="surge raftkv">Go</button></li>
+          <li><button type="button" data-in="surge raftkv">gRPC</button></li>
+          <li><button type="button" data-in="ledgerlite surge">Kafka</button></li>
+          <li><button type="button" data-in="flashsale ledgerlite surge">Redis</button></li>
           <li><button type="button" data-in="flashsale">RabbitMQ</button></li>
           <li><button type="button" data-in="flashsale">Nginx</button></li>
+          <li><button type="button" data-in="flashsale novac">Node.js</button></li>
+          <li><button type="button" data-in="novac">Express</button></li>
+          <li><button type="button" data-in="novac careerlens">REST APIs</button></li>
+        </ul>
+      </div>
+      <div class="tool-group">
+        <h3>Frontend and mobile</h3>
+        <ul>
+          <li><button type="button" data-in="varshik careerlens novac">React</button></li>
+          <li><button type="button" data-in="" data-note="Used on production web work and coursework.">Angular</button></li>
+          <li><button type="button" data-in="novac">HTML and CSS</button></li>
+          <li><button type="button" data-in="" data-note="Part of my coursework and hackathon work.">Flutter</button></li>
+          <li><button type="button" data-in="" data-note="Part of my coursework and hackathon work.">Kotlin Multiplatform</button></li>
           <li><button type="button" data-in="novac">Figma</button></li>
         </ul>
       </div>
       <div class="tool-group">
-        <h3>AI and delivery</h3>
+        <h3>AI and agents</h3>
         <ul>
-          <li><button type="button" data-in="varshik pipesense">YOLO</button></li>
+          <li><button type="button" data-in="varshik">Amazon Bedrock</button></li>
           <li><button type="button" data-in="careerlens">Gemini API</button></li>
-          <li><button type="button" data-in="flashsale">Docker</button></li>
-          <li><button type="button" data-in="novac">CI/CD</button></li>
+          <li><button type="button" data-in="" data-note="I have built agentic systems with this: multi-agent orchestration and RAG pipelines.">LangChain</button></li>
+          <li><button type="button" data-in="" data-note="I have built agentic systems with this: multi-agent orchestration and RAG pipelines.">LangGraph</button></li>
+          <li><button type="button" data-in="" data-note="I have built agentic systems with this: multi-agent orchestration and RAG pipelines.">RAG with FAISS</button></li>
+          <li><button type="button" data-in="varshik pipesense">YOLOv8</button></li>
+          <li><button type="button" data-in="" data-note="Applied research on interpretability for cyber threat attribution.">Explainable AI</button></li>
         </ul>
       </div>
       <div class="tool-group">
-        <h3>Languages and data</h3>
+        <h3>Languages</h3>
         <ul>
-          <li><button type="button" data-in="">Java</button></li>
           <li><button type="button" data-in="varshik">Python</button></li>
           <li><button type="button" data-in="careerlens flashsale novac">JavaScript</button></li>
-          <li><button type="button" data-in="">Kotlin</button></li>
-          <li><button type="button" data-in="">SQL</button></li>
-          <li><button type="button" data-in="flashsale">PostgreSQL</button></li>
+          <li><button type="button" data-in="" data-note="Part of my coursework and hackathon work.">C and C++</button></li>
+          <li><button type="button" data-in="" data-note="Part of my coursework and hackathon work.">Kotlin</button></li>
+          <li><button type="button" data-in="" data-note="Microsoft Certified: SQL Server Professional.">SQL</button></li>
+        </ul>
+      </div>
+      <div class="tool-group">
+        <h3>Data</h3>
+        <ul>
+          <li><button type="button" data-in="flashsale ledgerlite">PostgreSQL</button></li>
+          <li><button type="button" data-in="" data-note="Part of my coursework and projects.">MySQL</button></li>
+          <li><button type="button" data-in="" data-note="Microsoft Certified: SQL Server Professional.">SQL Server</button></li>
           <li><button type="button" data-in="novac">MongoDB</button></li>
+          <li><button type="button" data-in="" data-note="Used in full-stack web projects.">Firebase</button></li>
+          <li><button type="button" data-in="flashsale">Redis streams and caches</button></li>
+        </ul>
+      </div>
+      <div class="tool-group">
+        <h3>Tools and delivery</h3>
+        <ul>
+          <li><button type="button" data-in="flashsale ledgerlite raftkv">Docker</button></li>
+          <li><button type="button" data-in="novac">GitHub Actions</button></li>
+          <li><button type="button" data-in="novac">CI/CD</button></li>
+          <li><button type="button" data-in="novac">Git and GitHub</button></li>
+          <li><button type="button" data-in="" data-note="Part of my day-to-day tooling.">Linux</button></li>
+          <li><button type="button" data-in="" data-note="Part of my day-to-day tooling.">IntelliJ and VS Code</button></li>
+        </ul>
+      </div>
+      <div class="tool-group">
+        <h3>People</h3>
+        <ul>
+          <li><button type="button" data-in="" data-note="I run workshops and pitches. See the Moments ring.">Public speaking</button></li>
+          <li><button type="button" data-in="" data-note="AWS Student Builder Campus Leader, Community Lead at Open Source Connect Global 2026.">Leadership</button></li>
+          <li><button type="button" data-in="" data-note="I grew a 300+ student cloud community.">Community building</button></li>
         </ul>
       </div>
     </div>
@@ -178,9 +275,16 @@
           <p class="stack">ESP32, ESP32-CAM, YOLO</p>
         </div>
         <div class="sp-visual" data-liquid>
-          <ul class="bigstats"><li><strong>1st</strong><span>of 300 teams at the Datathon</span></li><li><strong>7</strong><span>defect types detected</span></li><li><strong>3</strong><span>sensors fused</span></li></ul>
+          <figure class="robot"><img src="assets/photos/pipesense-robot.jpg" width="647" height="396" loading="lazy" alt="Labelled design of the PipeSense robot: ESP32 controller, motor driver, ToF sensors, camera and LED ring"><figcaption>The robot design from our pitch deck</figcaption></figure>
+          <ul class="bigstats"><li><strong data-count="1" data-suffix="st">1st</strong><span>of 300 teams at the Datathon</span></li><li><strong data-count="7">7</strong><span>defect types detected</span></li><li><strong data-count="3">3</strong><span>sensors fused</span></li></ul>
         </div>
       </article>
+    </div>
+    <h3 class="more-title">More systems I have built</h3>
+    <div class="systems">
+      <article class="sys" id="ledgerlite"><h4>LedgerLite</h4><p>A UPI-style double-entry ledger with idempotency keys, saga transfers and the transactional outbox pattern. Fault-tested with node kills and Toxiproxy: zero double-debits.</p><p class="stack">Java, Spring Boot, PostgreSQL, Kafka, Redis, Docker</p></article>
+      <article class="sys" id="surge"><h4>Surge</h4><p>Real-time ride matching in Go. Driver GPS over WebSockets, Uber H3 hexagons, ETA matching over gRPC and per-hexagon surge from Kafka streams.</p><p class="stack">Go, gRPC, H3, Redis, Kafka, PostGIS</p></article>
+      <article class="sys" id="raftkv"><h4>RaftKV</h4><p>A distributed key-value store with Raft written from scratch: leader election, log replication, snapshots and linearizable reads, checked with Jepsen-style partition tests.</p><p class="stack">Go, gRPC, Docker, Toxiproxy</p></article>
     </div>
     <p class="more">Also: a patent filed for shipment clustering and route optimisation, and ErgoGuard, a drafted paper on real-time webcam posture monitoring.</p>
   </section>
@@ -238,27 +342,15 @@
 
 <footer class="foot"><p>Plain HTML, CSS and JavaScript on AWS Amplify Hosting.</p></footer>
 
-<!-- Creative feature: the superpower card pack -->
-<button id="packBtn" class="pack-btn" type="button" aria-haspopup="dialog">
-  <i class="ico ico-cards" aria-hidden="true"></i>
-  <span>Loot chest</span><span class="count" id="packCount">0/8</span>
-</button>
-
-<div id="deck" class="deck" role="dialog" aria-modal="true" aria-labelledby="deckTitle" hidden>
-  <div class="deck-inner">
-    <header class="deck-head">
-      <div><h2 id="deckTitle">Loot cards</h2><p id="deckSub">Open a chest. Collect all 8 to unlock a secret.</p></div>
-      <button class="x" id="deckClose" type="button" aria-label="Close"><i class="ico ico-x" aria-hidden="true"></i></button>
-    </header>
-    <div class="stage" id="stage" aria-live="polite"></div>
-    <div class="deck-actions">
-      <button class="btn primary" id="openPack" type="button">Open a chest</button>
-      <button class="btn" id="resetDeck" type="button">Start over</button>
-    </div>
-    <h3 class="coll-title">Your collection <span id="collCount">0/8</span></h3>
-    <ul class="collection" id="collection"></ul>
-  </div>
+<!-- Voice, sound and click ripples -->
+<p class="say" id="say" aria-live="polite" hidden></p>
+<div class="voice-dock" id="voiceDock" role="group" aria-label="Voice and sound controls">
+  <button id="micBtn" class="mic" type="button" aria-pressed="false" aria-label="Talk to my portfolio. Say projects, skills, journey, contact or spin the ring."><i class="ico ico-mic" aria-hidden="true"></i></button>
+  <div class="wave" id="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <form id="cmdForm" class="cmd" autocomplete="off"><input id="cmdInput" type="text" placeholder="Say or type: projects, skills, 3D" aria-label="Voice or typed command"></form>
+  <button id="sndBtn" class="snd" type="button" aria-pressed="true" aria-label="Sound on. Click to mute."><i class="ico ico-speaker" aria-hidden="true"></i></button>
 </div>
+<nav class="dots" id="dots" aria-label="Sections"></nav>
 
 <script src="app.js"></script>
 </body>

@@ -2,19 +2,20 @@
 
 Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting. Fonts (EB Garamond, Figtree, Geist Mono) and icons (Phosphor) are self-hosted.
 
-## Creative feature: the loot chest of superpower cards
+## Creative feature: talk to it, spin it, hear it
 
-A tiny pixel-art chest mascot sits in the hero (and a floating "Loot chest" button follows you down the page).
-- Open it to get 3 collectible cards built from my real achievements. Cards and the chest move like water: spring-lagged wobble that follows the cursor, plus ripples.
-- Each new card pops a "New card unlocked!" toast. Epic and Legendary cards carry an enchantment glint.
-- Collect all 8 to unlock a hidden Legendary card with the story behind why I build.
-- Progress is saved in your browser. Esc closes the deck, "Start over" resets it.
-- It is a closeable overlay, so it never blocks navigation. Honours `prefers-reduced-motion`.
+- **Voice portfolio.** Tap the mic and say "projects", "skills", "journey", "contact", "spin the ring", "Varshik", "mute" and more. A live waveform follows your voice, the page scrolls there and answers back. No microphone? Type the same commands in the box. (Voice needs Chrome or Edge.)
+- **3D ring of my world.** A draggable 3D carousel of real photos from my AWS talks, classroom sessions and the PipeSense robot. Hover pulls a card closer, press pushes it back, click opens its story.
+- **Sound and water.** Every click makes a soft synthesized sound and sends water ripples across the page. The speaker button mutes everything.
 
 ## Other interactions
+- Count-up numbers, scroll progress bar and section dots
+- Press-down, spring-lagged cards that follow the cursor like water (with ripples)
 - Each project gets its own full spotlight panel (own colour, glow that follows the cursor, stacked sticky scroll)
-- Scroll-driven Journey: a counter, a filling timeline line and the active role change as you scroll
-- Drag-to-scroll achievements, word-by-word About statement, interactive skills (pick a tool, see where it was used)
-- Cute x classic look: Wispr Flow-inspired butter paper, serif italics, lilac, pastel blobs and sparkles
+- Scroll-driven Journey with a rolling counter and a filling timeline
+- Interactive skills: pick a tool, see which projects used it
+- Wispr Flow-inspired layout: butter paper, stacked panels, serif italics, lilac
+
+All sound is generated in the browser with WebAudio (no audio files). Honours `prefers-reduced-motion`.
 
 Run locally: `python -m http.server`, then open http://localhost:8000 (icons need a server, not file://).
