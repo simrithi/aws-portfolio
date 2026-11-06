@@ -11,7 +11,7 @@ Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting
 - **Sound and water.** Every click makes a soft synthesized sound and sends water ripples across the page. The speaker button mutes everything.
 
 ## Recording my own voice
-Open `http://localhost:8000/record-voice.html`, choose the `assets/voice` folder, and record the 42 lines (answers and the guided tour). The assistant plays my recording when one exists and falls back to the computer voice for anything not recorded. Recorded answers show a "my voice" tag in the conversation log.
+Open `http://localhost:8000/record-voice.html`, choose the `assets/voice` folder, and press "Start the 10 essentials" for a five-minute teleprompter (Space to record and stop, Enter for the next line), or record all 42 lines. Audio made elsewhere also works: name each file after its line id (see `assets/voice/scripts.json`), drop it in `assets/voice` and run `python make-voice-manifest.py`. The assistant plays my recording when one exists and falls back to the computer voice for anything not recorded. Recorded answers show a "my voice" tag in the conversation log.
 
 ## Other interactions
 - Count-up numbers, scroll progress bar and section dots

@@ -39,6 +39,19 @@ button.rec { background: #d6336c; color: #fff; border-color: #d6336c; }
 .group-title { font: 600 .8rem "Figtree", sans-serif; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 34px 0 0; }
 code { font: 500 .9em ui-monospace, Consolas, monospace; background: #f1f1d8; padding: 1px 6px; border-radius: 6px; }
 .warn { color: #9a3412; }
+
+kbd { font: 600 .8rem ui-monospace, Consolas, monospace; background: #fff; border: 1.5px solid var(--ink); border-bottom-width: 3px; border-radius: 6px; padding: 1px 6px; }
+#guided { position: fixed; inset: 0; z-index: 50; background: var(--bg); display: none; flex-direction: column; align-items: center; justify-content: center; padding: 28px 22px; text-align: center; }
+#guided.on { display: flex; }
+#guided .g-prog { font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+#guided .g-label { font: 600 .85rem "Figtree", sans-serif; text-transform: uppercase; letter-spacing: .1em; color: var(--green); margin-bottom: 18px; }
+#guided .g-text { font: 400 clamp(1.7rem, 4vw, 2.6rem)/1.35 "EB Garamond", Georgia, serif; max-width: 22em; margin: 0 0 30px; }
+#guided .g-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+#guided button.big { font-size: 1.15rem; padding: 16px 34px; border-radius: 16px; }
+#guided .g-state { margin-top: 20px; min-height: 1.6em; color: var(--muted); }
+#guided .g-state.live { color: #d6336c; font-weight: 700; }
+#guided .g-close { position: absolute; top: 18px; right: 18px; }
+#guided .g-keys { margin-top: 26px; color: var(--muted); font-size: .92rem; }
 </style>
 </head>
 <body>
@@ -67,6 +80,12 @@ code { font: 500 .9em ui-monospace, Consolas, monospace; background: #f1f1d8; pa
     <div class="bar"><span class="status" id="count">0 of 0 recorded</span><button id="next" type="button">Jump to the next unrecorded</button></div>
   </section>
 
+  <section class="panel" id="quick" aria-labelledby="sq">
+    <h2 id="sq" style="margin-top:0">Quick start: the 10 essentials</h2>
+    <p>About 5 minutes. A full-screen teleprompter shows one line at a time. Press <kbd>Space</kbd> to start and stop recording, <kbd>Enter</kbd> for the next line, <kbd>Backspace</kbd> to redo. The site uses your voice for these answers and the computer voice for the rest.</p>
+    <div class="bar"><button class="primary" id="startGuided" type="button">Start the 10 essentials</button><span class="status" id="gNote"></span></div>
+  </section>
+
   <div id="list" aria-live="polite"></div>
 
   <section class="panel" aria-labelledby="s3">
@@ -76,6 +95,15 @@ code { font: 500 .9em ui-monospace, Consolas, monospace; background: #f1f1d8; pa
   </section>
 </main>
 
+<div id="guided" role="dialog" aria-modal="true" aria-label="Recording teleprompter">
+  <button class="g-close" id="gClose" type="button">Close</button>
+  <div class="g-prog" id="gProg"></div>
+  <div class="g-label" id="gLabel"></div>
+  <p class="g-text" id="gText"></p>
+  <div class="g-btns"><button class="big primary" id="gRec" type="button">Record</button><button class="big" id="gNext" type="button">Next line</button></div>
+  <div class="g-state" id="gState" aria-live="polite"></div>
+  <div class="g-keys"><kbd>Space</kbd> record / stop &nbsp; <kbd>Enter</kbd> next &nbsp; <kbd>Backspace</kbd> redo</div>
+</div>
 <script>
 (function () {
   'use strict';
@@ -187,6 +215,44 @@ code { font: 500 .9em ui-monospace, Consolas, monospace; background: #f1f1d8; pa
   document.getElementById('dlManifest').addEventListener('click', function () {
     var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(manifest, null, 1) + '\n'], { type: 'application/json' })); a.download = 'manifest.json'; a.click();
   });
+
+  /* ---------- teleprompter mode ---------- */
+  var G = { list: [], i: 0, on: false };
+  var gEl = { box: document.getElementById('guided'), prog: document.getElementById('gProg'), label: document.getElementById('gLabel'), text: document.getElementById('gText'), rec: document.getElementById('gRec'), next: document.getElementById('gNext'), state: document.getElementById('gState') };
+  function gRender() {
+    var s = G.list[G.i];
+    if (!s) { gEl.prog.textContent = 'All done'; gEl.label.textContent = ''; gEl.text.textContent = 'Those are your essentials. Reload the portfolio and ask it a question.'; gEl.rec.hidden = true; gEl.next.textContent = 'Close'; gEl.state.textContent = ''; return; }
+    gEl.rec.hidden = false; gEl.next.textContent = G.i === G.list.length - 1 ? 'Finish' : 'Next line';
+    gEl.prog.textContent = 'Line ' + (G.i + 1) + ' of ' + G.list.length;
+    gEl.label.textContent = s.label; gEl.text.textContent = s.text;
+    gEl.rec.textContent = manifest[s.id] || blobs[s.id] ? 'Re-record' : 'Record';
+    gEl.state.className = 'g-state'; gEl.state.textContent = manifest[s.id] ? 'Already recorded. Record again or go to the next line.' : 'Press Space and read it out loud.';
+  }
+  async function gToggle() {
+    var s = G.list[G.i]; if (!s) return;
+    await toggle(s);
+    if (current === s) { gEl.rec.textContent = 'Stop'; gEl.state.className = 'g-state live'; gEl.state.textContent = 'Recording… press Space when you are done'; }
+    else { gEl.rec.textContent = 'Re-record'; gEl.state.className = 'g-state'; gEl.state.textContent = manifest[s.id] ? 'Saved. Press Enter for the next line.' : 'Recorded. Press Enter for the next line.'; }
+  }
+  async function gNext() {
+    if (current) await stop();
+    if (G.i >= G.list.length) { gClose(); return; }
+    G.i++; gRender();
+  }
+  function gClose() { if (current) stop(); G.on = false; gEl.box.classList.remove('on'); refresh(); }
+  document.getElementById('startGuided').addEventListener('click', function () {
+    if (!dir && canPick) { document.getElementById('gNote').textContent = 'First choose the voice folder in step 1, so recordings save automatically.'; document.getElementById('pick').focus(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    G.list = scripts.filter(function (s) { return s.essential; }); G.i = 0; G.on = true; gEl.box.classList.add('on'); gRender();
+  });
+  gEl.rec.addEventListener('click', gToggle); gEl.next.addEventListener('click', gNext); document.getElementById('gClose').addEventListener('click', gClose);
+  document.addEventListener('keydown', function (e) {
+    if (!G.on) return;
+    if (e.code === 'Space') { e.preventDefault(); gToggle(); }
+    else if (e.key === 'Enter') { e.preventDefault(); gNext(); }
+    else if (e.key === 'Backspace') { e.preventDefault(); if (!current) { delete blobs[(G.list[G.i] || {}).id]; gRender(); gToggle(); } }
+    else if (e.key === 'Escape') { gClose(); }
+  });
+
   Promise.all([fetch('assets/voice/scripts.json').then(function (r) { return r.json(); }), fetch('assets/voice/manifest.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; })]).then(function (r) {
     scripts = r[0]; manifest = r[1] || {}; build();
   }).catch(function () { listEl.textContent = 'Could not load the scripts. Open this page through the local server: http://localhost:8000/record-voice.html'; });
