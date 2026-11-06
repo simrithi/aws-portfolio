@@ -55,11 +55,9 @@
         <p class="statement" id="statement">I like systems that have to be right under pressure. A stock counter that can never oversell. A payment ledger that never double-debits. A map that must not cry wolf. I build them, then I teach other students how to build them too.</p>
         <p class="origin">I grew up in Tamil Nadu and topped the state in the Cambridge IGCSE (93.5%). Today I study Computer Science at SRM in Chennai, build on AWS, and run the campus cloud community I started as an AWS Student Builder Campus Leader.</p>
       </div>
-      <figure class="portrait" data-liquid-solo id="portrait" tabindex="0" role="button" aria-label="Portrait of Simrithi. Press to see another photo.">
-        <img class="p-a" src="assets/photos/simrithi.jpg" width="413" height="531" alt="Portrait of Simrithi S" loading="eager">
-        <img class="p-b" src="assets/photos/simrithi-outdoors.jpg" width="895" height="1161" alt="Simrithi in a pink dress leaning on a large old tree in a park" loading="lazy">
-        <figcaption><span class="cap-a">Simrithi S, Chennai</span><span class="cap-b">Away from the screen</span></figcaption>
-        <span class="p-hint">Tap for another</span>
+      <figure class="portrait" data-liquid-solo>
+        <img src="assets/photos/simrithi-outdoors.jpg" width="895" height="1161" alt="Simrithi in a pink dress leaning on a large old tree in a park" loading="eager">
+        <figcaption>Simrithi S, Chennai</figcaption>
       </figure>
     </div>
     <dl class="stats">
@@ -76,10 +74,7 @@
     <div class="ring3d" id="ring3d" aria-label="3D ring of photos from my events and projects">
       <div class="r3-stage"><div class="r3-ring" id="r3Ring">
         <figure class="r3-card" data-i="0" data-title="Hi, I&#x27;m Simrithi" data-story="I am a Computer Science student in Chennai. I build on AWS, lead a 300+ student cloud community, and like making complicated things feel simple. Everything on this page is real: the photos, the projects and the numbers." tabindex="0" role="button" aria-label="Hi, I&#x27;m Simrithi. Press Enter to read the story.">
-          <div class="r3-face"><img src="assets/photos/simrithi.jpg" alt="Portrait of Simrithi" loading="lazy" draggable="false"><figcaption>Hi, I&#x27;m Simrithi</figcaption></div>
-        </figure>
-        <figure class="r3-card" data-title="Away from the screen" data-story="Not every moment is a slide deck or a terminal. This is me away from the screen, which is where I reset before the next build." tabindex="0" role="button" aria-label="Away from the screen. Press Enter to read the story.">
-          <div class="r3-face"><img src="assets/photos/simrithi-outdoors.jpg" alt="Simrithi in a pink dress leaning on a large old tree in a park" loading="lazy" draggable="false"><figcaption>Away from the screen</figcaption></div>
+          <div class="r3-face"><img src="assets/photos/simrithi-outdoors.jpg" alt="Simrithi in a pink dress leaning on a large old tree in a park" loading="lazy" draggable="false"><figcaption>Hi, I&#x27;m Simrithi</figcaption></div>
         </figure>
         <figure class="r3-card" data-i="1" data-title="Varshik" data-story="I grew up in Tamil Nadu and saw what floods do to families. Varshik began with one question: what if we could see which roads will flood before it rains? I rode roads with a phone, turned tilt and distance into a road-height profile, and taught three vision models to read dashcam frames. When the top-risk cells lined up with Delhi&#x27;s official flood hotspots, I knew the idea held water." data-tech='{&quot;bul&quot;: [&quot;Dashcam frames go to one Amazon SageMaker endpoint running SegFormer-B2 (road regions), Depth Anything V2 (relative depth) and YOLOv8m-seg (potholes).&quot;, &quot;Phone tilt plus distance becomes a road-height profile that finds underpasses and sags a 30 m satellite model cannot see.&quot;, &quot;Copernicus GLO-30 and FABDEM terrain from the AWS Open Data registry, pysheds flow routing and a water-balance model estimate standing water per 60 m segment for 2, 5 and 10 year storms.&quot;, &quot;Step Functions and Lambda orchestrate the run, S3 and CloudFront serve results, Bedrock writes the officer briefs, EventBridge checks rainfall and SNS sends alerts. All in AWS CDK.&quot;, &quot;Validation: AUC 0.69 for underpass detection on 45 km of Bengaluru ORR against 0.47 for satellite elevation, and Delhi hotspot AUC 0.66. Results are preliminary.&quot;], &quot;stack&quot;: [&quot;SageMaker&quot;, &quot;Bedrock&quot;, &quot;Step Functions&quot;, &quot;Lambda&quot;, &quot;S3 + CloudFront&quot;, &quot;CDK&quot;, &quot;YOLOv8&quot;, &quot;React 19&quot;, &quot;MapLibre&quot;], &quot;links&quot;: [[&quot;Live demo&quot;, &quot;https://d24wvc44c3vaxz.cloudfront.net/&quot;], [&quot;GitHub&quot;, &quot;https://github.com/simrithi/floodlens&quot;], [&quot;Blog post&quot;, &quot;https://builder.aws.com/content/3KYn3Kwff6ZOhYY2RbAhKFBszHr/varshik&quot;]]}' tabindex="0" role="button" aria-label="Varshik, a project. Press Enter to read the story and technical details.">
           <div class="r3-face txt tx-varshik"><span class="tx-k">Project 01</span><strong>Varshik</strong><span class="tx-t">Flood risk before the rain</span><span class="tx-m">60 m road cells</span></div>
@@ -87,7 +82,7 @@
         <figure class="r3-card" data-i="2" data-title="The AWS Builder Center talk" data-story="I stood on stage to introduce students to AWS Builder Center, a free place to Explore, Learn, Build and Grow. My goal was simple: every student leaves knowing exactly where to start." tabindex="0" role="button" aria-label="The AWS Builder Center talk. Press Enter to read the story.">
           <div class="r3-face"><img src="assets/photos/aws-talk-1.jpg" alt="Simrithi presenting an AWS Builder Center slide on stage" loading="lazy" draggable="false"><figcaption>The AWS Builder Center talk</figcaption></div>
         </figure>
-        <figure class="r3-card" data-i="3" data-title="CareerLens" data-story="Roughly 10 lakh engineering graduates compete for about 1 lakh entry-level openings a year, and most never learn why they are rejected. CareerLens gives students a re-plannable roadmap and honest feedback, and gives recruiters a blind, skill-first way to rank candidates. I built all of it solo for an AWS hackathon." data-tech='{&quot;bul&quot;: [&quot;React 19 and Vite front end with separate student and company portals.&quot;, &quot;Amazon Cognito for sign-in, API Gateway in front of about 30 Lambda functions.&quot;, &quot;A single-table DynamoDB design with pk/sk keys, S3 for files, EventBridge for scheduled work and Secrets Manager for keys.&quot;, &quot;An LLM (Gemini) turns unstructured placement notices into structured drives with eligibility matching, and powers resume and ATS feedback.&quot;, &quot;Infrastructure as code with AWS CDK (TypeScript), monitored with CloudWatch, front end on Amplify.&quot;], &quot;stack&quot;: [&quot;Lambda&quot;, &quot;API Gateway&quot;, &quot;DynamoDB&quot;, &quot;Cognito&quot;, &quot;EventBridge&quot;, &quot;Amplify&quot;, &quot;CDK&quot;, &quot;React&quot;, &quot;Gemini&quot;], &quot;links&quot;: [[&quot;GitHub&quot;, &quot;https://github.com/simrithi/careerlens-full&quot;]]}' tabindex="0" role="button" aria-label="CareerLens, a project. Press Enter to read the story and technical details.">
+        <figure class="r3-card" data-i="3" data-title="CareerLens" data-story="Roughly 10 lakh engineering graduates compete for about 1 lakh entry-level openings a year, and most never learn why they are rejected. CareerLens gives students a re-plannable roadmap and honest feedback, and gives recruiters a blind, skill-first way to rank candidates. I built all of it solo for an AWS hackathon." data-tech='{&quot;bul&quot;: [&quot;React 19 and Vite front end with separate student and company portals.&quot;, &quot;Amazon Cognito for sign-in, API Gateway in front of about 30 Lambda functions.&quot;, &quot;A single-table DynamoDB design with pk/sk keys, S3 for files, EventBridge for scheduled work and Secrets Manager for keys.&quot;, &quot;An LLM (Gemini) turns unstructured placement notices into structured drives with eligibility matching, and powers resume and ATS feedback.&quot;, &quot;Infrastructure as code with AWS CDK (TypeScript), monitored with CloudWatch, front end on Amplify.&quot;], &quot;stack&quot;: [&quot;Lambda&quot;, &quot;API Gateway&quot;, &quot;DynamoDB&quot;, &quot;Cognito&quot;, &quot;EventBridge&quot;, &quot;Amplify&quot;, &quot;CDK&quot;, &quot;React&quot;, &quot;Gemini&quot;], &quot;links&quot;: [[&quot;Live demo&quot;, &quot;https://main.d1afxz58feyue1.amplifyapp.com/&quot;], [&quot;GitHub&quot;, &quot;https://github.com/simrithi/careerlens-full&quot;]]}' tabindex="0" role="button" aria-label="CareerLens, a project. Press Enter to read the story and technical details.">
           <div class="r3-face txt tx-career"><span class="tx-k">Project 02</span><strong>CareerLens</strong><span class="tx-t">A serverless placement platform</span><span class="tx-m">~30 Lambdas</span></div>
         </figure>
         <figure class="r3-card" data-i="4" data-title="Pitching to a packed classroom" data-story="Classroom by classroom, I pitched AWS Builder Center to students: what it is, why it is free and what they can build with it on day one." tabindex="0" role="button" aria-label="Pitching to a packed classroom. Press Enter to read the story.">
@@ -157,6 +152,17 @@
         <figcaption>I am Community Lead for this international open source program, and I host its livestreams. <a href="https://www.youtube.com/@open-source-connect" rel="noopener">More sessions on the channel</a></figcaption>
       </figure>
     </div>
+  </section>
+
+  <section id="writing" class="block writing" aria-labelledby="writingTitle">
+    <h2 id="writingTitle">Writing on AWS Builder Center</h2>
+    <p class="section-sub">I write up what I build so other students can follow along.</p>
+    <article class="post" data-liquid-solo>
+      <p class="post-meta">AWS Builder Center article, October 2026</p>
+      <h3>Varshik: Building an AI-Powered Urban Flood-Risk Analysis Platform on AWS</h3>
+      <p>Using AI and geospatial intelligence to find urban flooding hotspots: three vision models on one Amazon SageMaker endpoint, smartphone sensor data, open elevation data and hydrological modelling. Written as decision support for city engineers, with honest, preliminary validation results.</p>
+      <p class="links"><a href="https://builder.aws.com/content/3KYn3Kwff6ZOhYY2RbAhKFBszHr/varshik" rel="noopener">Read the article</a><a href="https://builder.aws.com/community/@simrithi?tab=articles" rel="noopener">All my articles</a></p>
+    </article>
   </section>
 
   <section id="skills" class="block skills" aria-labelledby="skillsTitle">
@@ -291,7 +297,7 @@
           <p class="kicker">A serverless placement platform</p>
           <p>Students get a re-plannable roadmap, honest ATS feedback and an applications tracker. Recruiters get blind, skill-first ranking. Built solo on Cognito, API Gateway, about 30 Lambda functions, DynamoDB, S3 and EventBridge, with an LLM that turns messy placement notices into structured drives.</p>
           <p class="stack">Lambda, API Gateway, DynamoDB, Cognito, EventBridge, Amplify, React, Gemini</p>
-          <p class="links"><a href="https://github.com/simrithi/careerlens-full" rel="noopener">GitHub</a></p>
+          <p class="links"><a href="https://main.d1afxz58feyue1.amplifyapp.com/" rel="noopener">Live demo</a><a href="https://github.com/simrithi/careerlens-full" rel="noopener">GitHub</a></p>
         </div>
         <div class="sp-visual" data-liquid><img src="assets/careerlens.jpg" width="1440" height="900" loading="lazy" alt="CareerLens sign-in screen: Every engineering graduate deserves to know why they are not getting hired"></div>
       </article>
@@ -404,11 +410,21 @@
     <p class="socials">
       <a href="https://www.linkedin.com/in/simrithi-s/" rel="noopener"><i class="ico ico-linkedin" aria-hidden="true"></i>LinkedIn</a>
       <a href="https://github.com/simrithi" rel="noopener"><i class="ico ico-github" aria-hidden="true"></i>GitHub</a>
+      <a href="https://builder.aws.com/community/@simrithi" rel="noopener">AWS Builder Center</a>
     </p>
   </section>
 </main>
 
 <footer class="foot"><p>Plain HTML, CSS and JavaScript on AWS Amplify Hosting.</p></footer>
+
+<div id="r3Open" class="r3open" hidden role="dialog" aria-modal="true" aria-label="Opened card">
+  <button class="r3o-close x2" id="r3oClose" type="button" aria-label="Close the card"><i class="ico ico-x" aria-hidden="true"></i></button>
+  <div class="r3o-fly" id="r3oFly"><div class="r3o-center" id="r3oCenter"><div class="r3o-tilt" id="r3oTilt"><div class="r3o-book" id="r3oBook">
+    <div class="r3o-page" id="r3oPage"></div>
+    <div class="r3o-cover" id="r3oCover"><div class="r3o-cfront" id="r3oFront"></div><div class="r3o-cback" id="r3oBack"></div></div>
+  </div></div></div></div>
+  <p class="r3o-tip" id="r3oTip">Move your mouse to tilt the book. Press down to push it in. Esc closes it.</p>
+</div>
 
 <!-- Voice, sound and click ripples -->
 <p class="say" id="say" aria-live="polite" hidden></p>

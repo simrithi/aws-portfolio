@@ -210,8 +210,8 @@
     document.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
     upd();
 
-    var ids = ['top', 'about', 'moments', 'watch', 'skills', 'projects', 'journey', 'contact'];
-    var labels = { top: 'Top', about: 'About', moments: 'Moments', watch: 'Watch', skills: 'Skills', projects: 'Projects', journey: 'Journey', contact: 'Contact' };
+    var ids = ['top', 'about', 'moments', 'watch', 'writing', 'skills', 'projects', 'journey', 'contact'];
+    var labels = { top: 'Top', about: 'About', moments: 'Moments', watch: 'Watch', writing: 'Writing', skills: 'Skills', projects: 'Projects', journey: 'Journey', contact: 'Contact' };
     var dots = $('#dots'), dotEls = {};
     ids.forEach(function (id) {
       var a = document.createElement('a'); a.href = '#' + id; a.dataset.l = labels[id]; a.setAttribute('aria-label', labels[id]);
@@ -358,6 +358,71 @@
       (d.links || []).forEach(function (l) { var a = document.createElement('a'); a.href = l[1]; a.textContent = l[0]; a.rel = 'noopener'; a.target = '_blank'; lk.appendChild(a); });
       box.hidden = false; detail.classList.add('has-tech'); if (ht) ht.hidden = false; $('#r3Kicker').textContent = 'The story';
     }
+
+    /* ---------- the card opens like a 3D book ---------- */
+    var ov = $('#r3Open'), oFly = $('#r3oFly'), oCenter = $('#r3oCenter'), oTilt = $('#r3oTilt'), oBook = $('#r3oBook'), oFront = $('#r3oFront'), oBack = $('#r3oBack'), oPage = $('#r3oPage'), openerCard = null, openT = 0;
+    function mk(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+    function say2(text) {
+      if (!('speechSynthesis' in window)) return;
+      try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(text); u.rate = 1.02; u.pitch = 1.06; speechSynthesis.speak(u); } catch (e) {}
+    }
+    function techBlock(d) {
+      var wrap = mk('div', 'o-tech');
+      wrap.appendChild(mk('p', 'o-kicker', 'Under the hood'));
+      var ul = mk('ul'); d.bul.forEach(function (t) { ul.appendChild(mk('li', null, t)); }); wrap.appendChild(ul);
+      var st = mk('div', 'o-chips'); (d.stack || []).forEach(function (t) { st.appendChild(mk('span', null, t)); }); wrap.appendChild(st);
+      if (d.links && d.links.length) { var lk = mk('p', 'o-links'); d.links.forEach(function (l) { var a = mk('a', null, l[0]); a.href = l[1]; a.target = '_blank'; a.rel = 'noopener'; lk.appendChild(a); }); wrap.appendChild(lk); }
+      return wrap;
+    }
+    function openBook(card) {
+      if (!ov) return; openerCard = card; clearTimeout(openT);
+      var d = card.dataset, tech = null; try { tech = d.tech ? JSON.parse(d.tech) : null; } catch (e) {}
+      var face = $('.r3-face', card), faceRect = face.getBoundingClientRect();
+      oBook.classList.remove('open'); oCenter.classList.remove('spread');
+      oFront.className = face.className + ' r3o-cfront'; oFront.innerHTML = face.innerHTML; oFront.removeAttribute('style');
+      // left page (back of the cover): technical details, or the photo itself
+      oBack.textContent = '';
+      if (tech) { oBack.appendChild(techBlock(tech)); }
+      else {
+        var img = $('img', face);
+        if (img) { var big = mk('img', 'o-photo'); big.src = img.src; big.alt = img.alt; oBack.appendChild(big); }
+        oBack.appendChild(mk('p', 'o-cap', d.title));
+      }
+      // right page: the story
+      oPage.textContent = '';
+      oPage.appendChild(mk('p', 'o-kicker', 'The story'));
+      var t = mk('h3', null, d.title); t.id = 'r3oTitle'; oPage.appendChild(t);
+      oPage.appendChild(mk('p', 'o-story', d.story));
+      var btns = mk('div', 'o-btns');
+      var b1 = mk('button', 'hear', 'Hear this story'); b1.type = 'button'; b1.addEventListener('click', function () { say2(d.title + '. ' + d.story); }); btns.appendChild(b1);
+      if (tech) { var b2 = mk('button', 'hear', 'Hear the tech'); b2.type = 'button'; b2.addEventListener('click', function () { say2(d.title + ', under the hood. ' + tech.bul.join(' ')); }); btns.appendChild(b2); }
+      oPage.appendChild(btns);
+      if (tech) { var m = techBlock(tech); m.classList.add('o-tech-m'); oPage.appendChild(m); }
+      ov.hidden = false; ov.setAttribute('aria-labelledby', 'r3oTitle');
+      requestAnimationFrame(function () { ov.classList.add('show'); });
+      var spread = matchMedia('(min-width: 761px)').matches;
+      if (!reduced && oFly.animate) {
+        var br = oBook.getBoundingClientRect(), s = faceRect.width / br.width;
+        var dx = (faceRect.left + faceRect.width / 2) - (innerWidth / 2), dy = (faceRect.top + faceRect.height / 2) - (innerHeight / 2);
+        oFly.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s + ')' }, { transform: 'none' }], { duration: 850, easing: 'cubic-bezier(.16,1,.3,1)' });
+        sfx.whoosh();
+      }
+      openT = setTimeout(function () { oBook.classList.add('open'); if (spread) oCenter.classList.add('spread'); sfx.chime(); }, reduced ? 0 : 800);
+      $('#r3oClose').focus({ preventScroll: true });
+    }
+    function closeBook() {
+      if (!ov || ov.hidden) return; clearTimeout(openT);
+      oBook.classList.remove('open'); oCenter.classList.remove('spread'); ov.classList.remove('show');
+      try { speechSynthesis.cancel(); } catch (e) {}
+      setTimeout(function () { ov.hidden = true; if (openerCard) openerCard.focus({ preventScroll: true }); }, reduced ? 0 : 420);
+    }
+    if (ov) {
+      $('#r3oClose').addEventListener('click', closeBook);
+      ov.addEventListener('click', function (e) { if (!e.target.closest('.r3o-book') && !e.target.closest('.r3o-close')) closeBook(); });
+      addEventListener('keydown', function (e) { if (e.key === 'Escape') closeBook(); });
+      liquid(oTilt, ov, { rot: 6, move: 8, grow: 0, ripples: false });
+    }
+
     function select(i, silent) {
       cards.forEach(function (c, k) { c.classList.toggle('sel', k === i); });
       target = nearest(-i * step); auto = false;
@@ -378,9 +443,9 @@
     function up() { drag = false; wrap.classList.remove('drag'); }
     wrap.addEventListener('pointerup', up); wrap.addEventListener('pointercancel', up);
     cards.forEach(function (c, i) {
-      c.addEventListener('click', function () { if (moved < 8) select(i); });
+      c.addEventListener('click', function () { if (moved < 8) { select(i); openBook(c); } });
       c.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(i); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(i); openBook(c); }
         if (e.key === 'ArrowRight') { e.preventDefault(); select((i + 1) % N); cards[(i + 1) % N].focus(); }
         if (e.key === 'ArrowLeft') { e.preventDefault(); select((i - 1 + N) % N); cards[(i - 1 + N) % N].focus(); }
       });
@@ -393,14 +458,6 @@
     return { spin: function () { auto = true; target = null; vel = 22; if (hint) hint.classList.add('gone'); sfx.whoosh(); } };
   })();
 
-
-  /* ================= About portrait swap ================= */
-  (function portraitSwap() {
-    var p = $('#portrait'); if (!p) return;
-    function flip() { p.classList.add('seen'); p.classList.toggle('alt'); }
-    p.addEventListener('click', flip);
-    p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
-  })();
 
   /* ================= Hear the story, video and YouTube facade ================= */
   (function media() {
@@ -438,7 +495,7 @@
     function savePrefs() { try { localStorage.setItem(PKEY, JSON.stringify(prefs)); } catch (e) {} }
 
     /* ---------- what the assistant knows (all from my resumes) ---------- */
-    var DEMO = 'https://d24wvc44c3vaxz.cloudfront.net/';
+    var DEMO = 'https://d24wvc44c3vaxz.cloudfront.net/'; var CLDEMO = 'https://main.d1afxz58feyue1.amplifyapp.com/';
     var KB = [
       { re: /why .*(flood|varshik)|inspiration|motivat|story behind|what inspired/, id: 'varshik', a: "I grew up in Tamil Nadu and saw what floods do to families. Varshik began with one question: what if we could see which roads will flood before it rains?", more: ["Tell me about Varshik", "Open the live demo"] },
       { re: /varshik|flood|waterlog/, id: 'varshik', a: "Varshik is a street level flood risk map. Vision models on Amazon SageMaker score sixty metre road cells for waterlogging from dashcam frames, terrain and rainfall, and Amazon Bedrock writes plain language briefs. Its top risk cells matched Delhi's official flood hotspots, though the results are preliminary.", more: ["Why did you build it?", "Open the live demo", "Tell me about CareerLens"] },
@@ -450,6 +507,7 @@
       { re: /raft|consensus|key ?value|distributed (store|database)/, id: 'raftkv', a: "RaftKV is a distributed key value store with the Raft consensus algorithm written from scratch: leader election, log replication, snapshots and linearizable reads, tested with Jepsen style partition and crash tests.", more: ["What are your backend skills?"] },
       { re: /cansat|can-?sat|satellite|in-?space|defionix|ground station|flight software/, id: "moments", spin: true, a: "For the IN-SPACe CANSAT competition our team Defionix designed a seven U cylindrical satellite with a Raspberry Pi 5, IMU, barometer, NavIC GPS and a LoRa radio. I built the ground station and the flight software. We were a PDR finalist in the top thirty five in India and went all the way to the launch round, but funding fell short at the very end and we could not fly it.", more: ["Why did it not launch?", "Tell me about the ground station", "Tell me about PipeSense"] },
       { re: /funding|fail|failure|setback|lesson|did not launch|didn t launch|why .*(launch|fly)|couldn t|could not|what went wrong|biggest challenge/, id: "moments", spin: true, a: "We reached the launch round, then funding fell short at the very end, so we could not fly CAN-7USAT. The satellite hardware alone was about ninety seven thousand rupees and the ground station another one point six five lakh. I took one lesson from it: treat funding as part of the engineering plan from day one.", more: ["Tell me about the satellite", "What have you won?"] },
+      { re: /article|blog|writing|wrote|written|publication|builder center article/, id: "writing", a: "I write about what I build on AWS Builder Center. My article is Varshik: Building an AI Powered Urban Flood Risk Analysis Platform on AWS, about running three vision models on one SageMaker endpoint.", more: ["Tell me about Varshik", "Open the live demo"] },
       { re: /ideathon|iit|delhi/, id: 'journey', a: "I led the pitch preparation and presentation for the team that placed in the top five out of three hundred teams at the IIT Delhi Ideathon 2026, and I also created the demo video.", more: ["How many hackathons?", "What have you won?"] },
       { re: /hackathon|competition|won|win|award|prize|achievement|accomplish/, id: 'journey', a: "I have taken part in more than ten hackathons, including AWS Bharat Builds, the Amazon ML Challenge, NPCI and Citi DRUNIX and Paytm Build for India. I won first place in the PipeSense Datathon, was a CANSAT PDR finalist, and placed in the top five at the IIT Delhi Ideathon.", more: ["Tell me about PipeSense", "Tell me about the satellite"] },
       { re: /patent|research|paper|publication|ergoguard|explainable|interpretab/, id: 'journey', a: "I am an inventor on a patent application for shipment clustering and route optimisation. My research covers explainable AI for cyber threat attribution, a drafted paper on ErgoGuard posture monitoring, and offline pipe defect detection.", more: ["What are your AI skills?"] },
@@ -473,6 +531,7 @@
     ];
     var NAV = [
       [/watch|video|clip|youtube|stream|session/, 'watch', "Here are some clips of me at work."],
+      [/article|writing|blog/, 'writing', "Here is my writing on AWS Builder Center."],
       [/moment|photo|picture|gallery|\bring\b|3d|three d/, 'moments', "Here is my world in 3D."],
       [/project|work|built|build/, 'projects', "Here is what I built."],
       [/skill|tool|superpower/, 'skills', "My tech superpowers."],
@@ -580,6 +639,7 @@
       if (/\b(unmute|sound on|turn on sound)\b/.test(q)) { sfx.set(true); setSnd(); reply('Sound is on.'); return; }
       if (/\b(mute|sound off|silence)\b/.test(q)) { reply('Sound off.'); sfx.set(false); setSnd(); return; }
       if (/\b(spin|rotate)\b/.test(q)) { go('moments'); setTimeout(function () { ring.spin(); }, 650); reply('Spinning my world for you.'); return; }
+      if (/career ?lens/.test(q) && /live|demo|open|try|launch|visit/.test(q)) { window.open(CLDEMO, '_blank', 'noopener'); reply('Opening the CareerLens live demo in a new tab.'); return; }
       if (/live demo|open varshik|try varshik|launch varshik/.test(q)) { window.open(DEMO, '_blank', 'noopener'); reply('Opening the Varshik live demo in a new tab.'); return; }
       if (/\bgithub\b/.test(q) && /open|show|take|go/.test(q)) { window.open('https://github.com/simrithi', '_blank', 'noopener'); reply('Opening my GitHub.'); return; }
       if (/\blinkedin\b/.test(q)) { window.open('https://www.linkedin.com/in/simrithi-s/', '_blank', 'noopener'); reply('Opening my LinkedIn.'); return; }
