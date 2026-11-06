@@ -112,6 +112,22 @@
     zone.addEventListener('pointerleave', function () { hovering = false; pressed = false; nx = ny = 0; aim(); v.s -= 0.015; kick(); });
   }
 
+  /* ================= Hero: rotating word + cursor glow ================= */
+  (function heroLive() {
+    var words = $$('.rot span'), i = 0, hero = $('.hero'), spot = $('.hero .spot');
+    if (words.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setInterval(function () {
+        var cur = words[i]; i = (i + 1) % words.length; var nx = words[i];
+        cur.classList.remove('on'); cur.classList.add('out');
+        nx.classList.remove('out'); nx.style.transition = 'none'; nx.style.transform = 'translateY(70%)'; void nx.offsetWidth; nx.style.transition = ''; nx.style.transform = ''; nx.classList.add('on');
+        setTimeout(function () { cur.classList.remove('out'); }, 700);
+      }, 2600);
+    }
+    if (hero && spot) hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect(); spot.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px)';
+    }, { passive: true });
+  })();
+
   /* ================= Hero terrain lines ================= */
   (function ridges() {
     var cv = $('#ridges'); if (!cv) return;
