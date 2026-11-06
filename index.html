@@ -4,20 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Simrithi S | Cloud and Full-Stack Builder</title>
-<meta name="description" content="Simrithi S, a CSE student in Chennai building cloud and full-stack systems on AWS. About, skills, projects, and a flood hiding under the page.">
+<meta name="description" content="Simrithi S, a CSE student in Chennai building cloud and full-stack systems on AWS. Tap the raindrop and flood the page.">
+<meta name="color-scheme" content="dark light">
 <meta property="og:title" content="Simrithi S | Cloud and Full-Stack Builder">
-<meta property="og:description" content="Pre-final year CSE student building on AWS, React and Node.js. Tap the raindrop to see why I build what I build.">
+<meta property="og:description" content="AWS campus leader, full-stack builder, creator of Varshik. Flood this page to see why.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <a class="skip" href="#about">Skip to content</a>
 
 <header class="nav">
-  <a class="brand" href="#top" aria-label="Simrithi S, home">Simrithi S</a>
+  <a class="brand" href="#top" aria-label="Simrithi S, back to top">Simrithi S</a>
   <nav aria-label="Primary">
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
@@ -28,130 +27,178 @@
 </header>
 
 <main id="top">
-  <section class="hero">
-    <p class="eyebrow">Chennai · B.Tech CSE, SRM · 2028</p>
-    <h1>I build on the cloud, and I care where the water goes.</h1>
-    <p class="lede">Full-stack and AWS builder. I shipped a production CRM as an intern, grew a 300+ student cloud community, and built a map that finds the roads likely to flood before the rain arrives.</p>
-    <div class="cta">
-      <a class="btn primary" href="#projects">See projects</a>
-      <a class="btn" href="https://github.com/simrithi" rel="noopener">GitHub</a>
-      <a class="btn" href="https://www.linkedin.com/in/simrithi-s/" rel="noopener">LinkedIn</a>
-    </div>
-    <p class="hint-line" id="hintLine">Hint: there is a raindrop in the corner. Tap it. <span aria-hidden="true">↘</span></p>
-  </section>
-
-  <section id="about" class="block" data-mark="About">
-    <h2>About me</h2>
-    <div class="two">
-      <div>
-        <p>I am a pre-final year Computer Science student at SRM Institute of Science and Technology, Ramapuram (CGPA 9.07). I like systems that have to be right under pressure: a stock counter that must never oversell, a map that must not cry wolf, a CRM that real people use every day.</p>
-        <p>Outside code, I lead. AWS recognised me as one of its top Student Builder Campus Leaders for growing a 300+ student cloud community. I have run sessions with live AWS demos, pitched at hackathons, and explained cloud ideas to people who have never opened a console.</p>
+  <section class="hero" aria-label="Introduction">
+    <canvas id="ridges" aria-hidden="true"></canvas>
+    <div class="hero-copy">
+      <h1>I build cloud systems that stay dry.</h1>
+      <p class="lede">Simrithi S, CSE student in Chennai. AWS campus leader, full-stack builder, and creator of Varshik, a flood-risk map.</p>
+      <div class="cta">
+        <a class="btn primary mag" href="#projects">See projects</a>
+        <a class="btn mag" href="https://github.com/simrithi" rel="noopener">GitHub</a>
       </div>
-      <ul class="facts" aria-label="Quick facts">
-        <li><strong>9.07</strong><span>CGPA, B.Tech CSE</span></li>
-        <li><strong>300+</strong><span>students in the AWS community I grew</span></li>
-        <li><strong>20+</strong><span>live projects managed by the CRM I shipped</span></li>
-        <li><strong>1st of 300</strong><span>teams, PipeSense Datathon</span></li>
-      </ul>
     </div>
   </section>
 
-  <section id="skills" class="block" data-mark="Skills">
-    <h2>Tech superpowers</h2>
-    <div class="grid skills">
-      <article class="card">
-        <h3>Cloud and DevOps</h3>
-        <ul class="chips"><li>Lambda</li><li>API Gateway</li><li>DynamoDB</li><li>S3 + CloudFront</li><li>Amplify</li><li>SageMaker</li><li>Bedrock</li><li>CloudWatch</li><li>Docker</li><li>GitHub Actions</li></ul>
-      </article>
-      <article class="card">
+  <section id="about" class="block about" aria-labelledby="aboutTitle">
+    <h2 id="aboutTitle" class="sr">About me</h2>
+    <p class="statement" id="statement">I like systems that have to be right under pressure. A stock counter that can never oversell. A map that must not cry wolf. A CRM that real teams open every morning. I build them, then I teach other students how to build them too.</p>
+    <dl class="stats">
+      <div><dt>CGPA</dt><dd>9.07</dd><dd class="sub">B.Tech CSE, SRM Ramapuram</dd></div>
+      <div><dt>Community</dt><dd>300+</dd><dd class="sub">students in the AWS group I grew</dd></div>
+      <div><dt>Live projects</dt><dd>20+</dd><dd class="sub">run on the CRM I shipped</dd></div>
+      <div><dt>Datathon</dt><dd>1st</dd><dd class="sub">of 300 teams, PipeSense</dd></div>
+    </dl>
+  </section>
+
+  <section id="skills" class="block skills" aria-labelledby="skillsTitle">
+    <h2 id="skillsTitle">Tech superpowers</h2>
+    <p class="section-sub">Pick a tool to see where I have used it.</p>
+    <div class="toolbox" role="group" aria-label="Skills">
+      <div class="tool-group">
+        <h3>AWS</h3>
+        <ul>
+          <li><button type="button" data-in="careerlens">Lambda</button></li>
+          <li><button type="button" data-in="careerlens">API Gateway</button></li>
+          <li><button type="button" data-in="careerlens">DynamoDB</button></li>
+          <li><button type="button" data-in="varshik">S3 + CloudFront</button></li>
+          <li><button type="button" data-in="careerlens">Amplify</button></li>
+          <li><button type="button" data-in="varshik">SageMaker</button></li>
+          <li><button type="button" data-in="varshik">Bedrock</button></li>
+          <li><button type="button" data-in="careerlens">CloudWatch</button></li>
+        </ul>
+      </div>
+      <div class="tool-group">
         <h3>Full-stack</h3>
-        <ul class="chips"><li>React</li><li>Node.js</li><li>Express</li><li>REST APIs</li><li>Redis</li><li>RabbitMQ</li><li>Nginx</li><li>Flutter</li><li>Figma</li></ul>
-      </article>
-      <article class="card">
-        <h3>AI and GenAI</h3>
-        <ul class="chips"><li>Amazon Bedrock</li><li>Gemini API</li><li>YOLOv8</li><li>SegFormer</li><li>Depth Anything V2</li></ul>
-      </article>
-      <article class="card">
+        <ul>
+          <li><button type="button" data-in="varshik careerlens novac">React</button></li>
+          <li><button type="button" data-in="flashsale novac">Node.js</button></li>
+          <li><button type="button" data-in="novac">Express</button></li>
+          <li><button type="button" data-in="flashsale">Redis</button></li>
+          <li><button type="button" data-in="flashsale">RabbitMQ</button></li>
+          <li><button type="button" data-in="flashsale">Nginx</button></li>
+          <li><button type="button" data-in="novac">Figma</button></li>
+        </ul>
+      </div>
+      <div class="tool-group">
+        <h3>AI and delivery</h3>
+        <ul>
+          <li><button type="button" data-in="varshik pipesense">YOLO</button></li>
+          <li><button type="button" data-in="careerlens">Gemini API</button></li>
+          <li><button type="button" data-in="flashsale">Docker</button></li>
+          <li><button type="button" data-in="novac">CI/CD</button></li>
+        </ul>
+      </div>
+      <div class="tool-group">
         <h3>Languages and data</h3>
-        <ul class="chips"><li>Java</li><li>Python</li><li>JavaScript</li><li>Kotlin</li><li>SQL</li><li>PostgreSQL</li><li>MongoDB</li><li>DynamoDB</li><li>MySQL</li></ul>
-      </article>
-      <article class="card wide">
-        <h3>People skills</h3>
-        <p>Public speaking, workshop hosting, community building, and turning technical ideas into plain language. I am the person who gets asked to give the demo.</p>
-      </article>
+        <ul>
+          <li><button type="button" data-in="">Java</button></li>
+          <li><button type="button" data-in="varshik">Python</button></li>
+          <li><button type="button" data-in="careerlens flashsale novac">JavaScript</button></li>
+          <li><button type="button" data-in="">Kotlin</button></li>
+          <li><button type="button" data-in="">SQL</button></li>
+          <li><button type="button" data-in="flashsale">PostgreSQL</button></li>
+          <li><button type="button" data-in="novac">MongoDB</button></li>
+        </ul>
+      </div>
     </div>
+    <p class="used-in" id="usedIn" aria-live="polite">Tap anything above.</p>
   </section>
 
-  <section id="projects" class="block" data-mark="Projects">
-    <h2>Projects</h2>
-    <div class="grid projects">
-      <article class="card project featured">
-        <p class="tag">Flagship · AWS</p>
-        <h3>Varshik: street-level flood-risk map</h3>
-        <p>Finds roads likely to hold water before the rain arrives. A vision pipeline (SegFormer, Depth Anything V2, YOLOv8) on Amazon SageMaker scores 60 m road cells from dashcam frames, terrain and rainfall. Amazon Bedrock writes plain-language risk briefs. The React and MapLibre front end is served from S3 and CloudFront.</p>
-        <p class="note">Top-risk cells matched Delhi's official flood hotspots (AUC 0.66, preliminary).</p>
-        <p class="stack">AWS SageMaker · Bedrock · S3 · CloudFront · CDK · YOLOv8 · React</p>
-        <p class="links"><a href="https://d24wvc44c3vaxz.cloudfront.net/" rel="noopener">Live demo</a><a href="https://github.com/simrithi/floodlens" rel="noopener">GitHub</a><a href="https://youtu.be/nPr0dBLUtUk" rel="noopener">Video</a><a href="https://builder.aws.com/content/3KYn3Kwff6ZOhYY2RbAhKFBszHr/varshik" rel="noopener">Blog post</a></p>
+  <section id="projects" class="block projects" aria-labelledby="projectsTitle">
+    <h2 id="projectsTitle">Projects</h2>
+    <div class="bento">
+      <article class="tile t-varshik spot" id="varshik" data-risk>
+        <div class="t-media">
+          <img src="assets/varshik-architecture.png" width="2400" height="1646" loading="lazy" alt="Varshik system architecture diagram: dashcam frames to Amazon SageMaker, Step Functions, S3, Bedrock and CloudFront">
+        </div>
+        <div class="t-body">
+          <p class="risk-chip" data-dry="Dry" data-wet="High risk">Dry</p>
+          <h3>Varshik, a street-level flood-risk map</h3>
+          <p>A vision pipeline on Amazon SageMaker (SegFormer, Depth Anything V2, YOLOv8) scores 60 m road cells for waterlogging risk from dashcam frames, terrain and rainfall. Amazon Bedrock writes the plain-language briefs. React and MapLibre, served from S3 and CloudFront.</p>
+          <p class="fine">Top-risk cells matched Delhi's official flood hotspots. Results are preliminary.</p>
+          <p class="links"><a href="https://d24wvc44c3vaxz.cloudfront.net/" rel="noopener">Live demo</a><a href="https://github.com/simrithi/floodlens" rel="noopener">GitHub</a><a href="https://youtu.be/nPr0dBLUtUk" rel="noopener">Video</a><a href="https://builder.aws.com/content/3KYn3Kwff6ZOhYY2RbAhKFBszHr/varshik" rel="noopener">Blog post</a></p>
+        </div>
       </article>
 
-      <article class="card project">
-        <p class="tag">Backend</p>
-        <h3>FlashSale: oversell-proof inventory</h3>
-        <p>An atomic stock-reservation engine using Redis Lua scripts, so check-and-decrement is one operation and two buyers can never claim the last unit. Adds a virtual waiting room, token-bucket rate limiting behind Nginx, and RabbitMQ workers that release unpaid stock.</p>
-        <p class="note">Zero oversells under Locust load tests.</p>
-        <p class="stack">Node.js · Redis (Lua) · RabbitMQ · PostgreSQL · Nginx · Docker</p>
+      <article class="tile t-flash spot" id="flashsale" data-risk>
+        <p class="risk-chip" data-dry="Dry" data-wet="High risk">Dry</p>
+        <h3>FlashSale</h3>
+        <p class="kicker">Oversell-proof flash-sale inventory</p>
+        <p>Redis Lua scripts make check-and-decrement a single atomic step, so two buyers can never claim the last unit. A virtual waiting room, token-bucket rate limiting behind Nginx and RabbitMQ workers release unpaid stock.</p>
+        <p class="fine">Zero oversells under Locust load tests.</p>
+        <p class="stack">Node.js, Redis, RabbitMQ, PostgreSQL, Nginx, Docker</p>
       </article>
 
-      <article class="card project">
-        <p class="tag">Serverless · AWS</p>
-        <h3>CareerLens: placement tracker</h3>
-        <p>Event-driven backend on Lambda and API Gateway with a single-table DynamoDB design, behind separate student and company portals. An LLM turns unstructured placement notices into structured drives with eligibility matching. Hosted on Amplify, monitored with CloudWatch.</p>
-        <p class="stack">Lambda · API Gateway · DynamoDB · Amplify · React · Gemini</p>
-        <p class="links"><a href="https://github.com/simrithi/careerlens-full" rel="noopener">GitHub</a></p>
+      <article class="tile t-pipe spot" id="pipesense" data-risk>
+        <p class="risk-chip" data-dry="Dry" data-wet="High risk">Dry</p>
+        <h3>PipeSense</h3>
+        <p class="kicker">Pipe-inspection robot</p>
+        <p>Three-sensor fusion localises pipe defects. YOLO detects 7 defect types offline. Won 1st of 300 teams at the PipeSense Datathon. Patent in progress.</p>
+        <p class="stack">ESP32, ESP32-CAM, YOLO</p>
       </article>
 
-      <article class="card project">
-        <p class="tag">Research and hardware</p>
-        <h3>PipeSense: pipe-inspection robot</h3>
-        <p>Three-sensor fusion localises pipe defects, and YOLO detects seven defect types offline. Won 1st prize (1st of 300 teams) at the PipeSense Datathon with the Robotics Club and IEEE. Patent in progress.</p>
-        <p class="stack">ESP32 · ESP32-CAM · YOLO</p>
+      <article class="tile t-career spot" id="careerlens" data-risk>
+        <div class="t-body">
+          <p class="risk-chip" data-dry="Dry" data-wet="High risk">Dry</p>
+          <h3>CareerLens</h3>
+          <p class="kicker">Serverless placement tracker</p>
+          <p>Event-driven backend on Lambda and API Gateway with a single-table DynamoDB design, behind separate student and company portals. An LLM turns unstructured placement notices into structured drives with eligibility matching.</p>
+          <p class="stack">Lambda, API Gateway, DynamoDB, Amplify, CloudWatch, React, Gemini</p>
+          <p class="links"><a href="https://github.com/simrithi/careerlens-full" rel="noopener">GitHub</a></p>
+        </div>
       </article>
     </div>
-    <p class="more">Also: a patent filed for shipment clustering and route optimisation, and a drafted research paper, ErgoGuard, on real-time webcam posture monitoring.</p>
+    <p class="more">Also: a patent filed for shipment clustering and route optimisation, and ErgoGuard, a drafted paper on real-time webcam posture monitoring.</p>
   </section>
 
-  <section id="journey" class="block" data-mark="Journey">
-    <h2>Experience and achievements</h2>
+  <section id="journey" class="block journey" aria-labelledby="journeyTitle">
+    <div class="journey-head">
+      <h2 id="journeyTitle">Journey</h2>
+      <p class="section-sub">Where I have worked, led and competed.</p>
+    </div>
     <ol class="timeline">
-      <li><span class="when">May – Jul 2026</span><h3>UI/UX Design and QA Associate, Luna Eternal</h3><p>Designed screens and ran QA for 3 Android apps, including Brevi, live on Google Play.</p></li>
-      <li><span class="when">Aug – Sep 2026</span><h3>AWS Student Builder Campus Leader</h3><p>Recognised as one of the top campus leaders. Grew a 300+ student cloud community and reached 200+ students through pitches and tablings.</p></li>
-      <li><span class="when">Nov 2025 – Jan 2026</span><h3>Full Stack Software Engineering Intern, Novac Technology Solutions</h3><p>Shipped a production, responsive web platform (Figma, React, Node.js/Express, MongoDB on AWS) managing 20+ live construction projects. Built CRM modules end to end in a two-person team, including CI/CD and production support.</p></li>
-      <li><span class="when">Remote</span><h3>Frontend Contributor, Twin Cities Tamil Association (USA)</h3><p>Built 3 responsive pages for the live site <a href="https://tctamn.org" rel="noopener">tctamn.org</a>.</p></li>
+      <li data-risk>
+        <p class="when">May - Jul 2026</p>
+        <h3>UI/UX Design and QA Associate, Luna Eternal</h3>
+        <p>Designed screens and ran QA for 3 Android apps, including Brevi, live on Google Play.</p>
+      </li>
+      <li data-risk>
+        <p class="when">Aug - Sep 2026</p>
+        <h3>AWS Student Builder Campus Leader</h3>
+        <p>Recognised as one of the top campus leaders. Grew a 300+ student cloud community, ran sessions with live AWS demos and reached 200+ students through pitches and tablings.</p>
+      </li>
+      <li id="novac" data-risk>
+        <p class="when">Nov 2025 - Jan 2026</p>
+        <h3>Full Stack Software Engineering Intern, Novac Technology Solutions</h3>
+        <p>Shipped a production, responsive platform (Figma, React, Node.js and Express, MongoDB, on AWS) managing 20+ live construction projects. Built CRM modules end to end in a two-person team, with CI/CD and production support.</p>
+      </li>
+      <li data-risk>
+        <p class="when">Remote</p>
+        <h3>Frontend Contributor, Twin Cities Tamil Association</h3>
+        <p>Built 3 responsive pages for the live site <a href="https://tctamn.org" rel="noopener">tctamn.org</a>.</p>
+      </li>
     </ol>
-    <ul class="wins">
-      <li>Top 5 of 300 teams, IIT Delhi Ideathon 2026</li>
-      <li>IN-SPACe CANSAT: built the ground station and flight software, Top 35 in India</li>
-      <li>10+ hackathons, including AWS Bharat Builds, Amazon ML Challenge, NPCI x Citi DRUNIX, Paytm Build for India</li>
-      <li>Community Lead, Open Source Connect Global 2026</li>
-      <li>GCP and deployment sessions at CHiPSET Technical Club</li>
-      <li>Microsoft Certified: SQL Server Professional</li>
+    <ul class="wins" aria-label="Achievements">
+      <li><strong>Top 5 of 300</strong><span>IIT Delhi Ideathon 2026</span></li>
+      <li><strong>Top 35 in India</strong><span>IN-SPACe CANSAT, built the ground station and flight software</span></li>
+      <li><strong>10+ hackathons</strong><span>AWS Bharat Builds, Amazon ML Challenge, NPCI x Citi DRUNIX, Paytm Build for India</span></li>
+      <li><strong>Community Lead</strong><span>Open Source Connect Global 2026</span></li>
+      <li><strong>Workshop host</strong><span>Deployment and GCP sessions, CHiPSET Technical Club</span></li>
+      <li><strong>Certified</strong><span>Microsoft SQL Server Professional</span></li>
     </ul>
   </section>
 
-  <section id="contact" class="block" data-mark="Contact">
-    <h2>Say hello</h2>
-    <p>Looking for internships in cloud and full-stack engineering. The fastest way to reach me is email.</p>
-    <p class="cta">
-      <a class="btn primary" href="mailto:simrithi.work@gmail.com">simrithi.work@gmail.com</a>
-      <a class="btn" href="https://www.linkedin.com/in/simrithi-s/" rel="noopener">LinkedIn</a>
-      <a class="btn" href="https://github.com/simrithi" rel="noopener">GitHub</a>
+  <section id="contact" class="block contact" aria-labelledby="contactTitle">
+    <h2 id="contactTitle">Open to internships in cloud and full-stack engineering.</h2>
+    <a class="mail mag" href="mailto:simrithi.work@gmail.com">simrithi.work@gmail.com</a>
+    <p class="socials">
+      <a href="https://www.linkedin.com/in/simrithi-s/" rel="noopener"><i class="ico ico-linkedin" aria-hidden="true"></i>LinkedIn</a>
+      <a href="https://github.com/simrithi" rel="noopener"><i class="ico ico-github" aria-hidden="true"></i>GitHub</a>
     </p>
   </section>
 </main>
 
-<footer class="foot">
-  <p>Built with plain HTML, CSS and JavaScript. Hosted on AWS Amplify.</p>
-</footer>
+<footer class="foot"><p>Plain HTML, CSS and JavaScript on AWS Amplify Hosting.</p></footer>
 
 <!-- Creative feature: the rising flood -->
 <canvas id="rain" aria-hidden="true"></canvas>
@@ -161,19 +208,24 @@
 </div>
 
 <aside id="marker" class="marker" role="dialog" aria-labelledby="markerTitle" hidden>
-  <p class="marker-tag">High-water mark</p>
-  <h2 id="markerTitle">Why the page is flooding</h2>
-  <p>I grew up in Tamil Nadu and saw what floods do to families. I lost friends to them. So I asked a question that became Varshik: what if we could see which roads will flood <em>before</em> it rains?</p>
-  <p>Everything on this page sits above the water line on purpose. Most roads are not so lucky.</p>
-  <p class="marker-actions"><a class="btn small" href="https://d24wvc44c3vaxz.cloudfront.net/" rel="noopener">Open Varshik</a><button class="btn small" id="drain" type="button">Let it drain</button></p>
+  <h2 id="markerTitle">Why this page is flooding</h2>
+  <p>I grew up in Tamil Nadu and saw what floods do to families. I lost friends to them. That is where Varshik started: what if we could see which roads will flood before it rains?</p>
+  <p>The risk labels on this page follow the same idea. Anything below the waterline is high risk. Drag the gauge to move it.</p>
+  <p class="marker-actions"><a class="btn small primary" href="https://d24wvc44c3vaxz.cloudfront.net/" rel="noopener">Open Varshik</a><button class="btn small" id="drain" type="button">Let it drain</button></p>
 </aside>
 
-<div class="gauge" id="gauge" aria-live="polite" hidden>Water level: <strong id="gaugeValue">0.0 m</strong></div>
+<div id="gauge" class="gauge" hidden>
+  <div class="gauge-track" id="gaugeTrack">
+    <div class="gauge-handle" id="gaugeHandle" role="slider" tabindex="0" aria-label="Water level" aria-orientation="vertical" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0 metres"></div>
+  </div>
+  <p class="gauge-read" id="gaugeRead">0.0 m</p>
+</div>
 
-<button id="drop" class="drop" type="button" aria-pressed="false" aria-label="Make it rain. Reveals a story about why I build what I build.">
-  <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M12 2.5c3.6 4.6 6.5 8 6.5 11.4a6.5 6.5 0 0 1-13 0C5.5 10.500 8.400 7.100 12 2.500z" fill="currentColor"/></svg>
+<button id="drop" class="drop" type="button" aria-pressed="false" aria-label="Make it rain. Floods the page and reveals why I build what I build.">
+  <i class="ico ico-drop" aria-hidden="true"></i>
   <span class="drop-label" id="dropLabel">Make it rain</span>
 </button>
+<p class="drop-hint" id="dropHint" aria-hidden="true">Tap me. The page has a secret.</p>
 
 <script src="app.js"></script>
 </body>
