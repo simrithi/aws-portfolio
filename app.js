@@ -241,6 +241,42 @@
       el.addEventListener('pointerleave', function () { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
     }
 
+
+    function chestSVG() {
+      var map = [
+        '..kkkkkkkkkkkk..',
+        '.kbbbbbbbbbbbbk.',
+        'kbdbbbbbbbbbbdbk',
+        'kbbbbbbbbbbbbbbk',
+        'kbbbbbbbbbbbbbbk',
+        'kkkkkkggggkkkkkk',
+        'kdbbbbgyygbbbbdk',
+        'kbbbbbgkkgbbbbbk',
+        'kbbbbbbbbbbbbbbk',
+        'kbdbbbbbbbbbbdbk',
+        'kbbbbbbbbbbbbbbk',
+        'kbbbbbbbbbbbbbbk',
+        'kdddddddddddddbk',
+        'kkkkkkkkkkkkkkkk'
+      ];
+      var pal = { k: '#2b1a0c', b: '#a9763a', d: '#7a5230', g: '#cfcfcf', y: '#f5c542' };
+      var out = '<svg viewBox="0 0 16 14" shape-rendering="crispEdges" aria-hidden="true">';
+      map.forEach(function (row, y) {
+        for (var x = 0; x < 16; x++) { var ch = row.charAt(x); if (pal[ch]) out += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="' + pal[ch] + '"/>'; }
+      });
+      return out + '</svg>';
+    }
+    $$('[data-chest]').forEach(function (n) { n.innerHTML = chestSVG(); });
+
+    function toast(c, legendary) {
+      var old = $('.toast', deck); if (old) old.remove();
+      var t = document.createElement('div');
+      t.className = 'toast'; t.setAttribute('role', 'status');
+      t.innerHTML = '<span class="ico-frame"><i style="--i:url(assets/icons/' + c.icon + '.svg);-webkit-mask:url(assets/icons/' + c.icon + '.svg) center / contain no-repeat;mask:url(assets/icons/' + c.icon + '.svg) center / contain no-repeat"></i></span><div><b>' + (legendary ? 'Challenge Complete!' : 'Advancement Made!') + '</b><span>' + c.name + '</span></div>';
+      deck.appendChild(t);
+      setTimeout(function () { t.remove(); }, 4700);
+    }
+
     function renderCollection() {
       list.textContent = '';
       CARDS.concat([LEGEND]).forEach(function (c) {
@@ -254,8 +290,8 @@
       $('#collCount').textContent = n + '/8';
       $('#packCount').textContent = n + '/8';
       if (n === 8 && have('origin')) sub.textContent = 'Complete. You found everything, including the secret card.';
-      else if (n === 8) sub.textContent = 'All 8 collected. Open one more pack, something is glowing.';
-      else sub.textContent = 'Tear open a pack. Collect all 8 to unlock a secret.';
+      else if (n === 8) sub.textContent = 'All 8 collected. Open one more chest, something is glowing.';
+      else sub.textContent = 'Open a chest. Collect all 8 to unlock a secret.';
       btnOpen.hidden = n === 8 && have('origin');
     }
 
@@ -263,7 +299,7 @@
       stage.textContent = ''; pending = 0;
       var p = document.createElement('button');
       p.type = 'button'; p.className = 'foil-pack';
-      p.innerHTML = '<span><strong>Superpower<br>pack</strong><small>Click to tear open</small></span>';
+      p.innerHTML = chestSVG() + '<strong>Loot chest</strong><small>Click to open</small>';
       p.addEventListener('click', tear);
       stage.appendChild(p); p.focus();
     }
@@ -297,10 +333,10 @@
             if (el.classList.contains('up')) return;
             el.classList.add('up');
             var nb = el.querySelector('.new'); if (nb) nb.hidden = false;
-            if (isNew && owned.indexOf(c.id) < 0) { owned.push(c.id); save(); }
+            if (isNew && owned.indexOf(c.id) < 0) { owned.push(c.id); save(); toast(c, c.id === 'origin'); }
             pending--;
             if (c.id === 'origin') burst();
-            if (pending === 0) { renderCollection(); btnOpen.textContent = count() === 8 && !have('origin') ? 'Open the glowing pack' : 'Tear open another pack'; }
+            if (pending === 0) { renderCollection(); btnOpen.textContent = count() === 8 && !have('origin') ? 'Open the glowing chest' : 'Open another chest'; }
           });
         });
         sub.textContent = 'Click each card to flip it. Move your pointer over it to tilt.';
@@ -325,7 +361,7 @@
     function openDeck() {
       opener = document.activeElement;
       deck.hidden = false; document.body.style.overflow = 'hidden';
-      renderCollection(); showPack(); btnOpen.textContent = 'Tear open a pack';
+      renderCollection(); showPack(); btnOpen.textContent = 'Open a chest';
     }
     function closeDeck() {
       deck.hidden = true; document.body.style.overflow = '';
@@ -337,7 +373,7 @@
     deck.addEventListener('click', function (e) { if (e.target === deck) closeDeck(); });
     addEventListener('keydown', function (e) { if (e.key === 'Escape' && !deck.hidden) closeDeck(); });
     btnOpen.addEventListener('click', showPack);
-    btnReset.addEventListener('click', function () { owned = []; save(); renderCollection(); showPack(); btnOpen.textContent = 'Tear open a pack'; });
+    btnReset.addEventListener('click', function () { owned = []; save(); renderCollection(); showPack(); btnOpen.textContent = 'Open a chest'; });
     renderCollection();
   })();
 })();
