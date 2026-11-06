@@ -5,7 +5,8 @@ Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting
 ## Creative feature: talk to it, spin it, hear it
 
 - **Voice portfolio.** Tap the mic and say "projects", "skills", "journey", "contact", "spin the ring", "Varshik", "mute" and more. A live waveform follows your voice, the page scrolls there and answers back. No microphone? Type the same commands in the box. (Voice needs Chrome or Edge.)
-- **3D ring of my world.** A draggable 3D carousel of real photos from my AWS talks, classroom sessions and the PipeSense robot. Hover pulls a card closer, press pushes it back, click opens its story.
+- **3D ring of my world.** A draggable 3D carousel of 12 real moments: AWS talks, classroom sessions, the PipeSense robot and the CanSat flight board and ground station. Hover pulls a card closer, press pushes it back, click opens its story and a button reads it aloud.
+- **Watch me work.** Short clips of my sessions plus the Open Source Connect Global community stream.
 - **Sound and water.** Every click makes a soft synthesized sound and sends water ripples across the page. The speaker button mutes everything.
 
 ## Other interactions

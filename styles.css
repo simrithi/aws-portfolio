@@ -616,3 +616,23 @@ h1 em::after { content: ""; position: absolute; left: 2%; right: 2%; bottom: -.0
   .say { bottom: 78px; font-size: .95rem; }
 }
 @media (prefers-reduced-motion: reduce) { .hint-mic::after, .r3-hint, .voice-dock .mic[aria-pressed="true"], .wr i { animation: none; } .progress { transition: none; } }
+
+/* ===== Watch section, story button ===== */
+.watch { background: #ffffeb; }
+.vgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 12px; }
+.vid { margin: 0; border: 1.5px solid #1a1a1a; border-radius: 28px; overflow: hidden; background: #fffff6; transition: transform .3s var(--ease), box-shadow .3s; }
+.vid:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -22px rgba(3, 79, 70, .5); }
+.vid video, .vid iframe { width: 100%; aspect-ratio: 16 / 10; display: block; background: #111; object-fit: contain; border: 0; }
+.vid figcaption { padding: 14px 18px 16px; font-size: .98rem; color: #3b3b33; }
+.vid figcaption a { color: #034f46; font-weight: 600; text-underline-offset: 3px; }
+.yt { width: 100%; aspect-ratio: 16 / 10; display: grid; place-content: center; justify-items: center; gap: 10px; text-align: center; border: 0; cursor: pointer; background: radial-gradient(circle at 30% 30%, #f0d7ff, #034f46 75%); color: #ffffeb; font-family: var(--sans); padding: 24px; }
+.yt strong { font: 400 clamp(1.5rem, 3vw, 2.2rem) var(--serif); }
+.yt small { opacity: .9; font-size: .95rem; }
+.yt-play { width: 68px; height: 68px; border-radius: 50%; background: #ffffeb; position: relative; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); transition: transform .3s var(--ease); }
+.yt-play::after { content: ""; position: absolute; left: 27px; top: 20px; border-left: 22px solid #034f46; border-top: 14px solid transparent; border-bottom: 14px solid transparent; }
+.yt:hover .yt-play { transform: scale(1.1); }
+.hear { margin-top: 16px; padding: 10px 22px; border-radius: 12px; border: 1.5px solid #ffffeb; background: transparent; color: #ffffeb; font: 600 1rem var(--sans); cursor: pointer; transition: background .2s, color .2s; }
+.hear:hover { background: #f0d7ff; color: #1a1a1a; border-color: #f0d7ff; }
+.hear[hidden] { display: none; }
+.r3-detail { min-height: 12rem; }
+@media (max-width: 900px) { .vgrid { grid-template-columns: 1fr; } }

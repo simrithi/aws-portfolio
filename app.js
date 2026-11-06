@@ -210,8 +210,8 @@
     document.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
     upd();
 
-    var ids = ['top', 'about', 'moments', 'skills', 'projects', 'journey', 'contact'];
-    var labels = { top: 'Top', about: 'About', moments: 'Moments', skills: 'Skills', projects: 'Projects', journey: 'Journey', contact: 'Contact' };
+    var ids = ['top', 'about', 'moments', 'watch', 'skills', 'projects', 'journey', 'contact'];
+    var labels = { top: 'Top', about: 'About', moments: 'Moments', watch: 'Watch', skills: 'Skills', projects: 'Projects', journey: 'Journey', contact: 'Contact' };
     var dots = $('#dots'), dotEls = {};
     ids.forEach(function (id) {
       var a = document.createElement('a'); a.href = '#' + id; a.dataset.l = labels[id]; a.setAttribute('aria-label', labels[id]);
@@ -299,7 +299,7 @@
   /* ================= Journey ================= */
   (function journey() {
     var items = $$('#jList li'), num = $('#jNum'), now = $('#jNow'), list = $('#jList'); if (!items.length) return;
-    var shown = 1;
+    var shown = 1; var tot = $('#jTotal'); if (tot) tot.textContent = '/ 0' + items.length;
     function roll(to) {
       if (reduced) { num.textContent = '0' + to; shown = to; return; }
       var from = shown, start = performance.now(); shown = to;
@@ -351,6 +351,7 @@
       target = nearest(-i * step); auto = false;
       $('#r3Title').textContent = cards[i].dataset.title; $('#r3Story').textContent = cards[i].dataset.story;
       if (hint) hint.classList.add('gone'); if (!silent) sfx.chime();
+      var hb = $('#r3Hear'); if (hb) hb.hidden = false;
     }
     wrap.addEventListener('pointerdown', function (e) {
       drag = true; moved = 0; lastX = e.clientX; lastT = performance.now(); target = null; auto = true; vel = 0; wrap.classList.add('drag');
@@ -380,6 +381,26 @@
     return { spin: function () { auto = true; target = null; vel = 22; if (hint) hint.classList.add('gone'); sfx.whoosh(); } };
   })();
 
+
+  /* ================= Hear the story, video and YouTube facade ================= */
+  (function media() {
+    var hb = $('#r3Hear'); if (hb) { hb.hidden = true; hb.addEventListener('click', function () {
+      if (!('speechSynthesis' in window)) return;
+      try { speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance($('#r3Title').textContent + '. ' + $('#r3Story').textContent); u.rate = 1.02; u.pitch = 1.08; speechSynthesis.speak(u); } catch (e) {}
+    }); }
+    $$('.vid video').forEach(function (v) {
+      v.addEventListener('play', function () { $$('.vid video').forEach(function (o) { if (o !== v) o.pause(); }); });
+    });
+    $$('.yt').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + b.dataset.id + '?autoplay=1&rel=0';
+        f.title = 'Open Source Connect Global 2026 session'; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+        f.loading = 'lazy'; b.replaceWith(f);
+      });
+    });
+  })();
+
   /* ================= Voice and typed commands ================= */
   (function voice() {
     var dock = $('#voiceDock'), mic = $('#micBtn'), say = $('#say'), form = $('#cmdForm'), input = $('#cmdInput'), snd = $('#sndBtn'), bars = $$('#wave i'), heroMic = $('#heroMic');
@@ -401,6 +422,7 @@
       [/help|what can i say|commands/, function () { show('Try: about, moments, skills, projects, journey, contact, spin the ring, Varshik, or mute.', 7000); speak('Try about, moments, skills, projects, journey, contact, or spin the ring.'); }],
       [/unmute|sound on|turn on sound/, function () { sfx.set(true); setSnd(); show('Sound on'); }],
       [/mute|silence|quiet|sound off/, function () { show('Sound off'); sfx.set(false); setSnd(); }],
+      [/watch|video|clip|youtube|stream|session/, function () { go('watch', 'Here are some clips of me at work.'); }],
       [/spin|ring|3d|three d|moment|photo|picture|gallery/, function () { go('moments'); setTimeout(function () { ring.spin(); }, 650); show('<em>Spinning my world for you.</em>'); speak('Spinning my world for you.'); }],
       [/varshik|flood/, function () { go('varshik', 'Varshik, my flood risk map.'); }],
       [/career ?lens|placement/, function () { go('careerlens', 'CareerLens, my serverless placement platform.'); }],
