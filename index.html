@@ -10,7 +10,7 @@
 <meta property="og:description" content="AWS campus leader, full-stack builder, creator of Varshik. Open the loot chest, collect all 8 superpower cards and unlock a secret.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/pixelify.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/garamond.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -31,6 +31,7 @@
 <main id="top">
   <section class="hero" aria-label="Introduction">
     <canvas id="ridges" aria-hidden="true"></canvas>
+    <i class="sp s1" aria-hidden="true"></i><i class="sp s2" aria-hidden="true"></i><i class="sp s3" aria-hidden="true"></i><i class="sp s4" aria-hidden="true"></i>
     <svg class="ring" viewBox="0 0 340 340" aria-hidden="true"><defs><path id="ringPath" d="M170 170 m-135 0 a135 135 0 1 1 270 0 a135 135 0 1 1 -270 0"/></defs><text><textPath href="#ringPath">AWS Student Builder Campus Leader. 1st of 300 teams. Top 5 at IIT Delhi. 20+ live projects on one CRM. Varshik maps flood risk. </textPath></text></svg>
     <div class="hero-copy">
       <h1>I build cloud systems<br>that <em>hold up.</em></h1>
@@ -115,9 +116,18 @@
 
   <section id="projects" class="block projects" aria-labelledby="projectsTitle">
     <h2 id="projectsTitle">Projects</h2>
-    <div class="bento">
-      <article class="tile t-varshik spot" id="varshik">
-        <div class="t-media">
+    <p class="section-sub">Four things I built, one spotlight each.</p>
+    <div class="spotlights">
+      <article class="spot-panel spot sp-varshik" id="varshik" style="--i:0">
+        <span class="num" aria-hidden="true">01</span>
+        <div class="sp-copy">
+          <h3>Varshik</h3>
+          <p class="kicker">A street-level flood-risk map</p>
+          <p>A vision pipeline on Amazon SageMaker (SegFormer, Depth Anything V2, YOLOv8) scores 60 m road cells for waterlogging risk from dashcam frames, terrain and rainfall. Amazon Bedrock writes the plain-language briefs. React and MapLibre, served from S3 and CloudFront.</p>
+          <p class="fine">Top-risk cells matched Delhi's official flood hotspots. Results are preliminary.</p>
+          <p class="links"><a href="https://d24wvc44c3vaxz.cloudfront.net/" rel="noopener">Live demo</a><a href="https://github.com/simrithi/floodlens" rel="noopener">GitHub</a><a href="https://youtu.be/nPr0dBLUtUk" rel="noopener">Video</a><a href="https://builder.aws.com/content/3KYn3Kwff6ZOhYY2RbAhKFBszHr/varshik" rel="noopener">Blog post</a></p>
+        </div>
+        <div class="sp-visual" data-liquid>
           <div class="vtabs" role="tablist" aria-label="Varshik diagrams">
             <button role="tab" aria-selected="true" data-img="assets/varshik-architecture.png" data-w="2400" data-h="1646" data-alt="Varshik system architecture: dashcam frames to Amazon SageMaker, S3, Bedrock and CloudFront">Architecture</button>
             <button role="tab" aria-selected="false" data-img="assets/varshik-pipeline.png" data-w="2400" data-h="1406" data-alt="Varshik data pipeline from terrain and dashcam data to risk scores">Data pipeline</button>
@@ -125,79 +135,88 @@
           </div>
           <img id="vimg" src="assets/varshik-architecture.png" width="2400" height="1646" loading="lazy" alt="Varshik system architecture: dashcam frames to Amazon SageMaker, S3, Bedrock and CloudFront">
         </div>
-        <div class="t-body">
-          <h3>Varshik, a street-level flood-risk map</h3>
-          <p>A vision pipeline on Amazon SageMaker (SegFormer, Depth Anything V2, YOLOv8) scores 60 m road cells for waterlogging risk from dashcam frames, terrain and rainfall. Amazon Bedrock writes the plain-language briefs. React and MapLibre, served from S3 and CloudFront.</p>
-          <p class="fine">Top-risk cells matched Delhi's official flood hotspots. Results are preliminary.</p>
-          <p class="links"><a href="https://d24wvc44c3vaxz.cloudfront.net/" rel="noopener">Live demo</a><a href="https://github.com/simrithi/floodlens" rel="noopener">GitHub</a><a href="https://youtu.be/nPr0dBLUtUk" rel="noopener">Video</a><a href="https://builder.aws.com/content/3KYn3Kwff6ZOhYY2RbAhKFBszHr/varshik" rel="noopener">Blog post</a></p>
-        </div>
       </article>
 
-      <article class="tile t-career spot" id="careerlens">
-        <div class="t-body">
+      <article class="spot-panel spot sp-career" id="careerlens" style="--i:1">
+        <span class="num" aria-hidden="true">02</span>
+        <div class="sp-copy">
           <h3>CareerLens</h3>
-          <p class="kicker">Serverless placement platform</p>
+          <p class="kicker">A serverless placement platform</p>
           <p>Students get a re-plannable roadmap, honest ATS feedback and an applications tracker. Recruiters get blind, skill-first ranking. Built solo on Cognito, API Gateway, about 30 Lambda functions, DynamoDB, S3 and EventBridge, with an LLM that turns messy placement notices into structured drives.</p>
           <p class="stack">Lambda, API Gateway, DynamoDB, Cognito, EventBridge, Amplify, React, Gemini</p>
           <p class="links"><a href="https://github.com/simrithi/careerlens-full" rel="noopener">GitHub</a></p>
         </div>
-        <div class="t-shot"><img src="assets/careerlens.jpg" width="1440" height="900" loading="lazy" alt="CareerLens sign-in screen: Every engineering graduate deserves to know why they are not getting hired"></div>
+        <div class="sp-visual" data-liquid><img src="assets/careerlens.jpg" width="1440" height="900" loading="lazy" alt="CareerLens sign-in screen: Every engineering graduate deserves to know why they are not getting hired"></div>
       </article>
 
-      <article class="tile t-flash spot" id="flashsale">
-        <h3>FlashSale</h3>
-        <p class="kicker">Oversell-proof flash-sale inventory</p>
-        <p>One Redis Lua script makes check-and-decrement a single atomic step, so two buyers can never claim the last unit. Add a virtual waiting room, token-bucket rate limiting behind Nginx and RabbitMQ workers that release unpaid stock.</p>
-        <pre class="code" aria-label="Simplified version of the reservation script"><code><span class="c">-- the core idea, simplified</span>
+      <article class="spot-panel spot sp-flash" id="flashsale" style="--i:2">
+        <span class="num" aria-hidden="true">03</span>
+        <div class="sp-copy">
+          <h3>FlashSale</h3>
+          <p class="kicker">Inventory that never oversells</p>
+          <p>One Redis Lua script makes check-and-decrement a single atomic step, so two buyers can never claim the last unit. A virtual waiting room, token-bucket rate limiting behind Nginx and RabbitMQ workers that release unpaid stock complete it.</p>
+          <p class="fine">Zero oversells under Locust load tests.</p>
+          <p class="stack">Node.js, Redis, RabbitMQ, PostgreSQL, Nginx, Docker</p>
+        </div>
+        <div class="sp-visual" data-liquid>
+          <pre class="code" aria-label="Simplified version of the reservation script"><code><span class="c">-- the core idea, simplified</span>
 <span class="k">local</span> stock = tonumber(redis.call(<span class="s">'GET'</span>, KEYS[1]))
 <span class="k">if</span> stock <span class="k">and</span> stock &gt; 0 <span class="k">then</span>
   redis.call(<span class="s">'DECR'</span>, KEYS[1])
   <span class="k">return</span> 1
 <span class="k">end</span>
 <span class="k">return</span> 0</code></pre>
-        <p class="fine">Zero oversells under Locust load tests.</p>
-        <p class="stack">Node.js, Redis, RabbitMQ, PostgreSQL, Nginx, Docker</p>
+        </div>
       </article>
 
-      <article class="tile t-pipe spot" id="pipesense">
-        <h3>PipeSense</h3>
-        <p class="kicker">Pipe-inspection robot</p>
-        <p>Three-sensor fusion localises defects inside pipes. YOLO runs offline on the robot. Patent in progress.</p>
-        <ul class="bigstats"><li><strong>1st</strong><span>of 300 teams, Datathon</span></li><li><strong>7</strong><span>defect types detected</span></li><li><strong>3</strong><span>sensors fused</span></li></ul>
-        <p class="stack">ESP32, ESP32-CAM, YOLO</p>
+      <article class="spot-panel spot sp-pipe" id="pipesense" style="--i:3">
+        <span class="num" aria-hidden="true">04</span>
+        <div class="sp-copy">
+          <h3>PipeSense</h3>
+          <p class="kicker">A pipe-inspection robot</p>
+          <p>Three-sensor fusion localises defects inside pipes, and YOLO runs offline on the robot. Won the PipeSense Datathon with the Robotics Club and IEEE. Patent in progress.</p>
+          <p class="stack">ESP32, ESP32-CAM, YOLO</p>
+        </div>
+        <div class="sp-visual" data-liquid>
+          <ul class="bigstats"><li><strong>1st</strong><span>of 300 teams at the Datathon</span></li><li><strong>7</strong><span>defect types detected</span></li><li><strong>3</strong><span>sensors fused</span></li></ul>
+        </div>
       </article>
     </div>
     <p class="more">Also: a patent filed for shipment clustering and route optimisation, and ErgoGuard, a drafted paper on real-time webcam posture monitoring.</p>
   </section>
 
   <section id="journey" class="block journey" aria-labelledby="journeyTitle">
-    <div class="journey-head">
-      <h2 id="journeyTitle">Journey</h2>
-      <p class="section-sub">Where I have worked, led and competed.</p>
+    <div class="j-wrap">
+      <aside class="j-side">
+        <h2 id="journeyTitle">Journey</h2>
+        <p class="section-sub">Where I have worked, led and competed. Scroll to move along.</p>
+        <div class="j-count" aria-hidden="true"><span id="jNum">01</span><small>/ 04</small></div>
+        <p class="j-now" id="jNow" aria-hidden="true"></p>
+      </aside>
+      <ol class="j-list" id="jList">
+        <li data-short="UI/UX and QA at Luna Eternal">
+          <p class="when">May - Jul 2026</p>
+          <h3>UI/UX Design and QA Associate, Luna Eternal</h3>
+          <p>Designed screens and ran QA for 3 Android apps, including Brevi, live on Google Play.</p>
+        </li>
+        <li data-short="AWS Student Builder Campus Leader">
+          <p class="when">Aug - Sep 2026</p>
+          <h3>AWS Student Builder Campus Leader</h3>
+          <p>Recognised as one of the top campus leaders. Grew a 300+ student cloud community, ran sessions with live AWS demos and reached 200+ students through pitches and tablings.</p>
+        </li>
+        <li id="novac" data-short="Full stack intern at Novac">
+          <p class="when">Nov 2025 - Jan 2026</p>
+          <h3>Full Stack Software Engineering Intern, Novac Technology Solutions</h3>
+          <p>Shipped a production, responsive platform (Figma, React, Node.js and Express, MongoDB, on AWS) managing 20+ live construction projects. Built CRM modules end to end in a two-person team, with CI/CD and production support.</p>
+        </li>
+        <li data-short="Frontend contributor, Twin Cities Tamil Association">
+          <p class="when">Remote</p>
+          <h3>Frontend Contributor, Twin Cities Tamil Association</h3>
+          <p>Built 3 responsive pages for the live site <a href="https://tctamn.org" rel="noopener">tctamn.org</a>.</p>
+        </li>
+      </ol>
     </div>
-    <ol class="timeline">
-      <li>
-        <p class="when">May - Jul 2026</p>
-        <h3>UI/UX Design and QA Associate, Luna Eternal</h3>
-        <p>Designed screens and ran QA for 3 Android apps, including Brevi, live on Google Play.</p>
-      </li>
-      <li>
-        <p class="when">Aug - Sep 2026</p>
-        <h3>AWS Student Builder Campus Leader</h3>
-        <p>Recognised as one of the top campus leaders. Grew a 300+ student cloud community, ran sessions with live AWS demos and reached 200+ students through pitches and tablings.</p>
-      </li>
-      <li id="novac">
-        <p class="when">Nov 2025 - Jan 2026</p>
-        <h3>Full Stack Software Engineering Intern, Novac Technology Solutions</h3>
-        <p>Shipped a production, responsive platform (Figma, React, Node.js and Express, MongoDB, on AWS) managing 20+ live construction projects. Built CRM modules end to end in a two-person team, with CI/CD and production support.</p>
-      </li>
-      <li>
-        <p class="when">Remote</p>
-        <h3>Frontend Contributor, Twin Cities Tamil Association</h3>
-        <p>Built 3 responsive pages for the live site <a href="https://tctamn.org" rel="noopener">tctamn.org</a>.</p>
-      </li>
-    </ol>
-    <ul class="wins" aria-label="Achievements">
+    <ul class="wins" id="wins" aria-label="Achievements, drag to scroll">
       <li><strong>Top 5 of 300</strong><span>IIT Delhi Ideathon 2026</span></li>
       <li><strong>Top 35 in India</strong><span>IN-SPACe CANSAT, built the ground station and flight software</span></li>
       <li><strong>10+ hackathons</strong><span>AWS Bharat Builds, Amazon ML Challenge, NPCI x Citi DRUNIX, Paytm Build for India</span></li>
