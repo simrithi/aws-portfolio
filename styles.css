@@ -788,7 +788,8 @@ kbd { font: 600 .8rem var(--mono); background: #fff; border: 1.5px solid #1a1a1a
 html.gl { background: #ffffeb; }
 html.gl #world { display: block; position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; }
 html.gl body { background: transparent; background-image: none; }
-html.gl #ridges, html.gl .hero::before, html.gl .hero::after { display: none; }
+html.gl .hero::before, html.gl .hero::after { display: none; }
+html.gl #ridges { display: block; opacity: .35; }
 html.gl .ring { opacity: .8; }
 html.gl .block { margin-top: 0; border-radius: 0; padding-top: clamp(72px, 10vw, 130px); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 html.gl .block::before { display: none; }
@@ -809,12 +810,13 @@ html.gl .r3-hint { bottom: 8vh; }
 html.gl .hero-copy { text-shadow: 0 0 22px #ffffeb, 0 0 8px #ffffeb; }
 @media (max-width: 760px) { html.gl #moments { min-height: 100vh; } html.gl .ring3d { height: 62vh; } }
 
-/* black continuous scroll band under the hero */
-.marquee { position: relative; z-index: 3; background: #1a1a1a; color: #ffffeb; overflow: hidden; border-block: 1.5px solid #1a1a1a; padding: 18px 0; }
-.mq-track { display: flex; width: max-content; animation: mq 38s linear infinite; }
+/* black continuous scroll band under the hero (Wispr Flow style: big serif words, wide spaces) */
+.marquee { position: relative; z-index: 3; background: #1a1a1a; color: #ffffeb; overflow: hidden; padding: clamp(26px, 4vw, 44px) 0; }
+.mq-track { display: flex; width: max-content; animation: mq 45s linear infinite; }
 .marquee:hover .mq-track { animation-play-state: paused; }
 .mq-set { display: flex; align-items: center; flex-shrink: 0; }
-.mq-set span { font: 400 clamp(1.2rem, 2.4vw, 1.9rem) "EB Garamond", Georgia, serif; font-style: italic; white-space: nowrap; padding: 0 28px; }
-.mq-set i { width: 9px; height: 9px; border-radius: 50%; background: #f0d7ff; flex-shrink: 0; }
+.mq-set span { font: 400 clamp(1.8rem, 4.2vw, 3.4rem)/1 "EB Garamond", Georgia, serif; white-space: nowrap; padding: 0 clamp(36px, 6vw, 96px); }
+.mq-set span:nth-of-type(even) { font-style: italic; color: #f0d7ff; }
+.mq-set i { display: none; }
 @keyframes mq { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .mq-track { animation: none; } }

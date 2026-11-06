@@ -52,7 +52,7 @@
   var tGeo = new T.PlaneGeometry(170, 170, 70, 70); tGeo.rotateX(-Math.PI / 2);
   var tBase = tGeo.attributes.position.array.slice();
   var terrain = new T.Mesh(tGeo, new T.MeshBasicMaterial({ color: 0x034f46, wireframe: true, transparent: true, opacity: 0.4 }));
-  terrain.position.set(0, -10, -10); g0.add(terrain);
+  terrain.position.set(0, -10, -10); terrain.visible = false; /* netted wave removed */
   confetti(g0, 10, 26);
 
   /* ---------- station 1: about: orbit rings and drifting particles ---------- */
@@ -276,10 +276,12 @@
     camera.lookAt(pointer.x * 1.2, 0.5 - pointer.y * 0.6, cz - 30);
     // background colour follows the section under the viewport centre
     tmpColor.set(PAL[i0]); clear.copy(tmpColor).lerp(new T.Color(PAL[i1]), f); renderer.setClearColor(clear, 1); scene.fog.color.copy(clear);
-    // terrain waves
+    // terrain waves (hidden)
+    if (false) {
     var pos = tGeo.attributes.position, arr = pos.array;
     for (var v = 0; v < arr.length; v += 3) { var x = tBase[v], z = tBase[v + 2]; arr[v + 1] = Math.sin(x * 0.11 + t * 0.7) * 2.2 + Math.cos(z * 0.09 + t * 0.55) * 2 + Math.sin((x + z) * 0.05 + t * 0.3) * 2.4; }
     pos.needsUpdate = true;
+    }
     // ambient motion
     floaters.forEach(function (m) { m.rotation.x += m.userData.spin; m.rotation.y += m.userData.spin * 1.3; m.position.y = m.userData.y0 + Math.sin(t * m.userData.bob + m.userData.ph) * 1.2; });
     rings.forEach(function (r, k) { r.rotation.z += 0.0025 * (k + 1); r.rotation.x += 0.0008; });
