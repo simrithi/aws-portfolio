@@ -6,14 +6,19 @@
 <title>Simrithi S | Cloud and Backend Engineer</title>
 <meta name="description" content="Simrithi S, a cloud and backend focused CSE student in Chennai. AWS, distributed systems and APIs that hold up under load. Talk to the portfolio, spin the 3D ring, watch me work.">
 <meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffeb">
 <meta property="og:title" content="Simrithi S | Cloud and Backend Engineer">
 <meta property="og:description" content="Cloud and backend focused: AWS, distributed systems and APIs that hold up under load. A voice-driven, 3D interactive portfolio.">
+<meta property="og:image" content="assets/photos/simrithi-outdoors.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/garamond.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<noscript><p style="margin:0;padding:14px;background:#034f46;color:#ffffeb;text-align:center">This portfolio is interactive. Please turn on JavaScript for the 3D ring, voice and animations. Links: <a style="color:#f0d7ff" href="https://github.com/simrithi">GitHub</a>, <a style="color:#f0d7ff" href="https://www.linkedin.com/in/simrithi-s/">LinkedIn</a>.</p></noscript>
 <a class="skip" href="#about">Skip to content</a>
 <div class="progress" id="progress" aria-hidden="true"></div>
 <div class="banner">Portfolio entry for the AWS Student Builder Challenge</div>
@@ -441,6 +446,7 @@
     <label>Speed <input type="range" id="vRate" min="0.8" max="1.4" step="0.05" value="1" aria-label="Speaking speed"></label>
     <label>Voice <select id="vVoice" aria-label="Voice"></select></label>
     <label class="chk"><input type="checkbox" id="vSpeak" checked> Speak answers</label>
+    <label class="chk"><input type="checkbox" id="vOwn" checked disabled> My own voice</label>
     <label class="chk"><input type="checkbox" id="vKeep"> Keep listening</label>
   </div>
   <ol class="vlog" id="vlog" aria-live="polite" aria-label="Conversation"></ol>

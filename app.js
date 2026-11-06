@@ -497,37 +497,37 @@
     /* ---------- what the assistant knows (all from my resumes) ---------- */
     var DEMO = 'https://d24wvc44c3vaxz.cloudfront.net/'; var CLDEMO = 'https://main.d1afxz58feyue1.amplifyapp.com/';
     var KB = [
-      { re: /why .*(flood|varshik)|inspiration|motivat|story behind|what inspired/, id: 'varshik', a: "I grew up in Tamil Nadu and saw what floods do to families. Varshik began with one question: what if we could see which roads will flood before it rains?", more: ["Tell me about Varshik", "Open the live demo"] },
-      { re: /varshik|flood|waterlog/, id: 'varshik', a: "Varshik is a street level flood risk map. Vision models on Amazon SageMaker score sixty metre road cells for waterlogging from dashcam frames, terrain and rainfall, and Amazon Bedrock writes plain language briefs. Its top risk cells matched Delhi's official flood hotspots, though the results are preliminary.", more: ["Why did you build it?", "Open the live demo", "Tell me about CareerLens"] },
-      { re: /career ?lens|placement/, id: 'careerlens', a: "CareerLens is a serverless placement platform I built solo on AWS. About thirty Lambda functions, API Gateway, DynamoDB, Cognito and EventBridge power a student portal and a company portal, and an LLM turns messy placement notices into structured drives.", more: ["Tell me about FlashSale", "What are your cloud skills?"] },
-      { re: /flash ?sale|oversell|inventory|redis|lua/, id: 'flashsale', a: "FlashSale is an inventory system that never oversells. One Redis Lua script makes check and decrement a single atomic step, a virtual waiting room admits buyers in batches, and RabbitMQ workers release unpaid stock. Zero oversells under Locust load tests.", more: ["Tell me about LedgerLite", "What are your backend skills?"] },
-      { re: /pipe ?sense|robot|pipe inspection|datathon/, id: 'pipesense', a: "PipeSense is a pipe inspection robot. Three sensors fuse into one position estimate, an ESP32 drives it and YOLO detects seven defect types offline. We won first place out of three hundred teams at the Datathon with the Robotics Club and IEEE, and the patent is in progress.", more: ["Tell me about the satellite", "Spin the ring"] },
-      { re: /ledger|payment|upi|saga|outbox/, id: 'ledgerlite', a: "LedgerLite is a UPI style distributed payment ledger in Java and Spring Boot. It uses idempotency keys, saga based transfers and the transactional outbox pattern, and survived random node kills with zero double debits.", more: ["Tell me about Surge", "Tell me about RaftKV"] },
-      { re: /surge|ride|uber|h3|hexagon/, id: 'surge', a: "Surge is a real time ride matching engine in Go. It indexes live driver locations into Uber H3 hexagons, matches riders by ETA over gRPC, and computes surge from Kafka streams, validated with a fleet simulator across Chennai.", more: ["Tell me about RaftKV"] },
-      { re: /raft|consensus|key ?value|distributed (store|database)/, id: 'raftkv', a: "RaftKV is a distributed key value store with the Raft consensus algorithm written from scratch: leader election, log replication, snapshots and linearizable reads, tested with Jepsen style partition and crash tests.", more: ["What are your backend skills?"] },
-      { re: /cansat|can-?sat|satellite|in-?space|defionix|ground station|flight software/, id: "moments", spin: true, a: "For the IN-SPACe CANSAT competition our team Defionix designed a seven U cylindrical satellite with a Raspberry Pi 5, IMU, barometer, NavIC GPS and a LoRa radio. I built the ground station and the flight software. We were a PDR finalist in the top thirty five in India and went all the way to the launch round, but funding fell short at the very end and we could not fly it.", more: ["Why did it not launch?", "Tell me about the ground station", "Tell me about PipeSense"] },
-      { re: /funding|fail|failure|setback|lesson|did not launch|didn t launch|why .*(launch|fly)|couldn t|could not|what went wrong|biggest challenge/, id: "moments", spin: true, a: "We reached the launch round, then funding fell short at the very end, so we could not fly CAN-7USAT. The satellite hardware alone was about ninety seven thousand rupees and the ground station another one point six five lakh. I took one lesson from it: treat funding as part of the engineering plan from day one.", more: ["Tell me about the satellite", "What have you won?"] },
-      { re: /article|blog|writing|wrote|written|publication|builder center article/, id: "writing", a: "I write about what I build on AWS Builder Center. My article is Varshik: Building an AI Powered Urban Flood Risk Analysis Platform on AWS, about running three vision models on one SageMaker endpoint.", more: ["Tell me about Varshik", "Open the live demo"] },
-      { re: /ideathon|iit|delhi/, id: 'journey', a: "I led the pitch preparation and presentation for the team that placed in the top five out of three hundred teams at the IIT Delhi Ideathon 2026, and I also created the demo video.", more: ["How many hackathons?", "What have you won?"] },
-      { re: /hackathon|competition|won|win|award|prize|achievement|accomplish/, id: 'journey', a: "I have taken part in more than ten hackathons, including AWS Bharat Builds, the Amazon ML Challenge, NPCI and Citi DRUNIX and Paytm Build for India. I won first place in the PipeSense Datathon, was a CANSAT PDR finalist, and placed in the top five at the IIT Delhi Ideathon.", more: ["Tell me about PipeSense", "Tell me about the satellite"] },
-      { re: /patent|research|paper|publication|ergoguard|explainable|interpretab/, id: 'journey', a: "I am an inventor on a patent application for shipment clustering and route optimisation. My research covers explainable AI for cyber threat attribution, a drafted paper on ErgoGuard posture monitoring, and offline pipe defect detection.", more: ["What are your AI skills?"] },
-      { re: /aws|campus leader|student builder|builder center|community|300|cloud community/, id: 'moments', a: "I am an AWS Student Builder Campus Leader. I grew a three hundred plus student cloud community, ran sessions with live AWS demos and reached over two hundred students through pitches and tablings.", more: ["Spin the ring", "Show me the videos"] },
-      { re: /novac|shriram|construction/, id: "journey", a: "At Novac Technology Solutions, part of the Shriram Group, I was a software engineering intern on the backend and cloud side of a production platform that manages more than twenty live construction projects. In a two person team I worked on REST API design, MongoDB data modelling, CI CD pipelines, deployment on AWS and production support.", more: ["What are your backend skills?", "What are your cloud skills?"] },
-      { re: /intern|experience|work experience|job|fresher|role/, id: "journey", a: "I am looking for cloud and backend internships. So far I have interned at Novac Technology Solutions on the backend and cloud side, built and tested distributed systems and AWS projects, led a three hundred plus student community, contributed to open source, and taken a satellite design all the way to the launch round.", more: ["What are your backend skills?", "Tell me about the satellite", "How can I contact you?"] },
-      { re: /open ?source|aossie|osc|osconnect|livestream|live stream/, id: 'watch', a: "I contribute to open source with AOSSIE, and I am Community Lead and a frontend developer for Open Source Connect Global 2026, where I coordinate international livestream events and built parts of the official conference website.", more: ["Show me the videos"] },
-      { re: /cgpa|gpa|education|college|university|srm|degree|school|igcse|topper|marks|percentage|study|studying/, id: 'about', a: "I study B.Tech Computer Science and Engineering at SRM Institute of Science and Technology, Ramapuram, with a CGPA of 9.10 out of 10. In school I was the Cambridge IGCSE school topper in Tamil Nadu with ninety three point five percent.", more: ["Tell me about your community", "What are your skills?"] },
-      { re: /certif|microsoft|sql server|coursera/, id: 'journey', a: "I am a Microsoft Certified SQL Server Professional, covering relational database design, advanced querying, security and BI integration.", more: ["What are your skills?"] },
-      { re: /ai skill|machine learning|\bml\b|langchain|langgraph|agent|\brag\b|\bllm\b|faiss|yolo|bedrock|gemini/, id: 'skills', a: "On the AI side I work with Amazon Bedrock and the Gemini API, build multi agent systems with LangChain and LangGraph, run retrieval augmented generation with FAISS, and train and deploy vision models like YOLO on SageMaker.", more: ["What are your cloud skills?"] },
-      { re: /cloud skill|aws service|lambda|dynamodb|serverless|sagemaker|amplify|cloudfront|s3/, id: 'skills', a: "My AWS toolbox is Lambda, API Gateway, DynamoDB, S3 and CloudFront, Amplify, SageMaker, Bedrock, Cognito, EventBridge and CloudWatch, plus Docker and GitHub Actions for delivery.", more: ["What are your backend skills?", "Tell me about CareerLens"] },
-      { re: /backend|back end|distributed|java|spring|golang|\bgo\b|kafka|grpc|microservice/, id: 'skills', a: "For backend and distributed systems I use Java and Spring Boot, Go with gRPC, Kafka, Redis, RabbitMQ, Nginx and PostgreSQL, and I test them with fault injection and load tests.", more: ["Tell me about LedgerLite", "Tell me about Surge"] },
-      { re: /language|programming|python|kotlin|c\+\+|javascript/, id: 'skills', a: "I write Java, Python, JavaScript, Go, Kotlin, C, C plus plus and SQL, and I build front ends with React and Angular and mobile apps with Flutter and Kotlin Multiplatform.", more: ["What are your backend skills?"] },
-      { re: /skill|superpower|tech stack|technolog|good at|expertise|strength/, id: 'skills', a: "My superpowers are cloud and backend engineering: AWS, distributed systems in Java and Go, AI and agentic systems, and explaining all of it clearly as a speaker and community leader.", more: ["What are your cloud skills?", "What are your AI skills?", "What are your backend skills?"] },
-      { re: /contact|email|reach|hire|hiring|available|availability|internship|opportunit|open to|recruit|work with/, id: 'contact', a: "I am open to internships in cloud and backend engineering. The fastest way to reach me is email at simrithi dot work at gmail dot com, or message me on LinkedIn.", more: ["Open LinkedIn", "Open GitHub"] },
-      { re: /where|location|city|based|chennai|tamil nadu|india/, id: 'about', a: "I am based in Chennai, Tamil Nadu, and I grew up in Tamil Nadu.", more: ["Who are you?"] },
-      { re: /how (did you|was|is|were) .*(build|built|made|create)|this (site|website|portfolio|page)|tech behind|made with|under the hood/, id: 'top', a: "This site is plain HTML, CSS and JavaScript with no framework. The 3D ring is pure CSS 3D, the sounds are synthesized live with WebAudio, you are talking to the browser's speech recognition, and it is hosted on AWS Amplify.", more: ["Spin the ring", "Give me a tour"] },
-      { re: /fun fact|something (interesting|unique|cool)|surprise|different|unique|special|stand out/, id: 'moments', spin: true, a: "Fun fact: I built a satellite ground station, a pipe inspecting robot and a flood risk map, and I also teach other students how to do the same. Spin the ring to see the proof.", more: ["Tell me about the satellite", "Tell me about PipeSense"] },
-      { re: /who are you|introduce|yourself|about (you|simrithi)|who is simrithi|hello|^hi\b|^hey\b/, id: 'about', a: "I am Simrithi, a cloud and backend focused Computer Science student at SRM in Chennai. I build on AWS and ship distributed systems that hold up under load, and I lead a three hundred plus student cloud community.", more: ["What are your skills?", "Show me your projects", "Give me a tour"] },
-      { re: /thank|thanks|awesome|great|nice|cool|wow/, a: "Anytime. Ask me anything else, or say give me a tour.", more: ["Give me a tour"] }
+      { k: "whyvarshik", re: /why .*(flood|varshik)|inspiration|motivat|story behind|what inspired/, id: 'varshik', a: "I grew up in Tamil Nadu and saw what floods do to families. Varshik began with one question: what if we could see which roads will flood before it rains?", more: ["Tell me about Varshik", "Open the live demo"] },
+      { k: "varshik", re: /varshik|flood|waterlog/, id: 'varshik', a: "Varshik is a street level flood risk map. Vision models on Amazon SageMaker score sixty metre road cells for waterlogging from dashcam frames, terrain and rainfall, and Amazon Bedrock writes plain language briefs. Its top risk cells matched Delhi's official flood hotspots, though the results are preliminary.", more: ["Why did you build it?", "Open the live demo", "Tell me about CareerLens"] },
+      { k: "careerlens", re: /career ?lens|placement/, id: 'careerlens', a: "CareerLens is a serverless placement platform I built solo on AWS. About thirty Lambda functions, API Gateway, DynamoDB, Cognito and EventBridge power a student portal and a company portal, and an LLM turns messy placement notices into structured drives.", more: ["Tell me about FlashSale", "What are your cloud skills?"] },
+      { k: "flashsale", re: /flash ?sale|oversell|inventory|redis|lua/, id: 'flashsale', a: "FlashSale is an inventory system that never oversells. One Redis Lua script makes check and decrement a single atomic step, a virtual waiting room admits buyers in batches, and RabbitMQ workers release unpaid stock. Zero oversells under Locust load tests.", more: ["Tell me about LedgerLite", "What are your backend skills?"] },
+      { k: "pipesense", re: /pipe ?sense|robot|pipe inspection|datathon/, id: 'pipesense', a: "PipeSense is a pipe inspection robot. Three sensors fuse into one position estimate, an ESP32 drives it and YOLO detects seven defect types offline. We won first place out of three hundred teams at the Datathon with the Robotics Club and IEEE, and the patent is in progress.", more: ["Tell me about the satellite", "Spin the ring"] },
+      { k: "ledgerlite", re: /ledger|payment|upi|saga|outbox/, id: 'ledgerlite', a: "LedgerLite is a UPI style distributed payment ledger in Java and Spring Boot. It uses idempotency keys, saga based transfers and the transactional outbox pattern, and survived random node kills with zero double debits.", more: ["Tell me about Surge", "Tell me about RaftKV"] },
+      { k: "surge", re: /surge|ride|uber|h3|hexagon/, id: 'surge', a: "Surge is a real time ride matching engine in Go. It indexes live driver locations into Uber H3 hexagons, matches riders by ETA over gRPC, and computes surge from Kafka streams, validated with a fleet simulator across Chennai.", more: ["Tell me about RaftKV"] },
+      { k: "raftkv", re: /raft|consensus|key ?value|distributed (store|database)/, id: 'raftkv', a: "RaftKV is a distributed key value store with the Raft consensus algorithm written from scratch: leader election, log replication, snapshots and linearizable reads, tested with Jepsen style partition and crash tests.", more: ["What are your backend skills?"] },
+      { k: "cansat", re: /cansat|can-?sat|satellite|in-?space|defionix|ground station|flight software/, id: "moments", spin: true, a: "For the IN-SPACe CANSAT competition our team Defionix designed a seven U cylindrical satellite with a Raspberry Pi 5, IMU, barometer, NavIC GPS and a LoRa radio. I built the ground station and the flight software. We were a PDR finalist in the top thirty five in India and went all the way to the launch round, but funding fell short at the very end and we could not fly it.", more: ["Why did it not launch?", "Tell me about the ground station", "Tell me about PipeSense"] },
+      { k: "funding", re: /funding|fail|failure|setback|lesson|did not launch|didn t launch|why .*(launch|fly)|couldn t|could not|what went wrong|biggest challenge/, id: "moments", spin: true, a: "We reached the launch round, then funding fell short at the very end, so we could not fly CAN-7USAT. The satellite hardware alone was about ninety seven thousand rupees and the ground station another one point six five lakh. I took one lesson from it: treat funding as part of the engineering plan from day one.", more: ["Tell me about the satellite", "What have you won?"] },
+      { k: "writing", re: /article|blog|writing|wrote|written|publication|builder center article/, id: "writing", a: "I write about what I build on AWS Builder Center. My article is Varshik: Building an AI Powered Urban Flood Risk Analysis Platform on AWS, about running three vision models on one SageMaker endpoint.", more: ["Tell me about Varshik", "Open the live demo"] },
+      { k: "ideathon", re: /ideathon|iit|delhi/, id: 'journey', a: "I led the pitch preparation and presentation for the team that placed in the top five out of three hundred teams at the IIT Delhi Ideathon 2026, and I also created the demo video.", more: ["How many hackathons?", "What have you won?"] },
+      { k: "hackathons", re: /hackathon|competition|won|win|award|prize|achievement|accomplish/, id: 'journey', a: "I have taken part in more than ten hackathons, including AWS Bharat Builds, the Amazon ML Challenge, NPCI and Citi DRUNIX and Paytm Build for India. I won first place in the PipeSense Datathon, was a CANSAT PDR finalist, and placed in the top five at the IIT Delhi Ideathon.", more: ["Tell me about PipeSense", "Tell me about the satellite"] },
+      { k: "patent", re: /patent|research|paper|publication|ergoguard|explainable|interpretab/, id: 'journey', a: "I am an inventor on a patent application for shipment clustering and route optimisation. My research covers explainable AI for cyber threat attribution, a drafted paper on ErgoGuard posture monitoring, and offline pipe defect detection.", more: ["What are your AI skills?"] },
+      { k: "community", re: /aws|campus leader|student builder|builder center|community|300|cloud community/, id: 'moments', a: "I am an AWS Student Builder Campus Leader. I grew a three hundred plus student cloud community, ran sessions with live AWS demos and reached over two hundred students through pitches and tablings.", more: ["Spin the ring", "Show me the videos"] },
+      { k: "novac", re: /novac|shriram|construction/, id: "journey", a: "At Novac Technology Solutions, part of the Shriram Group, I was a software engineering intern on the backend and cloud side of a production platform that manages more than twenty live construction projects. In a two person team I worked on REST API design, MongoDB data modelling, CI CD pipelines, deployment on AWS and production support.", more: ["What are your backend skills?", "What are your cloud skills?"] },
+      { k: "internship", re: /intern|experience|work experience|job|fresher|role/, id: "journey", a: "I am looking for cloud and backend internships. So far I have interned at Novac Technology Solutions on the backend and cloud side, built and tested distributed systems and AWS projects, led a three hundred plus student community, contributed to open source, and taken a satellite design all the way to the launch round.", more: ["What are your backend skills?", "Tell me about the satellite", "How can I contact you?"] },
+      { k: "opensource", re: /open ?source|aossie|osc|osconnect|livestream|live stream/, id: 'watch', a: "I contribute to open source with AOSSIE, and I am Community Lead and a frontend developer for Open Source Connect Global 2026, where I coordinate international livestream events and built parts of the official conference website.", more: ["Show me the videos"] },
+      { k: "education", re: /cgpa|gpa|education|college|university|srm|degree|school|igcse|topper|marks|percentage|study|studying/, id: 'about', a: "I study B.Tech Computer Science and Engineering at SRM Institute of Science and Technology, Ramapuram, with a CGPA of 9.10 out of 10. In school I was the Cambridge IGCSE school topper in Tamil Nadu with ninety three point five percent.", more: ["Tell me about your community", "What are your skills?"] },
+      { k: "cert", re: /certif|microsoft|sql server|coursera/, id: 'journey', a: "I am a Microsoft Certified SQL Server Professional, covering relational database design, advanced querying, security and BI integration.", more: ["What are your skills?"] },
+      { k: "aiskills", re: /ai skill|machine learning|\bml\b|langchain|langgraph|agent|\brag\b|\bllm\b|faiss|yolo|bedrock|gemini/, id: 'skills', a: "On the AI side I work with Amazon Bedrock and the Gemini API, build multi agent systems with LangChain and LangGraph, run retrieval augmented generation with FAISS, and train and deploy vision models like YOLO on SageMaker.", more: ["What are your cloud skills?"] },
+      { k: "cloudskills", re: /cloud skill|aws service|lambda|dynamodb|serverless|sagemaker|amplify|cloudfront|s3/, id: 'skills', a: "My AWS toolbox is Lambda, API Gateway, DynamoDB, S3 and CloudFront, Amplify, SageMaker, Bedrock, Cognito, EventBridge and CloudWatch, plus Docker and GitHub Actions for delivery.", more: ["What are your backend skills?", "Tell me about CareerLens"] },
+      { k: "backend", re: /backend|back end|distributed|java|spring|golang|\bgo\b|kafka|grpc|microservice/, id: 'skills', a: "For backend and distributed systems I use Java and Spring Boot, Go with gRPC, Kafka, Redis, RabbitMQ, Nginx and PostgreSQL, and I test them with fault injection and load tests.", more: ["Tell me about LedgerLite", "Tell me about Surge"] },
+      { k: "languages", re: /language|programming|python|kotlin|c\+\+|javascript/, id: 'skills', a: "I write Java, Python, JavaScript, Go, Kotlin, C, C plus plus and SQL, and I build front ends with React and Angular and mobile apps with Flutter and Kotlin Multiplatform.", more: ["What are your backend skills?"] },
+      { k: "skills", re: /skill|superpower|tech stack|technolog|good at|expertise|strength/, id: 'skills', a: "My superpowers are cloud and backend engineering: AWS, distributed systems in Java and Go, AI and agentic systems, and explaining all of it clearly as a speaker and community leader.", more: ["What are your cloud skills?", "What are your AI skills?", "What are your backend skills?"] },
+      { k: "contact", re: /contact|email|reach|hire|hiring|available|availability|internship|opportunit|open to|recruit|work with/, id: 'contact', a: "I am open to internships in cloud and backend engineering. The fastest way to reach me is email at simrithi dot work at gmail dot com, or message me on LinkedIn.", more: ["Open LinkedIn", "Open GitHub"] },
+      { k: "location", re: /where|location|city|based|chennai|tamil nadu|india/, id: 'about', a: "I am based in Chennai, Tamil Nadu, and I grew up in Tamil Nadu.", more: ["Who are you?"] },
+      { k: "site", re: /how (did you|was|is|were) .*(build|built|made|create)|this (site|website|portfolio|page)|tech behind|made with|under the hood/, id: 'top', a: "This site is plain HTML, CSS and JavaScript with no framework. The 3D ring is pure CSS 3D, the sounds are synthesized live with WebAudio, you are talking to the browser's speech recognition, and it is hosted on AWS Amplify.", more: ["Spin the ring", "Give me a tour"] },
+      { k: "funfact", re: /fun fact|something (interesting|unique|cool)|surprise|different|unique|special|stand out/, id: 'moments', spin: true, a: "Fun fact: I built a satellite ground station, a pipe inspecting robot and a flood risk map, and I also teach other students how to do the same. Spin the ring to see the proof.", more: ["Tell me about the satellite", "Tell me about PipeSense"] },
+      { k: "intro", re: /who are you|introduce|yourself|about (you|simrithi)|who is simrithi|hello|^hi\b|^hey\b/, id: 'about', a: "I am Simrithi, a cloud and backend focused Computer Science student at SRM in Chennai. I build on AWS and ship distributed systems that hold up under load, and I lead a three hundred plus student cloud community.", more: ["What are your skills?", "Show me your projects", "Give me a tour"] },
+      { k: "thanks", re: /thank|thanks|awesome|great|nice|cool|wow/, a: "Anytime. Ask me anything else, or say give me a tour.", more: ["Give me a tour"] }
     ];
     var NAV = [
       [/watch|video|clip|youtube|stream|session/, 'watch', "Here are some clips of me at work."],
@@ -550,7 +550,7 @@
       ['flashsale', "FlashSale, inventory that can never oversell."],
       ['pipesense', "PipeSense, the pipe inspection robot that won first of three hundred teams."],
       ['journey', "My journey: an AWS campus leader, a CanSat team that reached the launch round, a backend and cloud intern at Novac, and an open source contributor."],
-      ['contact', "That is the tour. I am open to internships in cloud and full stack. Say hello!"]
+      ['contact', "That is the tour. I am open to cloud and backend internships. Say hello!"]
     ];
 
     /* ---------- speech out ---------- */
@@ -563,20 +563,46 @@
       if (pick) { voiceEl.value = pick.name; prefs.voice = pick.name; }
     }
     if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
-    function speak(text, done) {
-      lastSpoken = text;
-      if (!prefs.speak || !sfx.isOn() || !('speechSynthesis' in window)) { if (done) setTimeout(done, Math.min(2600 + text.length * 22, 9000)); return; }
+    var voiceMap = {}, clip = null, ownEl = $('#vOwn');
+    if (prefs.own === undefined) prefs.own = true;
+    if (ownEl) { ownEl.checked = prefs.own; ownEl.addEventListener('change', function () { prefs.own = ownEl.checked; savePrefs(); }); }
+    try {
+      fetch('assets/voice/manifest.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (m) {
+        voiceMap = m || {};
+        if (ownEl) { var has = Object.keys(voiceMap).length > 0; ownEl.disabled = !has; if (ownEl.parentNode) ownEl.parentNode.title = has ? 'Play my recorded answers instead of the computer voice' : 'No recordings yet. Use record-voice.html to add yours.'; }
+      }).catch(function () { if (ownEl) ownEl.disabled = true; });
+    } catch (e) {}
+    function hasOwn(key) { return !!(prefs.own && key && voiceMap[key]); }
+    function finishSpeech(done) { speaking = false; if (done) done(); if (keepOn && !listening) setTimeout(startListening, 250); }
+    function ttsSpeak(text, done) {
       try {
         speechSynthesis.cancel();
         var u = new SpeechSynthesisUtterance(text); u.rate = prefs.rate; u.pitch = 1.06;
         var v = voices.filter(function (x) { return x.name === prefs.voice; })[0]; if (v) u.voice = v;
         speaking = true; if (listening && rec) { try { rec.stop(); } catch (e) {} }
-        var fin = function () { speaking = false; if (done) done(); if (keepOn && !listening) setTimeout(startListening, 250); };
+        var fin = function () { finishSpeech(done); };
         u.onend = fin; u.onerror = fin;
         speechSynthesis.speak(u);
       } catch (e) { if (done) done(); }
     }
-    function hush() { tourId++; speaking = false; try { speechSynthesis.cancel(); } catch (e) {} }
+    function speak(text, done, key) {
+      lastSpoken = text;
+      if (!prefs.speak || !sfx.isOn()) { if (done) setTimeout(done, Math.min(2600 + text.length * 22, 9000)); return; }
+      if (hasOwn(key)) {
+        try {
+          if (window.speechSynthesis) speechSynthesis.cancel(); if (clip) clip.pause();
+          clip = new Audio('assets/voice/' + voiceMap[key]); clip.playbackRate = Math.max(0.9, Math.min(prefs.rate, 1.25));
+          speaking = true; if (listening && rec) { try { rec.stop(); } catch (e) {} }
+          clip.onended = function () { finishSpeech(done); };
+          clip.onerror = function () { clip = null; speaking = false; ttsSpeak(text, done); };
+          var p = clip.play(); if (p && p.catch) p.catch(function () { clip = null; speaking = false; ttsSpeak(text, done); });
+          return;
+        } catch (e) {}
+      }
+      if (!('speechSynthesis' in window)) { if (done) setTimeout(done, Math.min(2600 + text.length * 22, 9000)); return; }
+      ttsSpeak(text, done);
+    }
+    function hush() { tourId++; speaking = false; try { speechSynthesis.cancel(); } catch (e) {} if (clip) { try { clip.pause(); } catch (e) {} clip = null; } }
 
     /* ---------- UI helpers ---------- */
     function show(html, ms) { say.hidden = false; say.innerHTML = html; clearTimeout(sayT); sayT = setTimeout(function () { say.hidden = true; }, ms || 4200); }
@@ -597,12 +623,14 @@
       }
       log.appendChild(li); log.scrollTop = log.scrollHeight;
       while (log.children.length > 24) log.removeChild(log.firstChild);
+      return li;
     }
     function reply(text, o) {
       o = o || {};
-      logBot(text, o.more); show('<em>' + esc(text.length > 150 ? text.slice(0, 147) + '...' : text) + '</em>', Math.min(3500 + text.length * 40, 14000));
+      var entry = logBot(text, o.more); if (hasOwn(o.k)) { entry.classList.add('own'); var tag = document.createElement('span'); tag.className = 'own-tag'; tag.textContent = 'my voice'; entry.insertBefore(tag, entry.firstChild); }
+      show('<em>' + esc(text.length > 150 ? text.slice(0, 147) + '...' : text) + '</em>', Math.min(3500 + text.length * 40, 14000));
       if (o.id) go(o.id); if (o.spin) setTimeout(function () { ring.spin(); }, 700);
-      speak(text);
+      speak(text, undefined, o.k);
     }
 
     /* ---------- tour ---------- */
@@ -613,7 +641,7 @@
         if (i >= TOUR.length) { show('<em>Tour complete.</em>', 3000); sfx.chime(); return; }
         var s = TOUR[i]; go(s.id || s[0]); show('<em>' + esc(s[1]) + '</em>', 8000);
         if (s[0] === 'moments') setTimeout(function () { if (my === tourId) ring.spin(); }, 900);
-        setTimeout(function () { if (my === tourId) speak(s[1], function () { setTimeout(function () { step(i + 1); }, 500); }); }, 1100);
+        setTimeout(function () { if (my === tourId) speak(s[1], function () { setTimeout(function () { step(i + 1); }, 500); }, 'tour' + i); }, 1100);
       })(0);
     }
 
@@ -645,7 +673,7 @@
       if (/\blinkedin\b/.test(q)) { window.open('https://www.linkedin.com/in/simrithi-s/', '_blank', 'noopener'); reply('Opening my LinkedIn.'); return; }
       if (/\b(scroll down|go down|next section|down)\b/.test(q)) { scrollBy({ top: innerHeight * 0.85, behavior: reduced ? 'auto' : 'smooth' }); sfx.whoosh(); logBot('Scrolling down.'); return; }
       if (/\b(scroll up|go up|previous|up)\b/.test(q)) { scrollBy({ top: -innerHeight * 0.85, behavior: reduced ? 'auto' : 'smooth' }); sfx.whoosh(); logBot('Scrolling up.'); return; }
-      for (var k = 0; k < KB.length; k++) if (KB[k].re.test(q)) { reply(KB[k].a, { id: KB[k].id, spin: KB[k].spin, more: KB[k].more }); return; }
+      for (var k = 0; k < KB.length; k++) if (KB[k].re.test(q)) { reply(KB[k].a, { id: KB[k].id, spin: KB[k].spin, more: KB[k].more, k: KB[k].k }); return; }
       for (var n = 0; n < NAV.length; n++) if (NAV[n][0].test(q)) { reply(NAV[n][2], { id: NAV[n][1] }); return; }
       reply('I am not sure about "' + raw.slice(0, 60) + '". Try asking about my projects, skills, CGPA, the satellite, or say give me a tour.', { more: ['Who are you?', 'What are your skills?', 'Give me a tour'] });
     }

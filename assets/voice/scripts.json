@@ -1,0 +1,254 @@
+[
+ {
+  "id": "intro",
+  "label": "Introduction",
+  "group": "Answers",
+  "text": "I am Simrithi, a cloud and backend focused Computer Science student at SRM in Chennai. I build on AWS and ship distributed systems that hold up under load, and I lead a three hundred plus student cloud community."
+ },
+ {
+  "id": "whyvarshik",
+  "label": "Why I built Varshik",
+  "group": "Answers",
+  "text": "I grew up in Tamil Nadu and saw what floods do to families. Varshik began with one question: what if we could see which roads will flood before it rains?"
+ },
+ {
+  "id": "varshik",
+  "label": "Varshik",
+  "group": "Answers",
+  "text": "Varshik is a street level flood risk map. Vision models on Amazon SageMaker score sixty metre road cells for waterlogging from dashcam frames, terrain and rainfall, and Amazon Bedrock writes plain language briefs. Its top risk cells matched Delhi's official flood hotspots, though the results are preliminary."
+ },
+ {
+  "id": "careerlens",
+  "label": "CareerLens",
+  "group": "Answers",
+  "text": "CareerLens is a serverless placement platform I built solo on AWS. About thirty Lambda functions, API Gateway, DynamoDB, Cognito and EventBridge power a student portal and a company portal, and an LLM turns messy placement notices into structured drives."
+ },
+ {
+  "id": "flashsale",
+  "label": "FlashSale",
+  "group": "Answers",
+  "text": "FlashSale is an inventory system that never oversells. One Redis Lua script makes check and decrement a single atomic step, a virtual waiting room admits buyers in batches, and RabbitMQ workers release unpaid stock. Zero oversells under Locust load tests."
+ },
+ {
+  "id": "pipesense",
+  "label": "PipeSense",
+  "group": "Answers",
+  "text": "PipeSense is a pipe inspection robot. Three sensors fuse into one position estimate, an ESP32 drives it and YOLO detects seven defect types offline. We won first place out of three hundred teams at the Datathon with the Robotics Club and IEEE, and the patent is in progress."
+ },
+ {
+  "id": "ledgerlite",
+  "label": "LedgerLite",
+  "group": "Answers",
+  "text": "LedgerLite is a UPI style distributed payment ledger in Java and Spring Boot. It uses idempotency keys, saga based transfers and the transactional outbox pattern, and survived random node kills with zero double debits."
+ },
+ {
+  "id": "surge",
+  "label": "Surge",
+  "group": "Answers",
+  "text": "Surge is a real time ride matching engine in Go. It indexes live driver locations into Uber H3 hexagons, matches riders by ETA over gRPC, and computes surge from Kafka streams, validated with a fleet simulator across Chennai."
+ },
+ {
+  "id": "raftkv",
+  "label": "RaftKV",
+  "group": "Answers",
+  "text": "RaftKV is a distributed key value store with the Raft consensus algorithm written from scratch: leader election, log replication, snapshots and linearizable reads, tested with Jepsen style partition and crash tests."
+ },
+ {
+  "id": "cansat",
+  "label": "The satellite",
+  "group": "Answers",
+  "text": "For the IN-SPACe CANSAT competition our team Defionix designed a seven U cylindrical satellite with a Raspberry Pi 5, IMU, barometer, NavIC GPS and a LoRa radio. I built the ground station and the flight software. We were a PDR finalist in the top thirty five in India and went all the way to the launch round, but funding fell short at the very end and we could not fly it."
+ },
+ {
+  "id": "funding",
+  "label": "The launch we missed",
+  "group": "Answers",
+  "text": "We reached the launch round, then funding fell short at the very end, so we could not fly CAN-7USAT. The satellite hardware alone was about ninety seven thousand rupees and the ground station another one point six five lakh. I took one lesson from it: treat funding as part of the engineering plan from day one."
+ },
+ {
+  "id": "writing",
+  "label": "My writing",
+  "group": "Answers",
+  "text": "I write about what I build on AWS Builder Center. My article is Varshik: Building an AI Powered Urban Flood Risk Analysis Platform on AWS, about running three vision models on one SageMaker endpoint."
+ },
+ {
+  "id": "ideathon",
+  "label": "IIT Delhi Ideathon",
+  "group": "Answers",
+  "text": "I led the pitch preparation and presentation for the team that placed in the top five out of three hundred teams at the IIT Delhi Ideathon 2026, and I also created the demo video."
+ },
+ {
+  "id": "hackathons",
+  "label": "Hackathons and wins",
+  "group": "Answers",
+  "text": "I have taken part in more than ten hackathons, including AWS Bharat Builds, the Amazon ML Challenge, NPCI and Citi DRUNIX and Paytm Build for India. I won first place in the PipeSense Datathon, was a CANSAT PDR finalist, and placed in the top five at the IIT Delhi Ideathon."
+ },
+ {
+  "id": "patent",
+  "label": "Patent and research",
+  "group": "Answers",
+  "text": "I am an inventor on a patent application for shipment clustering and route optimisation. My research covers explainable AI for cyber threat attribution, a drafted paper on ErgoGuard posture monitoring, and offline pipe defect detection."
+ },
+ {
+  "id": "community",
+  "label": "AWS community",
+  "group": "Answers",
+  "text": "I am an AWS Student Builder Campus Leader. I grew a three hundred plus student cloud community, ran sessions with live AWS demos and reached over two hundred students through pitches and tablings."
+ },
+ {
+  "id": "novac",
+  "label": "Novac internship",
+  "group": "Answers",
+  "text": "At Novac Technology Solutions, part of the Shriram Group, I was a software engineering intern on the backend and cloud side of a production platform that manages more than twenty live construction projects. In a two person team I worked on REST API design, MongoDB data modelling, CI CD pipelines, deployment on AWS and production support."
+ },
+ {
+  "id": "internship",
+  "label": "Internships",
+  "group": "Answers",
+  "text": "I am looking for cloud and backend internships. So far I have interned at Novac Technology Solutions on the backend and cloud side, built and tested distributed systems and AWS projects, led a three hundred plus student community, contributed to open source, and taken a satellite design all the way to the launch round."
+ },
+ {
+  "id": "opensource",
+  "label": "Open source",
+  "group": "Answers",
+  "text": "I contribute to open source with AOSSIE, and I am Community Lead and a frontend developer for Open Source Connect Global 2026, where I coordinate international livestream events and built parts of the official conference website."
+ },
+ {
+  "id": "education",
+  "label": "Education",
+  "group": "Answers",
+  "text": "I study B.Tech Computer Science and Engineering at SRM Institute of Science and Technology, Ramapuram, with a CGPA of 9.10 out of 10. In school I was the Cambridge IGCSE school topper in Tamil Nadu with ninety three point five percent."
+ },
+ {
+  "id": "cert",
+  "label": "Certification",
+  "group": "Answers",
+  "text": "I am a Microsoft Certified SQL Server Professional, covering relational database design, advanced querying, security and BI integration."
+ },
+ {
+  "id": "aiskills",
+  "label": "AI skills",
+  "group": "Answers",
+  "text": "On the AI side I work with Amazon Bedrock and the Gemini API, build multi agent systems with LangChain and LangGraph, run retrieval augmented generation with FAISS, and train and deploy vision models like YOLO on SageMaker."
+ },
+ {
+  "id": "cloudskills",
+  "label": "Cloud skills",
+  "group": "Answers",
+  "text": "My AWS toolbox is Lambda, API Gateway, DynamoDB, S3 and CloudFront, Amplify, SageMaker, Bedrock, Cognito, EventBridge and CloudWatch, plus Docker and GitHub Actions for delivery."
+ },
+ {
+  "id": "backend",
+  "label": "Backend skills",
+  "group": "Answers",
+  "text": "For backend and distributed systems I use Java and Spring Boot, Go with gRPC, Kafka, Redis, RabbitMQ, Nginx and PostgreSQL, and I test them with fault injection and load tests."
+ },
+ {
+  "id": "languages",
+  "label": "Languages",
+  "group": "Answers",
+  "text": "I write Java, Python, JavaScript, Go, Kotlin, C, C plus plus and SQL, and I build front ends with React and Angular and mobile apps with Flutter and Kotlin Multiplatform."
+ },
+ {
+  "id": "skills",
+  "label": "Skills overview",
+  "group": "Answers",
+  "text": "My superpowers are cloud and backend engineering: AWS, distributed systems in Java and Go, AI and agentic systems, and explaining all of it clearly as a speaker and community leader."
+ },
+ {
+  "id": "contact",
+  "label": "Contact",
+  "group": "Answers",
+  "text": "I am open to internships in cloud and backend engineering. The fastest way to reach me is email at simrithi dot work at gmail dot com, or message me on LinkedIn."
+ },
+ {
+  "id": "location",
+  "label": "Where I am",
+  "group": "Answers",
+  "text": "I am based in Chennai, Tamil Nadu, and I grew up in Tamil Nadu."
+ },
+ {
+  "id": "site",
+  "label": "How this site was built",
+  "group": "Answers",
+  "text": "This site is plain HTML, CSS and JavaScript with no framework. The 3D ring is pure CSS 3D, the sounds are synthesized live with WebAudio, you are talking to the browser's speech recognition, and it is hosted on AWS Amplify."
+ },
+ {
+  "id": "funfact",
+  "label": "A fun fact",
+  "group": "Answers",
+  "text": "Fun fact: I built a satellite ground station, a pipe inspecting robot and a flood risk map, and I also teach other students how to do the same. Spin the ring to see the proof."
+ },
+ {
+  "id": "thanks",
+  "label": "Thank you reply",
+  "group": "Answers",
+  "text": "Anytime. Ask me anything else, or say give me a tour."
+ },
+ {
+  "id": "tour0",
+  "label": "Tour 1: top",
+  "group": "Guided tour",
+  "text": "Hi, I am Simrithi. Let me show you around."
+ },
+ {
+  "id": "tour1",
+  "label": "Tour 2: about",
+  "group": "Guided tour",
+  "text": "I study computer science in Chennai and build cloud systems that have to be right under pressure."
+ },
+ {
+  "id": "tour2",
+  "label": "Tour 3: moments",
+  "group": "Guided tour",
+  "text": "This is my world in 3D: my talks, my classrooms, my robot and a satellite."
+ },
+ {
+  "id": "tour3",
+  "label": "Tour 4: watch",
+  "group": "Guided tour",
+  "text": "Here are short clips of me teaching, and the Open Source Connect Global stream."
+ },
+ {
+  "id": "tour4",
+  "label": "Tour 5: skills",
+  "group": "Guided tour",
+  "text": "These are my tech superpowers. Tap any tool to see where I used it."
+ },
+ {
+  "id": "tour5",
+  "label": "Tour 6: varshik",
+  "group": "Guided tour",
+  "text": "Varshik, a flood risk map that finds waterlogged roads before the rain."
+ },
+ {
+  "id": "tour6",
+  "label": "Tour 7: careerlens",
+  "group": "Guided tour",
+  "text": "CareerLens, a serverless placement platform built solo on AWS."
+ },
+ {
+  "id": "tour7",
+  "label": "Tour 8: flashsale",
+  "group": "Guided tour",
+  "text": "FlashSale, inventory that can never oversell."
+ },
+ {
+  "id": "tour8",
+  "label": "Tour 9: pipesense",
+  "group": "Guided tour",
+  "text": "PipeSense, the pipe inspection robot that won first of three hundred teams."
+ },
+ {
+  "id": "tour9",
+  "label": "Tour 10: journey",
+  "group": "Guided tour",
+  "text": "My journey: an AWS campus leader, a CanSat team that reached the launch round, a backend and cloud intern at Novac, and an open source contributor."
+ },
+ {
+  "id": "tour10",
+  "label": "Tour 11: contact",
+  "group": "Guided tour",
+  "text": "That is the tour. I am open to cloud and backend internships. Say hello!"
+ }
+]

@@ -10,6 +10,9 @@ Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting
 - **Watch me work.** Short clips of my sessions plus the Open Source Connect Global community stream.
 - **Sound and water.** Every click makes a soft synthesized sound and sends water ripples across the page. The speaker button mutes everything.
 
+## Recording my own voice
+Open `http://localhost:8000/record-voice.html`, choose the `assets/voice` folder, and record the 42 lines (answers and the guided tour). The assistant plays my recording when one exists and falls back to the computer voice for anything not recorded. Recorded answers show a "my voice" tag in the conversation log.
+
 ## Other interactions
 - Count-up numbers, scroll progress bar and section dots
 - Press-down, spring-lagged cards that follow the cursor like water (with ripples)

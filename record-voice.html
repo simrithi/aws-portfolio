@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Record my voice | Simrithi S</title>
+<style>
+@font-face { font-family: "Figtree"; src: url("assets/fonts/figtree.woff2") format("woff2"); font-weight: 300 900; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("assets/fonts/garamond.woff2") format("woff2"); font-weight: 400 800; font-display: swap; }
+:root { --bg: #ffffeb; --ink: #1a1a1a; --green: #034f46; --lilac: #f0d7ff; --muted: #55554a; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.55 "Figtree", system-ui, sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 40px 20px 120px; }
+h1 { font: 400 clamp(2.4rem, 7vw, 4rem)/1 "EB Garamond", Georgia, serif; margin: 0 0 10px; letter-spacing: -.02em; }
+h2 { font: 400 1.8rem "EB Garamond", Georgia, serif; margin: 40px 0 12px; }
+p { margin: 0 0 12px; }
+.lede { color: var(--muted); max-width: 60ch; }
+.panel { background: #fffff6; border: 1.5px solid var(--ink); border-radius: 24px; padding: 20px 22px; margin: 18px 0; }
+ol.tips { margin: 0; padding-left: 20px; color: var(--muted); }
+button { font: 600 .95rem "Figtree", sans-serif; padding: 10px 18px; border-radius: 12px; border: 1.5px solid var(--ink); background: transparent; color: var(--ink); cursor: pointer; transition: background .2s; }
+button:hover:not(:disabled) { background: var(--lilac); }
+button:disabled { opacity: .45; cursor: not-allowed; }
+button.primary { background: var(--green); color: #ffffeb; border-color: var(--green); }
+button.primary:hover:not(:disabled) { background: #046b5f; }
+button.rec { background: #d6336c; color: #fff; border-color: #d6336c; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.status { font-size: .92rem; color: var(--muted); }
+.progress { height: 10px; border-radius: 6px; background: #e4e4d0; overflow: hidden; margin: 12px 0 4px; }
+.progress i { display: block; height: 100%; width: 0; background: var(--green); transition: width .4s; }
+.card { background: #fffff6; border: 1.5px solid var(--ink); border-radius: 22px; padding: 18px 20px; margin: 14px 0; transition: border-color .2s, box-shadow .2s; }
+.card.active { border-color: var(--green); box-shadow: 0 0 0 4px rgba(3, 79, 70, .15); }
+.card.done { border-left: 8px solid var(--green); }
+.card h3 { margin: 0 0 6px; font: 600 1rem "Figtree", sans-serif; display: flex; gap: 10px; align-items: center; }
+.card h3 .tick { color: var(--green); font-weight: 700; }
+.script { font: 400 1.25rem/1.45 "EB Garamond", Georgia, serif; margin: 0 0 14px; }
+.meter { height: 8px; border-radius: 5px; background: #e4e4d0; overflow: hidden; margin: 0 0 12px; }
+.meter i { display: block; height: 100%; width: 0; background: #d6336c; transition: width .06s linear; }
+.group-title { font: 600 .8rem "Figtree", sans-serif; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 34px 0 0; }
+code { font: 500 .9em ui-monospace, Consolas, monospace; background: #f1f1d8; padding: 1px 6px; border-radius: 6px; }
+.warn { color: #9a3412; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Record my voice</h1>
+  <p class="lede">The portfolio answers questions out loud. Record each answer in your own voice and the site will play your recording instead of the computer voice. Anything you skip keeps the computer voice.</p>
+
+  <section class="panel" aria-labelledby="s1">
+    <h2 id="s1" style="margin-top:0">1. Pick where recordings are saved</h2>
+    <p>Click the button and choose the folder <code>portfolio/assets/voice</code>. Recordings and the list file <code>manifest.json</code> are saved there automatically, one by one.</p>
+    <div class="bar">
+      <button class="primary" id="pick" type="button">Choose the voice folder</button>
+      <span class="status" id="folderStatus">No folder chosen yet. Without it you can still download each recording and copy it in by hand.</span>
+    </div>
+    <p class="status warn" id="support" hidden>This browser cannot save to a folder. Use Chrome or Edge, or download each recording.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="s2">
+    <h2 id="s2" style="margin-top:0">2. Record</h2>
+    <ol class="tips">
+      <li>Find a quiet room and sit about a hand's length from the microphone.</li>
+      <li>Read the line in your own words if you like. Keep it about the same length.</li>
+      <li>Press Record, speak, press Stop, then Play to check. Re-record as often as you want.</li>
+    </ol>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+    <div class="bar"><span class="status" id="count">0 of 0 recorded</span><button id="next" type="button">Jump to the next unrecorded</button></div>
+  </section>
+
+  <div id="list" aria-live="polite"></div>
+
+  <section class="panel" aria-labelledby="s3">
+    <h2 id="s3" style="margin-top:0">3. Finish</h2>
+    <p>Reload the portfolio (<code>http://localhost:8000</code>), tap the mic, ask a question. If you recorded that answer, you will hear yourself and see a "my voice" tag in the conversation.</p>
+    <div class="bar"><button id="dlManifest" type="button">Download manifest.json (only if you did not pick a folder)</button></div>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var listEl = document.getElementById('list'), countEl = document.getElementById('count'), barEl = document.getElementById('bar');
+  var folderStatus = document.getElementById('folderStatus'), pickBtn = document.getElementById('pick');
+  var dir = null, scripts = [], manifest = {}, blobs = {}, current = null, mediaRec = null, stream = null, chunks = [], meterRaf = 0, actx = null;
+  var canPick = 'showDirectoryPicker' in window;
+  if (!canPick) { document.getElementById('support').hidden = false; pickBtn.disabled = true; }
+
+  function pickMime() {
+    var opts = ['audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus', 'audio/mp4'];
+    for (var i = 0; i < opts.length; i++) if (window.MediaRecorder && MediaRecorder.isTypeSupported(opts[i])) return opts[i];
+    return '';
+  }
+  function extFor(mime) { return /ogg/.test(mime) ? 'ogg' : /mp4/.test(mime) ? 'm4a' : 'webm'; }
+  function recorded() { return scripts.filter(function (s) { return manifest[s.id]; }).length; }
+  function refresh() {
+    var n = recorded(); countEl.textContent = n + ' of ' + scripts.length + ' recorded';
+    barEl.style.width = (scripts.length ? n / scripts.length * 100 : 0) + '%';
+  }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+
+  function build() {
+    listEl.textContent = '';
+    var lastGroup = '';
+    scripts.forEach(function (s, idx) {
+      if (s.group !== lastGroup) { listEl.appendChild(el('p', 'group-title', s.group)); lastGroup = s.group; }
+      var card = el('article', 'card'); card.id = 'c-' + s.id;
+      var h = el('h3'); h.appendChild(el('span', null, (idx + 1) + '. ' + s.label)); var tick = el('span', 'tick', ''); h.appendChild(tick); card.appendChild(h);
+      card.appendChild(el('p', 'script', s.text));
+      var meter = el('div', 'meter'); meter.appendChild(el('i')); card.appendChild(meter);
+      var bar = el('div', 'bar');
+      var rec = el('button', null, 'Record'); rec.type = 'button';
+      var play = el('button', null, 'Play'); play.type = 'button'; play.disabled = true;
+      var dl = el('button', null, 'Download'); dl.type = 'button'; dl.disabled = true;
+      var st = el('span', 'status', manifest[s.id] ? 'Saved as ' + manifest[s.id] : 'Not recorded yet');
+      bar.appendChild(rec); bar.appendChild(play); bar.appendChild(dl); bar.appendChild(st); card.appendChild(bar);
+      listEl.appendChild(card);
+      s.ui = { card: card, rec: rec, play: play, dl: dl, st: st, meter: meter.firstChild, tick: tick };
+      if (manifest[s.id]) { card.classList.add('done'); tick.textContent = 'recorded'; play.disabled = false; }
+      rec.addEventListener('click', function () { toggle(s); });
+      play.addEventListener('click', function () { playIt(s); });
+      dl.addEventListener('click', function () { download(s); });
+    });
+    refresh();
+  }
+
+  async function toggle(s) {
+    if (current && current !== s) await stop();
+    if (current === s) { await stop(); return; }
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: true, channelCount: 1 } }); }
+    catch (e) { s.ui.st.textContent = 'Microphone blocked. Allow it in the address bar and try again.'; return; }
+    var mime = pickMime(); chunks = [];
+    mediaRec = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
+    mediaRec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+    mediaRec.onstop = async function () {
+      var type = mediaRec.mimeType || mime || 'audio/webm';
+      var blob = new Blob(chunks, { type: type }); blobs[s.id] = { blob: blob, ext: extFor(type) };
+      s.ui.play.disabled = false; s.ui.dl.disabled = false; s.ui.st.textContent = 'Recorded ' + (blob.size / 1024).toFixed(0) + ' KB. Saving…';
+      await save(s);
+    };
+    current = s; mediaRec.start(); s.ui.rec.textContent = 'Stop'; s.ui.rec.classList.add('rec'); s.ui.card.classList.add('active'); s.ui.st.textContent = 'Recording… speak now';
+    actx = new (window.AudioContext || window.webkitAudioContext)(); var src = actx.createMediaStreamSource(stream), an = actx.createAnalyser(); an.fftSize = 256; src.connect(an);
+    var data = new Uint8Array(an.frequencyBinCount);
+    (function loop() { an.getByteTimeDomainData(data); var peak = 0; for (var i = 0; i < data.length; i++) peak = Math.max(peak, Math.abs(data[i] - 128)); s.ui.meter.style.width = Math.min(peak / 90 * 100, 100) + '%'; meterRaf = requestAnimationFrame(loop); })();
+  }
+  function stop() {
+    return new Promise(function (resolve) {
+      if (!mediaRec) return resolve();
+      var s = current; var prevStop = mediaRec.onstop;
+      mediaRec.onstop = async function (e) { await prevStop(e); resolve(); };
+      cancelAnimationFrame(meterRaf); if (s) { s.ui.meter.style.width = '0'; s.ui.rec.textContent = 'Re-record'; s.ui.rec.classList.remove('rec'); s.ui.card.classList.remove('active'); }
+      try { mediaRec.stop(); } catch (e) { resolve(); }
+      if (stream) stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; if (actx) { try { actx.close(); } catch (e) {} actx = null; }
+      current = null; mediaRec = null;
+    });
+  }
+  function playIt(s) {
+    var b = blobs[s.id];
+    var a = new Audio(b ? URL.createObjectURL(b.blob) : 'assets/voice/' + manifest[s.id]); a.play();
+  }
+  function download(s) {
+    var b = blobs[s.id]; if (!b) return;
+    var a = document.createElement('a'); a.href = URL.createObjectURL(b.blob); a.download = s.id + '.' + b.ext; a.click();
+    manifest[s.id] = s.id + '.' + b.ext; refresh(); s.ui.card.classList.add('done'); s.ui.tick.textContent = 'recorded';
+  }
+  async function save(s) {
+    var b = blobs[s.id], name = s.id + '.' + b.ext;
+    if (!dir) { s.ui.st.textContent = 'Recorded. Click Download (no folder chosen), then copy the file into assets/voice.'; return; }
+    try {
+      var fh = await dir.getFileHandle(name, { create: true }); var w = await fh.createWritable(); await w.write(b.blob); await w.close();
+      manifest[s.id] = name;
+      var mh = await dir.getFileHandle('manifest.json', { create: true }); var mw = await mh.createWritable(); await mw.write(JSON.stringify(manifest, null, 1) + '\n'); await mw.close();
+      s.ui.st.textContent = 'Saved as ' + name; s.ui.card.classList.add('done'); s.ui.tick.textContent = 'recorded'; refresh();
+    } catch (e) { s.ui.st.textContent = 'Could not save to the folder: ' + e.message; }
+  }
+  pickBtn.addEventListener('click', async function () {
+    try {
+      dir = await window.showDirectoryPicker({ mode: 'readwrite' });
+      folderStatus.textContent = 'Saving into: ' + dir.name;
+      try { var mh = await dir.getFileHandle('manifest.json'); var txt = await (await mh.getFile()).text(); manifest = Object.assign(manifest, JSON.parse(txt || '{}')); } catch (e) {}
+      build();
+    } catch (e) { folderStatus.textContent = 'No folder chosen.'; }
+  });
+  document.getElementById('next').addEventListener('click', function () {
+    var t = scripts.filter(function (s) { return !manifest[s.id]; })[0];
+    if (t) { t.ui.card.scrollIntoView({ behavior: 'smooth', block: 'center' }); t.ui.rec.focus(); }
+  });
+  document.getElementById('dlManifest').addEventListener('click', function () {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(manifest, null, 1) + '\n'], { type: 'application/json' })); a.download = 'manifest.json'; a.click();
+  });
+  Promise.all([fetch('assets/voice/scripts.json').then(function (r) { return r.json(); }), fetch('assets/voice/manifest.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; })]).then(function (r) {
+    scripts = r[0]; manifest = r[1] || {}; build();
+  }).catch(function () { listEl.textContent = 'Could not load the scripts. Open this page through the local server: http://localhost:8000/record-voice.html'; });
+})();
+</script>
+</body>
+</html>
