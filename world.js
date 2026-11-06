@@ -33,6 +33,7 @@
   function mat(color, o) { o = o || {}; return new T.MeshStandardMaterial(Object.assign({ color: color, roughness: 0.5, metalness: 0.1, flatShading: true }, o)); }
   function rnd(a, b) { return a + Math.random() * (b - a); }
   function confetti(g, count, spreadX) {
+    return; /* floating shapes removed */
     var shapes = [new T.IcosahedronGeometry(1, 0), new T.OctahedronGeometry(1, 0), new T.TorusGeometry(0.8, 0.3, 8, 16), new T.BoxGeometry(1.2, 1.2, 1.2)];
     var cols = [0xf0d7ff, 0x9be7d8, 0xffd6e8, 0x8d5fd3, 0xffd479];
     for (var k = 0; k < count; k++) {

@@ -808,3 +808,13 @@ html.gl .moments h2, html.gl .moments .section-sub { text-shadow: 0 2px 18px rgb
 html.gl .r3-hint { bottom: 8vh; }
 html.gl .hero-copy { text-shadow: 0 0 22px #ffffeb, 0 0 8px #ffffeb; }
 @media (max-width: 760px) { html.gl #moments { min-height: 100vh; } html.gl .ring3d { height: 62vh; } }
+
+/* black continuous scroll band under the hero */
+.marquee { position: relative; z-index: 3; background: #1a1a1a; color: #ffffeb; overflow: hidden; border-block: 1.5px solid #1a1a1a; padding: 18px 0; }
+.mq-track { display: flex; width: max-content; animation: mq 38s linear infinite; }
+.marquee:hover .mq-track { animation-play-state: paused; }
+.mq-set { display: flex; align-items: center; flex-shrink: 0; }
+.mq-set span { font: 400 clamp(1.2rem, 2.4vw, 1.9rem) "EB Garamond", Georgia, serif; font-style: italic; white-space: nowrap; padding: 0 28px; }
+.mq-set i { width: 9px; height: 9px; border-radius: 50%; background: #f0d7ff; flex-shrink: 0; }
+@keyframes mq { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .mq-track { animation: none; } }
