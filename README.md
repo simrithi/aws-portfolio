@@ -1,29 +1,73 @@
-# Simrithi S: portfolio
+# Simrithi S: Cloud and Backend Portfolio
 
-Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting. Fonts (EB Garamond, Figtree, Geist Mono) and icons (Phosphor) are self-hosted.
+> A portfolio you can fly through and talk to. Built for the **AWS Student Builder Challenge: Build Your Tech Superpower**.
 
-## Creative feature: a 3D world you talk to
+**Live site:** https://main.dzqbfo6xieab6.amplifyapp.com
+**Repo:** https://github.com/simrithi/aws-portfolio
 
-- **The whole site is a 3D world.** A Three.js scene (terrain, orbit rings, a gallery ring of my photos and projects, a skills sphere, a robot, a CanSat, a journey helix and a globe pinned on Chennai). The camera flies through it as you scroll and the sections float over it. Click a card in the ring and it opens as a 3D book; click a floating skill to see where I used it. Without WebGL or with reduced motion the normal page is shown.
+I'm a cloud and backend focused CSE student in Chennai. I build on AWS and ship distributed systems. This site is my About, Skills and Projects in one place, and it is the project itself: a 3D world with a voice assistant.
 
+## The creative feature: a 3D world you talk to
 
-- **Voice assistant.** Tap the mic (or hold the V key) and ask anything: "What is your CGPA?", "Tell me about Varshik", "What are your cloud skills?", "Tell me about the satellite", "Are you open to internships?". It answers out loud from my resumes and scrolls you there. Say "give me a tour" for a narrated walk through the whole site, plus "repeat", "slower", "change voice", "keep listening" (hands-free) and "stop". The Guide panel keeps a conversation log with follow-up chips and speed, voice and listening controls. No microphone? Type the same questions. (Voice needs Chrome or Edge.)
-- **3D ring of my world.** A draggable 3D carousel of 15 cards: AWS talks, classroom sessions, and every project and system I built. Hover pulls a card closer, press pushes it back, click and the card flies to the centre and opens like a 3D book: the story on one page, the architecture, stack and links ("Under the hood") on the other. The book tilts with your cursor and presses down when you click. Buttons read both aloud.
-- **Writing.** My AWS Builder Center article on Varshik, linked to my profile.
-- **Watch me work.** Short clips of my sessions plus the Open Source Connect Global community stream.
-- **Sound and water.** Every click makes a soft synthesized sound and sends water ripples across the page. The speaker button mutes everything.
+**Hint on the page:** the hero says "Talk to my portfolio". Tap the mic, or press `V`.
 
-## Recording my own voice
-Open `http://localhost:8000/record-voice.html`, choose the `assets/voice` folder, and press "Start the 10 essentials" for a five-minute teleprompter (Space to record and stop, Enter for the next line), or record all 42 lines. Audio made elsewhere also works: name each file after its line id (see `assets/voice/scripts.json`), drop it in `assets/voice` and run `python make-voice-manifest.py`. The assistant plays my recording when one exists and falls back to the computer voice for anything not recorded. Recorded answers show a "my voice" tag in the conversation log.
+1. **Scroll flythrough.** The whole site is a Three.js scene. As you scroll, the camera flies through terrain, a gallery ring of my photos and projects, a floating skills sphere, a PipeSense robot, a CanSat satellite, a journey helix and a globe pinned on Chennai. Each section floats over its own station. Drag the gallery ring to spin it.
+2. **3D story book.** Click any card and it flies to the centre and opens like a book: the story on one page, the architecture, stack and links ("Under the hood") on the other.
+3. **Voice assistant.** Ask out loud: "What is your CGPA?", "Tell me about Varshik", "What are your cloud skills?", "Tell me about the satellite", "Are you open to internships?". It answers and scrolls you to the right place. Say "give me a tour" for a narrated walk through the site. Typing works too.
+4. **Sound and water.** Clicks make soft synthesized sounds and send ripples across the page. The speaker button mutes it.
 
-## Other interactions
-- Count-up numbers, scroll progress bar and section dots
-- Press-down, spring-lagged cards that follow the cursor like water (with ripples)
-- Each project gets its own full spotlight panel (own colour, glow that follows the cursor, stacked sticky scroll)
-- Scroll-driven Journey with a rolling counter and a filling timeline
-- Interactive skills: pick a tool, see which projects used it
-- Wispr Flow-inspired layout: butter paper, stacked panels, serif italics, lilac
+It degrades gracefully. Without WebGL, or with `prefers-reduced-motion`, you get the normal page. Without a microphone, you can type your questions. Voice needs Chrome or Edge.
 
-All sound is generated in the browser with WebAudio (no audio files). Honours `prefers-reduced-motion`.
+### About the voice
+Some answers play as an **AI clone of my voice**, made locally from my own speaking videos with the open XTTS v2 model (non-commercial licence). They are labelled that way in the conversation log. A real recording (`record-voice.html`) always overrides a clone, and any line without audio falls back to the browser's computer voice.
 
-Run locally: `python -m http.server`, then open http://localhost:8000 (icons need a server, not file://).
+## Sections
+| Section | What's in it |
+|---|---|
+| About | Me, the numbers (CGPA 9.10, 300+ community, 10+ hackathons, 1st at Datathon'26) |
+| Moments and Watch | Photos from AWS talks, classroom sessions, the robot and CanSat, plus videos |
+| Writing | My AWS Builder Center article on Varshik |
+| Skills | An interactive toolbox: pick a tool, see which projects used it |
+| Projects | Varshik, CareerLens (live), FlashSale, PipeSense, plus LedgerLite, Surge and RaftKV |
+| Journey | AWS Campus Leader, CanSat to the launch round, Open Source Connect Global, AOSSIE, Novac (cloud and backend), Twin Cities Tamil Association |
+| Contact | Email, LinkedIn, GitHub, AWS Builder Center |
+
+## AWS services used
+- **AWS Amplify Hosting** serves this site (static files, HTTPS, CDN).
+- Projects shown on the site use more AWS: Lambda, API Gateway, DynamoDB, S3, SNS, SQS, Step Functions, SageMaker, Bedrock and CloudWatch. See each project's spotlight.
+
+## How it's built
+- **No build step.** Plain HTML, CSS and JavaScript. `amplify.yml` just publishes the folder.
+- `index.html`: all content and structure
+- `styles.css`: layout, Wispr Flow-inspired theme (butter paper, forest green, lilac), the book and the voice panel
+- `app.js`: sounds, ripples, spring-physics cards, count-ups, the 3D book, the voice assistant
+- `world.js`: the Three.js scene and scroll camera (Three.js r128 is vendored in `assets/vendor`)
+- `record-voice.html`, `make-cloned-voice.py`, `make-voice-manifest.py`: voice tooling
+- Fonts (EB Garamond, Figtree, Geist Mono) and Phosphor icons are self-hosted
+
+Tech: Three.js, CSS 3D, WebAudio, Web Speech API, IntersectionObserver.
+
+## Run locally
+```
+python -m http.server 8000
+```
+Open http://localhost:8000 (a server is needed, not `file://`).
+
+## Deploy
+Amplify Hosting, manual deploy of this folder:
+```
+aws amplify create-app --name simrithi-portfolio
+aws amplify create-branch --app-id <id> --branch-name main
+aws amplify create-deployment --app-id <id> --branch-name main
+# upload the zip to the returned URL, then:
+aws amplify start-deployment --app-id <id> --branch-name main --job-id <jobId>
+```
+
+## What I learned
+- Progressive enhancement matters most with heavy 3D: the page works first, WebGL is a bonus.
+- Browser speech APIs differ a lot between browsers, so every voice path needs a typed fallback.
+- Be honest in the UI about what is a real recording and what is an AI clone.
+- Keep the bundle light: self-hosted fonts and icons, compressed media, no framework.
+
+## Credits and licences
+Photos, videos and text are mine. All rights reserved unless you ask. Voice cloning uses Coqui XTTS v2 under its non-commercial licence.
