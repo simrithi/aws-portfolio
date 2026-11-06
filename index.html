@@ -427,6 +427,18 @@
   <section id="contact" class="block contact" aria-labelledby="contactTitle">
     <h2 id="contactTitle">Open to internships in cloud and full-stack engineering.</h2>
     <a class="mail mag" href="mailto:simrithi.work@gmail.com">simrithi.work@gmail.com</a>
+    <form class="cform" id="cform" novalidate hidden aria-labelledby="cformTitle">
+      <h3 id="cformTitle">Or send me a message</h3>
+      <p class="cnote">It goes straight to my inbox through Amazon SNS.</p>
+      <div class="crow">
+        <label>Your name<input name="name" type="text" maxlength="80" autocomplete="name" required></label>
+        <label>Your email<input name="email" type="email" maxlength="200" autocomplete="email" required></label>
+      </div>
+      <label>Message<textarea name="message" rows="4" maxlength="2000" required></textarea></label>
+      <input class="hp" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn primary" type="submit" id="cSend">Send message</button>
+      <p class="cstate" id="cState" role="status" aria-live="polite"></p>
+    </form>
     <p class="socials">
       <a href="https://www.linkedin.com/in/simrithi-s/" rel="noopener"><i class="ico ico-linkedin" aria-hidden="true"></i>LinkedIn</a>
       <a href="https://github.com/simrithi" rel="noopener"><i class="ico ico-github" aria-hidden="true"></i>GitHub</a>

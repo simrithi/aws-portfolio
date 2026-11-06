@@ -112,6 +112,29 @@
     zone.addEventListener('pointerleave', function () { hovering = false; pressed = false; nx = ny = 0; aim(); v.s -= 0.015; kick(); });
   }
 
+  /* ================= Contact form -> Lambda -> SNS -> my inbox ================= */
+  (function contactForm() {
+    var f = $('#cform'); if (!f) return;
+    var ENDPOINT = ''; /* set to the Lambda Function URL after deployment */
+    if (!ENDPOINT) return;
+    f.hidden = false;
+    var st = $('#cState'), btn = $('#cSend');
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var d = { name: f.name.value, email: f.email.value, message: f.message.value, website: f.website.value };
+      if (!d.name.trim() || !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(d.email.trim()) || !d.message.trim()) { st.className = 'cstate err'; st.textContent = 'Please add your name, a valid email and a message.'; return; }
+      btn.disabled = true; st.className = 'cstate'; st.textContent = 'Sending...';
+      fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.ok, j: j }; }); })
+        .then(function (res) {
+          if (res.ok) { f.reset(); st.textContent = 'Sent. Thank you, I will reply soon.'; if (window.__sfx) window.__sfx.chime && window.__sfx.chime(); }
+          else { st.className = 'cstate err'; st.textContent = (res.j && res.j.error) || 'Could not send. Please email me directly.'; }
+        })
+        .catch(function () { st.className = 'cstate err'; st.textContent = 'Could not send. Please email me directly.'; })
+        .then(function () { btn.disabled = false; });
+    });
+  })();
+
   /* ================= Hero: rotating word + cursor glow ================= */
   (function heroLive() {
     var words = $$('.rot span'), i = 0, hero = $('.hero'), spot = $('.hero .spot');

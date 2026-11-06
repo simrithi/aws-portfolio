@@ -856,3 +856,17 @@ html.gl .hero-copy { text-shadow: 0 0 22px #ffffeb, 0 0 8px #ffffeb; }
 .hero .ring text { fill: #034f46; font-weight: 700; font-size: 15px; opacity: 1; }
 .hero .ring { opacity: 1; color: #034f46; }
 .hero .ring circle { stroke: #034f46; stroke-opacity: .55; stroke-width: 1.5; }
+
+/* contact form */
+.cform { max-width: 640px; margin: 8px auto 34px; text-align: left; display: grid; gap: 14px; }
+.cform h3 { font: 400 clamp(1.6rem, 3vw, 2.2rem)/1.1 var(--serif); margin: 0; text-align: center; }
+.cform .cnote { margin: 0; text-align: center; opacity: .8; }
+.cform .crow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.cform label { display: grid; gap: 6px; font-weight: 600; font-size: .95rem; }
+.cform input, .cform textarea { font: 500 1rem var(--sans); color: #1a1a1a; background: #fffff6; border: 1.5px solid #1a1a1a; border-radius: 12px; padding: 12px 14px; width: 100%; }
+.cform input:focus, .cform textarea:focus { outline: 3px solid #f0d7ff; }
+.cform .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.cform .btn { justify-self: center; cursor: pointer; background: #f0d7ff; color: #1a1a1a; }
+.cform .cstate { margin: 0; text-align: center; min-height: 1.4em; font-weight: 600; }
+.cform .cstate.err { color: #ffb3c1; }
+@media (max-width: 600px) { .cform .crow { grid-template-columns: 1fr; } }
