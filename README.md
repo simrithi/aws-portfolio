@@ -1,6 +1,6 @@
 # Simrithi S: portfolio
 
-Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting. Fonts (Geist) and icons (Phosphor) are self-hosted.
+Plain HTML, CSS and JavaScript with no build step, hosted on AWS Amplify Hosting. Fonts (Figtree, EB Garamond, Geist Mono) and icons (Phosphor) are self-hosted.
 
 ## Creative feature: Superpower cards
 
@@ -14,6 +14,6 @@ A foil pack sits in the hero (and a floating "Open a pack" button follows you do
 - Terrain-line hero that lifts toward the pointer
 - About statement that lights up word by word as you scroll
 - Skills toolbox: pick a tool to see which projects used it
-- Varshik diagram switcher, spotlight project cards, magnetic buttons, light and dark themes
+- Varshik diagram switcher, spotlight project cards, magnetic buttons, a Wispr Flow-inspired theme of butter paper, stacked rounded panels, forest green and lilac
 
 Run locally: `python -m http.server`, then open http://localhost:8000 (icons need a server, not file://).
